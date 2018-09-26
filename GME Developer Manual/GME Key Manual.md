@@ -17,7 +17,7 @@
 | dwOpenID			|wAccountLen		|第三方自己的帐号字符	|
 | dwSdkAppid		|unsigned short/4	|第三方自己的 appid		|
 | dwRoomID			|unsigned int/4		|如果是实时语音，请填写房间号码；如果是离线语音，请填写0			|
-| dwExpTime		|unsigned int/4		|过期时间（当前时间+有效期[单位：秒，建议 300 秒]）|
+| dwExpTime		|unsigned int/4		|过期时刻（当前时间+有效期[单位：秒，建议 300 秒]）|
 | dwReserved1		|unsigned int/4		|填写数值：-1 或者 0xFFFFFFFF|
 | dwReserved2		|unsigned int/4		|填写数值：0		|
 
