@@ -46,10 +46,10 @@ The members in the room will appear in the scene as a actor. Moving around the m
 
 Click the "Voice Message" button in Figure 2 to enter the voice message interface.
 
-![image](Image/u12.png)
+![image](Image/ue12.png)
 > Figure 5 voice message interface
 
-Audio：Recorded voice messages and voice duration. Click ![image](Image/u13.png) to play audio, and click it again to end playback.
+Audio：Recorded voice messages and voice duration. Click ![image](Image/ue13.png) to play audio, and click it again to end playback.
 
 
 
