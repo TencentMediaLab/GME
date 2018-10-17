@@ -1341,7 +1341,7 @@ int ret = ITMGContext.GetInstance().GetPttCtrl().StartRecordingWithStreamingReco
 
 ### 启动流式录音的回调
 启动录音完成后的回调通过委托传递消息。
-
+```
 委托函数：
 public delegate void QAVStreamingRecognitionCallback(int code, string fileid, string filepath, string result);
 事件函数：
@@ -1421,8 +1421,10 @@ IQAVContext.GetInstance().GetPttCtrl().UploadRecordedFile(filePath);
 ```
 委托函数：
 public delegate void QAVUploadFileCompleteCallback(int code, string filepath, string fileid);
+
 事件函数：
 public abstract event QAVUploadFileCompleteCallback OnUploadFileComplete;
+
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
