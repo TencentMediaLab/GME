@@ -21,8 +21,11 @@
 [回调消息列表](./Unity%20SDK%20Developer%20Manual.md#%E5%9B%9E%E8%B0%83%E6%B6%88%E6%81%AF)
 
 ## 使用流程图
+### 实时语音流程图
 ![image](Image/i0.png)
 
+### 离线语音语音转文字流程图
+![image](Image/l0.png)
 
 ### 使用GME 重要事项
 
@@ -34,7 +37,8 @@
 |EnableMic	 	|开麦克风 	|
 |EnableSpeaker		|开扬声器 	|
 
-**说明：**
+
+**说明**
 
 **GME 的接口调用成功后返回值为 QAVError.OK，数值为0。**
 
@@ -44,11 +48,11 @@
 
 **GME 需要调用 Poll 接口触发事件回调。**
 
-**设备的操作要在进房成功之后。**
-
 **GME 回调信息参考回调消息列表。**
 
-**此文档对应GME sdk version：2.1.1.39800。**
+**设备的操作要在进房成功之后。**
+
+**此文档对应GME sdk version：2.2。**
 
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
@@ -1231,6 +1235,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetEffectsVolume(volume);
 |ApplyPTTAuthbuffer    |鉴权初始化	|
 |SetMaxMessageLength    |限制最大语音信息时长	|
 |StartRecording		|启动录音		|
+|StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
 |UploadRecordedFile 	|上传语音文件		|
@@ -1315,6 +1320,49 @@ void mInnerHandler(int code, string filepath){
 }
 ```
 
+### 启动流式录音
+此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+
+> 函数原型  
+
+```
+ITMGPTT int StartRecordingWithStreamingRecognition(string filePath, string language)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| filePath    	|String	|存放的语音路径	|
+| language 	|String	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+
+> 示例代码  
+```
+String  temple = getActivity().getExternalFilesDir(null).getAbsolutePath() + "/test_"+(index++)+".ptt";
+ITMGContext.GetInstance(getActivity()).GetPTT().StartRecordingWithStreamingRecognition(temple,"cmn-Hans-CN");
+```
+
+### 启动流式录音的回调
+启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
+
+|信息名称     | 意义         |
+| ------------- |:-------------:|
+| result    	|流式录音是否成功		|
+| text    		|语音转文字识别的文本	|
+| file_path 	|录音存放的本地地址		|
+| file_id 		|录音在后台的 url 地址	|
+
+|错误码     | 意义         |处理方式|
+| ------------- |:-------------:|:-------------:|
+|32775	|流式语音转文本失败，但是录音成功	|调用 UploadRecordedFile 接口上传录音，再调用 SpeechToText 接口进行语音转文字操作
+|32777	|流式语音转文本失败，但是录音成功，上传成功	|返回的信息中有上传成功的后台 url 地址，调用 SpeechToText 接口进行语音转文字操作
+
+> 示例代码  
+```
+public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
+	if (ITMGContext.ITMG_MAIN_EVENT_TYPE.ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE == type)
+        	{
+            		//启动流式录音的回调
+        	}
+}
+```
 ### 停止录音
 此接口用于停止录音。
 > 函数原型  
