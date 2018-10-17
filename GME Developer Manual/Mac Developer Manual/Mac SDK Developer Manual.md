@@ -41,13 +41,14 @@
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
-
-**设备的操作要在进房成功之后。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
 
 **GME 回调信息参考回调消息列表。**
 
-**此文档对应GME sdk version：2.1.1.39800。**
+**设备的操作要在进房成功之后。**
+
+**此文档对应GME sdk version：2.2。**
+
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
 
@@ -396,6 +397,7 @@ ITMGContext GetRoom -(int)GetRoomType
 |weight    				|范围是 1 到 50，数值为 50 是音质评分极好，数值为 1 是音质评分很差，几乎不能使用，数值为 0 代表初始值，无意义|
 |floss    				|丢包率|
 |delay    		|音频触达延迟时间（ms）|
+
 
 ### 消息详情
 
@@ -774,6 +776,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableLoopBack:YES];
 ```
 
+
 ## 实时语音伴奏相关接口
 |接口     | 接口含义   |
 | ------------- |:-------------:|
@@ -1134,6 +1137,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 |ApplyPTTAuthbuffer    |鉴权初始化	|
 |SetMaxMessageLength    |限制最大语音信息时长	|
 |StartRecording		|启动录音		|
+|StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
 |UploadRecordedFile 	|上传语音文件		|
@@ -1142,7 +1146,8 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 |StopPlayFile		|停止播放语音		|
 |GetFileSize 		|语音文件的大小		|
 |GetVoiceFileDuration	|语音文件的时长		|
-|SpeechToText 		|语音识别成文字			|
+|SpeechToText 		|语音识别成文字		|
+
 
 
 ### 鉴权初始化
@@ -1170,7 +1175,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长|
+| msTime    |int                    |语音时长，单位ms|
 > 示例代码  
 
 ```
@@ -1178,7 +1183,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 ```
 
 ### 启动录音
-此接口用于启动录音。
+此接口用于启动录音。需要将录音文件上传后才可以进行语音转文字等操作。
 > 函数原型  
 
 ```
@@ -1209,6 +1214,54 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
             break;
     }
 }
+```
+
+### 启动流式录音
+此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+
+> 函数原型  
+
+```
+ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const char* filePath,const char*translateLanguage)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| filePath    	|char*	|存放的语音路径	|
+| language 	|char*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+
+> 示例代码  
+```
+[[[ITMGContext GetInstance] GetPTT] StartRecordingWithStreamingRecognition:recordfilePath language:@"cmn-Hans-CN"];
+```
+
+### 启动流式录音的回调
+启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
+
+|消息名称     | 意义         |
+| ------------- |:-------------:|
+| result    	|用于判断流式录音是否成功的返回码			|
+| text    		|语音转文字识别的文本	|
+| file_path 	|录音存放的本地地址		|
+| file_id 		|录音在后台的 url 地址	|
+
+|错误码     | 意义         |处理方式|
+| ------------- |:-------------:|:-------------:|
+|32775	|流式语音转文本失败，但是录音成功	|调用 UploadRecordedFile 接口上传录音，再调用 SpeechToText 接口进行语音转文字操作
+|32777	|流式语音转文本失败，但是录音成功，上传成功	|返回的信息中有上传成功的后台 url 地址，调用 SpeechToText 接口进行语音转文字操作
+
+> 示例代码  
+```
+-(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
+    NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
+    switch (eventType) {
+        case ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE：
+        {
+	    //启动流式录音的回调
+        }
+            break;
+    }
+}
+
 ```
 
 ### 停止录音

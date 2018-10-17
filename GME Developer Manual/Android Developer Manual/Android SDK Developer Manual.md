@@ -44,7 +44,7 @@
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
 
 **GME 回调信息参考回调消息列表。**
 
@@ -146,7 +146,7 @@ ITMGContext.GetInstance(this).Init(sdkAppId, openID);
 ```
 
 ### 触发事件回调
-通过在 update 里面周期的调用 Poll 可以触发事件回调。
+通过周期的调用 Poll 可以触发事件回调。
 > 函数原型
 
 ```
@@ -1189,9 +1189,9 @@ ITMGContext.GetInstance(getActivity()).GetPTT().StartRecordingWithStreamingRecog
 ### 启动流式录音的回调
 启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
 
-|信息名称     | 意义         |
+|消息名称     | 意义         |
 | ------------- |:-------------:|
-| result    	|流式录音是否成功		|
+| result    	|用于判断流式录音是否成功的返回码			|
 | text    		|语音转文字识别的文本	|
 | file_path 	|录音存放的本地地址		|
 | file_id 		|录音在后台的 url 地址	|

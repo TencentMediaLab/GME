@@ -46,7 +46,7 @@
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
 
 **GME 回调信息参考回调消息列表。**
 
@@ -1270,7 +1270,7 @@ ITMGPTT int SetMaxMessageLength(int msTime)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长|
+| msTime    |int                    |语音时长，单位ms|
 > 示例代码  
 
 ```
@@ -1335,19 +1335,25 @@ ITMGPTT int StartRecordingWithStreamingRecognition(string filePath, string langu
 
 > 示例代码  
 ```
-String  temple = getActivity().getExternalFilesDir(null).getAbsolutePath() + "/test_"+(index++)+".ptt";
-ITMGContext.GetInstance(getActivity()).GetPTT().StartRecordingWithStreamingRecognition(temple,"cmn-Hans-CN");
+string recordPath = Application.persistentDataPath + string.Format("/{0}.silk", sUid++);
+int ret = ITMGContext.GetInstance().GetPttCtrl().StartRecordingWithStreamingRecognition(recordPath, "cmn-Hans-CN");
 ```
 
 ### 启动流式录音的回调
-启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
+启动录音完成后的回调通过委托传递消息。
 
-|信息名称     | 意义         |
+委托函数：
+public delegate void QAVStreamingRecognitionCallback(int code, string fileid, string filepath, string result);
+事件函数：
+public abstract event QAVStreamingRecognitionCallback OnStreamingSpeechComplete;
+```
+
+|消息名称     | 意义         |
 | ------------- |:-------------:|
-| result    	|流式录音是否成功		|
-| text    		|语音转文字识别的文本	|
-| file_path 	|录音存放的本地地址		|
-| file_id 		|录音在后台的 url 地址	|
+| code    	|用于判断流式录音是否成功的返回码		|
+| result    		|语音转文字识别的文本	|
+| filepath 	|录音存放的本地地址		|
+| fileid 		|录音在后台的 url 地址	|
 
 |错误码     | 意义         |处理方式|
 | ------------- |:-------------:|:-------------:|
@@ -1356,12 +1362,13 @@ ITMGContext.GetInstance(getActivity()).GetPTT().StartRecordingWithStreamingRecog
 
 > 示例代码  
 ```
-public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
-	if (ITMGContext.ITMG_MAIN_EVENT_TYPE.ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE == type)
-        	{
-            		//启动流式录音的回调
-        	}
+对事件进行监听：
+IQAVContext.GetInstance().GetPttCtrl().OnStreamingSpeechComplete += mInnerHandler;
+监听处理：
+void mInnerHandler(int code, string fileid, string filepath, string result){
+    //启动流式录音的回调
 }
+
 ```
 ### 停止录音
 此接口用于停止录音。
