@@ -8,8 +8,12 @@
 
 > 函数原型  
 ```
-public abstract int InitSpatializer()
+public abstract int InitSpatializer(string modelPath)
 ```
+
+|参数	|类型	|意义 |
+| ------- |---------|------|
+| modelPath    	|string    	|3D音效资源文件路径，资源文件详情咨询腾讯云相关工作人员|
 
 ### 2、开启或关闭 3D 音效
 此函数用于开启或关闭 3D 音效。开启之后可以听到 3D 音效。

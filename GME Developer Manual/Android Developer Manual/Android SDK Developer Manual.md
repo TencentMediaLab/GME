@@ -772,7 +772,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableLoopBack(true);
 |SetAccompanyFileCurrentPlayedTimeByMs 				|设置播放进度|
 
 ### 开始播放伴奏
-调用此接口开始播放伴奏。支持 m4a、AAC、wav、mp3 一共四种格式。调用此 API，音量会重置。
+调用此接口开始播放伴奏。支持 m4a、wav、mp3 一共三种格式。调用此 API，音量会重置。
 
 > 函数原型  
 ```
@@ -1056,6 +1056,31 @@ ITMGContext TMGAudioEffectCtrl  public int setVoiceType(int type);
 ITMGContext.GetInstance(this).GetAudioEffectCtrl().setVoiceType(0);
 ```
 
+### K歌音效特效
+调用此接口设置K歌音效特效。
+> 函数原型  
+```
+ITMGContext TMGAudioEffectCtrl  public int SetKaraokeType(int type);
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| type    |int                    |表示本端音频变声类型|
+
+
+|类型参数     |参数代表|意义|
+| ------------- |-------------|------------- |
+|ITMG_KARAOKE_TYPE_ORIGINAL 		|0	|原声			|
+|ITMG_KARAOKE_TYPE_POP 				|1	|流行			|
+|ITMG_KARAOKE_TYPE_ROCK 			|2	|摇滚			|
+|ITMG_KARAOKE_TYPE_RB 				|3	|嘻哈			|
+|ITMG_KARAOKE_TYPE_DANCE 			|4	|舞曲			|
+|ITMG_KARAOKE_TYPE_HEAVEN 			|5	|空灵			|
+|ITMG_KARAOKE_TYPE_TTS 				|6	|语音合成		|
+
+> 示例代码  
+```
+ITMGContext.GetInstance(this).GetAudioEffectCtrl().SetKaraokeType(0);
+```
 
 
 ### 获取播放音效的音量

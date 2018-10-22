@@ -835,7 +835,7 @@ void QAVAudioDeviceStateCallback(){
 |SetAccompanyFileCurrentPlayedTimeByMs 				|设置播放进度|
 
 ### 开始播放伴奏
-调用此接口开始播放伴奏。支持 m4a、AAC、wav、mp3 一共四种格式。调用此 API，音量会重置。
+调用此接口开始播放伴奏。支持 m4a、wav、mp3 一共三种格式。调用此 API，音量会重置。
 > 函数原型
 
 ```
@@ -1045,7 +1045,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetAccompanyFileCurrentPlayedTime
 |SetEffectsVolume 	|设置播放音效的音量|
 
 ### 播放音效
-此接口用于播放音效。参数中音效 id 需要 App 侧进行管理，唯一标识一个独立文件。文件支持 m4a、AAC、wav、mp3 一共四种格式。
+此接口用于播放音效。参数中音效 id 需要 App 侧进行管理，唯一标识一个独立文件。文件支持 m4a、wav、mp3 一共三种格式。
 > 函数原型  
 
 ```
@@ -1189,6 +1189,35 @@ IQAAudioEffectCtrl int setVoiceType(int type)
 ```
 IQAVContext.GetInstance().GetAudioEffectCtrl().setVoiceType(0);
 ```
+
+### K歌音效特效
+调用此接口设置K歌音效特效。
+>  函数原型  
+```
+IQAAudioEffectCtrl int SetKaraokeType(int type)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| type    |int                    |表示本端音频变声类型|
+
+
+|类型参数     |参数代表|意义|
+| ------------- |-------------|------------- |
+|ITMG_KARAOKE_TYPE_ORIGINAL 		|0	|原声			|
+|ITMG_KARAOKE_TYPE_POP 				|1	|流行			|
+|ITMG_KARAOKE_TYPE_ROCK 			|2	|摇滚			|
+|ITMG_KARAOKE_TYPE_RB 				|3	|嘻哈			|
+|ITMG_KARAOKE_TYPE_DANCE 			|4	|舞曲			|
+|ITMG_KARAOKE_TYPE_HEAVEN 			|5	|空灵			|
+|ITMG_KARAOKE_TYPE_TTS 				|6	|语音合成		|
+
+> 示例代码  
+```
+IQAVContext.GetInstance().GetAudioEffectCtrl().SetKaraokeType(0);
+```
+
+
+
 
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
