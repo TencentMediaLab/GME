@@ -1041,6 +1041,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetAccompanyFileCurrentPlayedTime
 |StopEffect 		|停止播放音效|
 |StopAllEffects		|停止播放所有音效|
 |SetVoiceType 		|变声特效|
+|SetKaraokeType 		|K歌音效特效|
 |GetEffectsVolume	|获取播放音效的音量|
 |SetEffectsVolume 	|设置播放音效的音量|
 
