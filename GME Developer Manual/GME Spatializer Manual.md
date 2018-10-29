@@ -89,7 +89,7 @@ float right[] = { matrix.GetColumn(0).Y,matrix.GetColumn(1).Y,matrix.GetColumn(2
 float up[] = { matrix.GetColumn(0).Z,matrix.GetColumn(1).Z,matrix.GetColumn(2).Z};
 ITMGContextGetInstance()->GetRoom()->UpdateSelfPosition(position, forward, right, up); 	
 ```
-Unity：
+Unity:
 ```
 Transform selftrans = currentPlayer.gameObject.transform;
 Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, selftrans.rotation, Vector3.one);

@@ -1080,6 +1080,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 | type    |int                    |表示本端音频变声类型|
 
 
+
 |类型参数     |参数代表|意义|
 | ------------- |-------------|------------- |
 | ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|原声			|
@@ -1128,6 +1129,8 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetKaraokeType:0];
 ```
+
+
 
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
@@ -1325,7 +1328,7 @@ ITMGContext GetPTT -(QAVResult)CancelRecording
 > 函数原型  
 
 ```
-ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
+ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath 
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -1358,6 +1361,7 @@ ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
 ```
 ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePath:(NSString*)downloadFilePath 
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileID    			|NSString                      |文件的url路径		|
@@ -1474,6 +1478,24 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 ```
 [[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID];
 ```
+
+### 将指定的语音文件识别成文字（指定语言）
+此接口用于将指定的语音文件识别成指定语言的文字。
+
+>  函数原型  
+```
+ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| fileID    |NSString*                     |语音文件 url|
+| language    |NSString*                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+
+>  示例代码  
+```
+[[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID language:"cmn-Hans-CN"];
+```
+
 
 ### 识别回调
 将指定的语音文件识别成文字的回调，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。

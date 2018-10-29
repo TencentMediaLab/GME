@@ -31,7 +31,7 @@
 ![image](Image/u5.png)
 
 ### 3. 音频设置
-在 Unity 编辑器中，Edit-Project Setting-Audio 请使用系统默认即可，如果进行修改，Unity 播放音效会因为在iOS上设置硬件缓存区受影响，表现为音效被打断。
+在 Unity 编辑器中，Edit-Project Setting-Audio 使用系统默认即可。如果进行修改，Unity 播放音效会因为在iOS上设置硬件缓存区受影响，表现为音效被打断。
 ![image](Image/u12.png)
 如果设置为下图这种模式，Unity 播放音效会因为在iOS上设置硬件缓存区受影响，表现为音效被打断。
 
