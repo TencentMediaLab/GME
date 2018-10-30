@@ -1456,7 +1456,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 ```
 
 ### 停止录音
-此接口用于停止录音。
+此接口用于停止录音。停止录音后会有录音完成回调。
 > 函数原型  
 ```
 ITMGPTT virtual int StopRecording()

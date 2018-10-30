@@ -18,6 +18,11 @@
 4、CPU 及内存性能优化；
 
 ## 主要接口更新
+- ### ExitRoom 退房操作由同步改为异步调用，参照RoomExitComplete回调函数处理，回值为AV_OK的时候代表异步投递成功。
+```
+public abstract int ExitRoom();
+```
+
 - ### genAuthBuffer 参数 roomId 类型由 int32 类型改为字符串类型
 ```
 AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, String identifier, String key)
