@@ -2,20 +2,22 @@
 欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于开发的接口升级技术文档(GME 2.1 升级 GME 2.2)。
 
 ## 新增功能
-1、GenAuthBuffer 参数 roomId 类型由 int32 类型改为字符串类型；
-2、EnterRoom 参数 roomId 类型由 int32 类型改为字符串类型；
-3、SetMicVolume 由设置麦克风硬件音量改为设置麦克风软件音量；
-4、GetMicVolume 由获取麦克风硬件音量改为获取麦克风软件音量；
-5、支持多种K歌音效；
-6、优化超大房间体验，延时更低更流畅；
-7、离线语音消息支持流式语音转文字；
-8、windows端支持伴奏；
+1、房间号由 int32 类型升级为字符串类型；
+
+2、支持多种K歌音效；
+
+3、优化超大房间体验，延时更低更流畅；
+
+4、离线语音消息支持流式语音转文字； 
+
+5、windows端支持伴奏；
 
 ## 优化能力
-1、房间号由 int32 类型升级为字符串类型；
-2、音量调节接口由设置及获取硬件音量改为设置及获取软件音量；
-3、语音带宽优化，更省流量；
-4、CPU 及内存性能优化；
+1、退房改为异步执行，防止ANR；
+
+2、语音带宽优化，更省流量； 
+
+3、CPU 及内存性能优化；
 
 ## 主要接口更新
 - ### ExitRoom 退房操作由同步改为异步调用，参照RoomExitComplete回调函数处理，回值为AV_OK的时候代表异步投递成功。
@@ -30,7 +32,7 @@ AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, Strin
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|String   		|房间号，最大支持127字符（离线语音房间号参数必须填0）|
+| roomId    		|String   		|房间号，最大支持127字符（离线语音房间号参数必须填null）|
 | openID    	|String 	|用户标识					|
 | key    		|String 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
 
