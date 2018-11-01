@@ -67,7 +67,6 @@ ITMGRoom virtual void UpdateAudioRecvRange(int range)
 ITMGRoom virtual intUpdateSelfPosition(int position[3], float axisForward[3], float axisRight[3], float axisUp[3])
 ```
 
-- x axis points to the front, y axis points to the right, z axis points to the top.
 
 |Parameter | Type | Description |
 | ------------- |-------------|-------------

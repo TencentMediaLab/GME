@@ -65,9 +65,6 @@ public abstract void UpdateAudioRecvRange(int range)
 public abstract int UpdateSelfPosition(int position[3], float axisForward[3], float axisRight[3], float axisUp[3])
 ```
 
-在GME中设计的世界坐标系下（此坐标系与 Unreal 引擎坐标系相同，与 Unity 引擎不同，需要开发者注意）：
-- x 轴指向前方，y 轴指向右方，z 轴指向上方。
-
 
 |参数     | 类型         |意义|
 | ------------- |-------------|-------------
