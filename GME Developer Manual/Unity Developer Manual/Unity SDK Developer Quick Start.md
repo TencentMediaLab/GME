@@ -50,6 +50,7 @@ IQAVContext Init(string sdkAppID, string openID)
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码						|
 | openID    	|String  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 	|
+
 > 示例代码  
 ```
 int ret = IQAVContext.GetInstance().Init(str_appId, str_userId);

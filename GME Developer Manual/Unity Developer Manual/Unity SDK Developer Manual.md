@@ -1301,6 +1301,7 @@ ITMGPTT int SetMaxMessageLength(int msTime)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | msTime    |int                    |语音时长，单位ms|
+
 > 示例代码  
 
 ```
