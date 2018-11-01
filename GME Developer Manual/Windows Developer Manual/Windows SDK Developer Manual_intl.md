@@ -574,7 +574,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
 
 ### Obtain the microphone status
-This API is used to obtain the microphone status. "0" means microphone is enabled, "1" means microphone is disabled, "2" means microphone is under working, "3" means no microphones exits, "4" means microphone is not initialized well.
+This API is used to obtain the microphone status. "0" means microphone is enabled, "1" means microphone is disabled.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetMicState()
@@ -752,7 +752,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ```
 
 ### Obtain the speaker status
-This API is used to obtain the speaker status. "0" means speaker is enabled, "1" means speaker is disabled, "2" means speaker is under working, "3" means no speaker exits, "4" means speaker is not initialized well.
+This API is used to obtain the speaker status. "0" means speaker is enabled, "1" means speaker is disabled.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetSpeakerState()
