@@ -1354,8 +1354,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ```
 
-### Enable streaming recording
-This API is used to start streaming recording. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
+### Enable streaming speech recognition
+This API is used to start streaming speech recognition. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
 
 #### Function prototype 
 ```
@@ -1371,12 +1371,12 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
 ```
 
-### Callback for starting streaming recordings
+### Callback for starting streaming speech recognitions
 The callback function OnEvent is called after the recording is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 
 |Message Name     | Description         |
 | ------------- |:-------------:|
-| result    	|Error code indicating whether streaming recording is successful			|
+| result    	|Error code indicating whether streaming speech recognition is successful			|
 | text    		|text obtained from voice-to-text conversion	|
 | file_path 	|local path for saving the recording		|
 | file_id 		|URL to background recording	|
