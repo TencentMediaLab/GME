@@ -124,11 +124,6 @@ public:
 #### Sample code
 ```
 //Declaration in the header file
-class TMGTestScene : public cocos2d::Scene,public ITMGDelegate
-{
-void update(float delta); 
-}
-
 //Code implementation
 void TMGTestScene::update(float delta)
 {
@@ -193,11 +188,11 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| appId    		|int   		| The SdkAppId obtained from Tencent Cloud console		|
-| authId    		|int   		| Room ID. 32-bit is supported.	|
+| nAppId    		|int   		| The SdkAppId obtained from Tencent Cloud console		|
+| dwRoomID    		|char*     		|Room ID,maximum to 127 characters(the offline voice room ID must be null)	|
 | strOpenID  		|char*    	| User ID					|
 | strkey    		|char*	    	| The key obtained from Tencent Cloud console	|
-| retAuthBuff   	|char*    	| Returned authbuff				|
+| strAuthBuffer   	|char*    	| Returned authbuff				|
 | buffLenght   		|int    	| Length of returned authbuff				|
 
 
@@ -220,7 +215,7 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId			|char*   		| Room ID. 32-bit is supported.	|
+| roomId			|char*   		| Room ID,maximum to 127 characters(the offline voice room ID must be null)	|
 | roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
 | authBuffer    		|char*     	| Authentication key			|
 | buffLen   			|int   		| Length of the authentication key		|
@@ -252,7 +247,7 @@ ITMGContext virtual void EnterTeamRoom(const char* roomId, ITMG_ROOM_TYPE roomTy
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId		|char*   		| Room I. 32-bit is supported.	|
+| roomId		|char*   		| Room ID,maximum to 127 characters(the offline voice room ID must be null)|
 | roomType 		|ITMG_ROOM_TYPE	|Audio type of the room |
 | authBuffer    	|char*    	| Authentication key					|
 | buffLen   		|int   		| Length of the authentication key				|
