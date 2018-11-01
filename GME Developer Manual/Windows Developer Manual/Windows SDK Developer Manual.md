@@ -1377,7 +1377,7 @@ ITMGPTT virtual void StartRecording(const char* fileDir)
 | fileDir    |char*                      |存放的语音路径|
 > 示例代码  
 ```
-ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(fileDir);
+ITMGContextGetInstance()->GetPTT()->StartRecording(fileDir);
 ```
 
 ### 启动录音的回调

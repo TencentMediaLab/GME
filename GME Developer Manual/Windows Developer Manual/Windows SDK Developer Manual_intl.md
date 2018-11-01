@@ -301,7 +301,7 @@ This API is called to exit the current room.
 #### Function prototype  
 
 ```
-ITMGContext virtual void ExitRoom()
+ITMGContext virtual int ExitRoom()
 ```
 #### Sample code  
 
@@ -1574,6 +1574,7 @@ ITMGContextGetInstance()->GetPTT()->GetVoiceFileDuration(filePath);
 This API is used to convert the specified voice file into text with Speech Recognition.
 #### Function prototype  
 ```
+ITMGPTT virtual void SpeechToText(const char* fileID)
 ITMGPTT virtual void SpeechToText(const char* fileID, const char* language)
 ```
 | Parameter | Type | Description |
