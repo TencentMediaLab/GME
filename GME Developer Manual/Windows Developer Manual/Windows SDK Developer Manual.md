@@ -600,7 +600,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 > 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
@@ -781,7 +781,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
-
+EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
 > 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)

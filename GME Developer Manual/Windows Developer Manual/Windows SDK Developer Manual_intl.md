@@ -560,7 +560,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 
 ### Enable/disable the microphone
 This API is used to enable/disable the microphone. Microphone and speaker are not enabled by default after a user enters a room.
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
@@ -738,6 +738,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 
 ### Enable/disable the speaker
 This API is used to enable/disable the speaker.
+EnableSpeaker = EnableAudioPlayDevice + EnableAudioRecv.
 
 #### Function prototype  
 ```
