@@ -47,12 +47,12 @@ This function is used to set its own position and direction related information.
 
 #### relationship between sound source distance and sound volume attenuation.
 
-In 3D sound effect, the sound volume has a certain attenuation relationship with the sound source distance. When the unit distance exceeds 500, the volume attenuates to almost zero
+In 3D sound effect, the sound volume has a certain attenuation relationship with the sound source distance. When the unit distance exceeds the parameter range, the volume attenuates to almost zero.
 
 | Distance Range (In the unit of engine) | Attenuation Formula |
 | ------- |---------|
-| 0< N <range/5	| Attenuation coefficient: 1.0 (no attenuation) |
-| N≥range/5  |Attenuation coefficient: 40/N |
+| 0< N <range/10	| Attenuation coefficient: 1.0 (no attenuation) |
+| N≥range/10  |Attenuation coefficient: range/10/N |
 
 #### Function prototype  
 ```

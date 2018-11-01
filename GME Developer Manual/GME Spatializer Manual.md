@@ -44,12 +44,12 @@ public abstract bool IsEnableSpatializer()
 
 #### 距离与声音衰减的关系
 
-3D 音效中，音源音量的大小与音源距离有一定的衰减关系。单位距离超过500之后，音量衰减到几乎为零。
+3D 音效中，音源音量的大小与音源距离有一定的衰减关系。单位距离超过 range 之后，音量衰减到几乎为零。
 
 |距离范围（引擎单位）|衰减公式	|
 | ------- |---------|
-| 0< N <range/5  	|衰减系数：1.0 （音量无衰减）	|
-| N≥range/5  |衰减系数：40/N          			|
+| 0< N <range/10  	|衰减系数：1.0 （音量无衰减）	|
+| N≥range/10|衰减系数：range/10/N        			|
 
 ![](https://github.com/TencentMediaLab/GME/blob/master/Image/t1.jpg)
 
