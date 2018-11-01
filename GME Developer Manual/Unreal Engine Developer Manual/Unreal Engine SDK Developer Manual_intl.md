@@ -3,40 +3,53 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 
 
 ## How to Use
-![](https://main.qcloudimg.com/raw/810d0404638c494d9d5514eb5037cd37.png)
+
+### How to use voice chat
+![](https://main.qcloudimg.com/raw/bf2993148e4783caf331e6ffd5cec661.png)
+### How to convert voice message to text
+![](https://main.qcloudimg.com/raw/4c875d05cd2b4eaefba676d2e4fc031d.png)
+
 
 ### Key considerations for using GME
 
 | Important API | Description |
 | ------------- |:-------------:|
-|Init    		|Initializes GME 	|
-|Poll    		|Triggers event callback	|
-|EnterRoom	 	|Enters a room  		|
-|EnableMic	 	|Enables the microphone 	|
-|EnableSpeaker		|Enables the speaker 	|
+| Init | initializes GME |
+| Poll | Triggers event callback |
+| EnterRoom | Enters a room |
+|EnableMic	 	| Enables the microphone 	|
+| EnableSpeaker | Enables the speaker |
 
-**Note:**
+>**Notes:**
+
 **When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
 
 **GME APIs are called in the same thread.**
 
-**The request for entering a room via GME API should be authenticated. For more information, please see authentication section in relevant documentation.**
+**The request for entering a room via GME API should be authenticated. For more information, see authentication section in relevant documentation.**
 
-**This document is applicable to GME sdk version：2.1.1.39800.**
-## Initialization-related APIs
+**The Poll API is called periodically for GME to trigger event callback.**
+
+**See the callback message list for GME callback information.**
+
+**The operation on devices shall be carried out after successful entry into a room.**
+
+**This document applies to GME SDK version 2.2.**
+
+## Initialization-Related APIs
 For an uninitialized SDK, you must initialize it via initialization authentication to enter a room.
 
 | API | Description |
 | ------------- |:-------------:|
-|Init    	|Initializes GME 	| 
-|Poll    	|Triggers event callback	|
+|Init    		| Initializes GME 	| 
+|Poll    		| Triggers event callback	|
 |Pause   	|Pauses the system	|
-|Resume 	|Resumes the system	|
-|Uninit    	|Initializes GME 	|
+|Resume 	| Resumes the system	|
+|Uninit    	|Deinitializes GME 	|
 
 
 ### Preparations
-To integrate GME, import the tmg_sdk.h header file first. Create a class inheritance ITMGDelegate for the header file to facilitate message passing and callback.
+You need to import the header file tmg_sdk before you can integrate GME. The classes in the header file inherit ITMGDelegate for message delivery and callback.
 #### Sample code  
 ```
 #include "tmg_sdk.h"
@@ -47,12 +60,12 @@ public:
 ...
 private:
 ...
-}
+｝
 ```
 
 
 ### Set a singleton
-Before you call the EnterRoom function, obtain and configure ITMGContext first, because all calls begin from ITMGContext and are called and passed back to your application via ITMGDelegate.
+You need to obtain ITMGContext before you can call the function EnterRoom, because any API call begins with ITMGContext and the callback is passed to application via ITMGDelegate.
 
 #### Sample code
 ```
@@ -70,7 +83,7 @@ class UEDEMO1_API AUEDemoLevelScriptActor : public ALevelScriptActor, public Set
 {
 public:
 	void OnEvent(ITMG_MAIN_EVENT_TYPE eventType, const char* data);
-}
+｝
 
 //UEDemoLevelScriptActor.cpp:
 void AUEDemoLevelScriptActor::OnEvent(ITMG_MAIN_EVENT_TYPE eventType, const char* data){
@@ -80,8 +93,8 @@ void AUEDemoLevelScriptActor::OnEvent(ITMG_MAIN_EVENT_TYPE eventType, const char
 
 ### Initialize the SDK
 
-For more information on how to obtain parameters, please see [GME Integration Guide](/GME%20Introduction_intl.md).
-This API should contain SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
+For more information on how to obtain parameters, see [GME Integration Guide](https://cloud.tencent.com/document/product/607/10782).
+This API should contain SdkAppId and openId. The SdkAppId is obtained from the Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
 SDK must be initialized before a user can enter a room.
 #### Function prototype 
 
@@ -90,8 +103,8 @@ ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|char*   	|The SdkAppId obtained from Tencent Cloud console					|
-| openID    	|char*   	|The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. 	|
+| sdkAppId | char* | The SdkAppId obtained from the Tencent Cloud console |
+| openID |char* | The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. |
 
 #### Sample code  
 
@@ -104,7 +117,7 @@ ITMGContextGetInstance()->Init(appid.c_str(), userId.c_str());
 
 ### Trigger event callback
 
-This API is used to trigger event callback via periodic Poll call in Tick.
+Event callbacks can be triggered by periodically calling Poll in Tick.
 #### Function prototype
 
 ```
@@ -150,7 +163,7 @@ ITMGContext  int Resume()
 
 
 ### Deinitialize the SDK
-Deinitializes an SDK to make it uninitialized.
+This API is used to deinitialize an SDK to make it uninitialized.
 
 #### Function prototype 
 ```
@@ -169,30 +182,30 @@ You must initialize and call the SDK to enter a room before Voice Chat can start
 
 | API | Description |
 | ------------- |:-------------:|
-|GenAuthBuffer    	|Initialization authentication |
-|EnterRoom   		|Joins a room |
-|IsRoomEntered   	|Indicates whether any member has entered a room |
-|ExitRoom 		|Exits the room |
-|ChangeRoomType 	|Modifies the audio type of the user's room |
-|GetRoomType 		|Obtains the audio type of the user's room |
+|GenAuthBuffer    	| Initializes authentication |
+|EnterRoom   		| Enters a room |
+|IsRoomEntered   	| Indicates whether any member has entered a room |
+|ExitRoom 		| Exits a room |
+|ChangeRoomType 	| Modifies the audio type of the user's room |
+|GetRoomType 		| Obtains the audio type of the user's room |
 
 
-### Voice chat authentication
-AuthBuffer is generated for encryption and authentication of appropriate features. For more information on how to obtain relevant parameters, please see [GME Key](../GME%20Key%20Manual_intl.md).    
+### Authentication information
+This API is used to generate AuthBuffer for encryption and authentication of appropriate features. For more information on deployment at backend, see [GME Key](https://cloud.tencent.com/document/product/607/12218).    
+When voice message is obtaining authentication, the room number parameter must be set to 0.
 
 #### Function prototype
 ```
-QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, unsigned int dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
+QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, unsigned QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
-
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| nAppId    		|int   		| The SdkAppId obtained from Tencent Cloud console		|
-| dwRoomID    		|int  		| Room number. 32-bit is supported.In offline voice,room number must be 0	|
-| strOpenID  		|char*    	| User ID					|
-| strKey    		|char*	    	| The key obtained from Tencent Cloud console				|
-| strAuthBuffer   	|char*    	| Returned authbuff				|
-| buffLenght   		|int    	| Length of returned authbuff				|
+| nAppId | int | The SdkAppId obtained from the Tencent Cloud console |
+| dwRoomID |char* | Room number, which is limited to 127 characters (The room number parameter for voice message must be set to 0) |
+| strOpenID | char*   | User ID |
+| strKey    			| char*  	| The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme)					|
+| strAuthBuffer | char* | Returned authbuff |
+| buffLenght | int | Length of returned authbuff |
 
 
 
@@ -200,34 +213,32 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
-unsigned int expTime = cocos2d::utils::gettime()+60*60*24*3;
-
-QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY, expTime, ITMG_AUTH_BITS_DEFAULT, retAuthBuff, &bufferLen);
+QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strAuthBuffer,&bufferLen);
 ```
 
-### Join a room
+### Enter a room
 This API is used to enter a room with the generated authentication information, and the ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message is received as a callback. Microphone and speaker are not enabled by default after a user enters the room.
-For entering a common voice chat room that does not involve team voice chat, use the common API for entering a room. For more information, please see the [GME team voice chat documentation](../GME%20TeamAudio%20Manual_intl.md).
+For entering a common voice chat room that does not involve team chatting, use the common API for entering a room. For more information, see the [GME team chatting documentation](https://cloud.tencent.com/document/product/607/17972).
 
 #### Function prototype
 
 ```
-ITMGContext virtual void EnterRoom(int roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//Common API for entering a room
+ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//Common API for entering a room
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId			|int   		| Room number. 32-bit is supported.	|
-| roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
-| authBuffer    		|char*     	| Authentication key			|
-| buffLen   			|int   		| Length of the authentication key		|
+| roomId | char* | Room number, which is limited to 127 characters |
+| roomType | ITMG_ROOM_TYPE | Audio type of the room |
+| authBuffer | char* | Authentication key |
+| buffLen | int | Length of the authentication key |
 
 | Audio Type | Meaning | Parameter | Volume Type | Recommended Sampling Rate on the Console | Application Scenarios |
 | ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|Fluent	|1|Speaker: chat volume; headset: media volume 	| 16k sampling rate is recommended if there is no special requirement for sound quality					| With fluent sound and ultra-low latency, it allows voice chat and is suitable for team speak scenario in such games as FPS and MOBA.	|							
-| ITMG_ROOM_TYPE_STANDARD			|Standard	|2|Speaker: chat volume; headset: media volume	| Choose 16k or 48k sampling rate depending on different requirements for sound quality				| With good sound quality and medium latency, it is suitable for real time chat scenarios in casual games such as Werewolf, chess and card games.	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|High-quality	|3|Speaker: media volume; headset: media volume	| To ensure optimum effect, it is recommended to enable HQ configuration with 48k sampling rate	| With ultra-high sound quality and high latency, it is suitable for scenarios demanding high sound quality, such as music playback and online karaoke.	|
+| ITMG_ROOM_TYPE_FLUENCY | Fluent | 1 | Speaker: chat volume; headset: media volume | 16k (if there is no special requirement for sound quality) | With high fluency and ultra-low delay, it is suitable for team speak scenarios in such games as FPS and MOBA. |							
+| ITMG_ROOM_TYPE_STANDARD | Standard | 2 |Speaker: chat volume; headset: media volume | 16k or 48k, depending on the requirement for sound quality | With good sound quality and medium delay, it is suitable for voice chat scenarios in casual games such as Werewolf and board games. |												
+| ITMG_ROOM_TYPE_HIGHQUALITY | HD | 3    | Speaker: media volume; headset: media volume	| 48k is recommended to ensure the best effect	| With ultra-high sound quality and high delay, it is suitable for music and voice social Apps, and scenarios demanding high sound quality, such as music playback and online karaoke.	|
 
-- If you have special requirement for audio type or scenarios, contact the customer service.
+- If you have special requirements for volume types or scenarios, contact the customer service.
 - The sound effect in a game depends directly on the sampling rate set on the console. Please confirm whether the sampling rate you set on the [console](https://console.cloud.tencent.com/gamegme) is suitable for the project's application scenario.
 
 
@@ -239,28 +250,29 @@ context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen
 ```
 
 
-### Team voice chat room
-For more information on how to integrate team voice chat, please see relevant [integration document](../GME%20TeamAudio%20Manual_intl.md).
+### Team chatting room
+For more information on how to integrate team chatting, see [GME team chatting documentation](https://cloud.tencent.com/document/product/607/17972).
 
 #### Function prototype
 ```
-ITMGContext virtual void EnterTeamRoom(int roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen, int teamId, int gameAudioMode)
+ITMGContext virtual void EnterTeamRoom(const char* roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen, int teamId, int gameAudioMode)
 ```
+
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId		|int   				| Room number. 32-bit is supported. |
-| roomType 		|ITMG_ROOM_TYPE	|Audio type of the room |
-| authBuffer    	|char*    	| Authentication key					|
-| buffLen   		|int   		| Length of the authentication key				|
-| teamId    		|int    	| The ID of the team that enters the room (0 is not allowed)	|
-| audioMode    		|int    	| 0 is for global voice chat, and 1 for team voice chat		|
+| roomId | char* | Room number, which is limited to 127 characters |
+| roomType | ITMG_ROOM_TYPE | Audio type of the room |
+| authBuffer | char* | Authentication key |
+| buffLen | int | Length of the authentication key |
+| teamId | int | The ID of the team that enters the room (0 is not allowed) |
+| audioMode | int | 0 is for global chatting, and 1 for team chatting. |
 
 
 | Audio Type | Meaning | Parameter | Volume Type | Recommended Sampling Rate on the Console | Application Scenarios |
 | ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|Fluent	|1|Speaker: chat volume; headset: media volume 	| 16k sampling rate is recommended if there is no special requirement for sound quality					| With fluent sound and ultra-low latency, it allows voice chat and is suitable for team speak scenario in such games as FPS and MOBA.	|							
-| ITMG_ROOM_TYPE_STANDARD			|Standard	|2|Speaker: chat volume; headset: media volume	| Choose 16k or 48k sampling rate depending on different requirements for sound quality				| With good sound quality and medium latency, it is suitable for real time chat scenarios in casual games such as Werewolf, chess and card games.	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|High-quality	|3|Speaker: media volume; headset: media volume	| To ensure optimum effect, it is recommended to enable HQ configuration with 48k sampling rate	| With ultra-high sound quality and high latency, it is suitable for scenarios demanding high sound quality, such as music playback and online karaoke.	|
+| ITMG_ROOM_TYPE_FLUENCY | Fluent | 1 | Speaker: chat volume; headset: media volume | 16k (if there is no special requirement for sound quality) | With high fluency and ultra-low delay, it is suitable for team speak scenarios in such games as FPS and MOBA. |							
+| ITMG_ROOM_TYPE_STANDARD | Standard | 2 |Speaker: chat volume; headset: media volume | 16k or 48k, depending on the requirement for sound quality | With good sound quality and medium delay, it is suitable for voice chat scenarios in casual games such as Werewolf and board games. |												
+| ITMG_ROOM_TYPE_HIGHQUALITY | HD | 3    | Speaker: media volume; headset: media volume	| 48k is recommended to ensure the best effect	| With ultra-high sound quality and high delay, it is suitable for music and voice social Apps, and scenarios demanding high sound quality, such as music playback and online karaoke.	|
 
 #### Sample code  
 ```
@@ -271,7 +283,7 @@ context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen
 
 ### Callback for entering a room
 This API is used to send the ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message after a user enters a room, which is checked in the OnEvent function.
-#### Code Description
+#### Code description
 ```
 
 void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
@@ -298,7 +310,7 @@ context->IsRoomEntered();
 ```
 
 ### Exit a room
-This API is called to exit the current room.
+This API is called to exit the current room. It is a synchronous API which releases occupied device resources after called.
 #### Function prototype  
 
 ```
@@ -337,7 +349,7 @@ IITMGContext TMGRoom public void ChangeRoomType((ITMG_ROOM_TYPE roomType)
 
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomType    |ITMG_ROOM_TYPE    |The room type to be switched to. See the API EnterRoom for the audio type of the user's room. |
+| roomType | ITMG_ROOM_TYPE | The room type to be switched to. See the API EnterRoom for the audio type of the user's room. |
 
 #### Sample code  
 ```
@@ -347,7 +359,7 @@ ITMGContextGetInstance()->GetRoom()->ChangeRoomType(ITMG_ROOM_TYPE_FLUENCY);
 
 
 ### Obtain the audio type of the user's room
-This API is used to obtain the audio type of the user's room. The returned value is the audio type of the room. The audio type of the user's room can be found in the API EnterRoom.
+This API is used to obtain the audio type of the user's room. The returned value is the audio type of the room. Value 0 means that an error occurred while obtaining the audio type of the user's room. See the API EnterRoom for the audio type of the user's room.
 
 #### Function prototype  
 ```
@@ -366,10 +378,10 @@ After the room type is set, the event message ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_T
 
 | Event Sub-type | Parameters | Description |
 | ------------- |:-------------:|-------------|
-| ITMG_ROOM_CHANGE_EVENT_ENTERROOM		|1 	|Indicates that the existing audio type is inconsistent with and changed to that of the room to enter.	|
-| ITMG_ROOM_CHANGE_EVENT_START			|2	|Indicates that there are members in the room and the audio type starts changing (e.g., the audio type is changed after the ChangeRoomType API is called.) |
-| ITMG_ROOM_CHANGE_EVENT_COMPLETE		|3	|Indicates that there are members in the room and the audio type has changed |
-| ITMG_ROOM_CHANGE_EVENT_REQUEST			|4	|Indicates that a room member calls the ChangeRoomType API to request a change in the audio type |	
+| ITMG_ROOM_CHANGE_EVENT_ENTERROOM		|1 	| Indicates that the existing audio type is inconsistent with and changed to that of the room to enter.	|
+| ITMG_ROOM_CHANGE_EVENT_START			|2	| Indicates that there are members in the room and the audio type starts changing (e.g., the audio type is changed after the ChangeRoomType API is called.) |
+| ITMG_ROOM_CHANGE_EVENT_COMPLETE		|3	| Indicates that there are members in the room and the audio type has been changed |
+| ITMG_ROOM_CHANGE_EVENT_REQUEST			|4	| Indicates that a room member calls the ChangeRoomType API to request a change in the audio type |	
 
 
 #### Sample code  
@@ -384,14 +396,14 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data) {
 
 ### Member status change
 Notification about this event is sent only when the status changes. To obtain the member status in real time, cache the notification when receiving it at a higher layer. The event message ITMG_MAIN_EVNET_TYPE_USER_UPDATE is returned. The "data" includes event_id and user_list, and event_id is identified in the OnEvent function.
-Audio events are subject to a threshold above which a notification is sent.
+Audio events are subject to a threshold above which a notification is sent. The notification "A member stops sending audio packets" is sent when audio packets are not received after 2 seconds.
 
-|event_id     | Description | What is maintained at the App side |
+|event_id     | Description | What Is Maintained at the App Side |
 | ------------- |:-------------:|-------------|
-|ITMG_EVENT_ID_USER_ENTER    				|A member enters the room			| Member list		|
-|ITMG_EVENT_ID_USER_EXIT    				|A member exits the room			| Member list		|
-|ITMG_EVENT_ID_USER_HAS_AUDIO    		|A member sends audio packages		| Chat member list	|
-|ITMG_EVENT_ID_USER_NO_AUDIO    			|A member stops sending audio packages		| Chat member list	|
+|ITMG_EVENT_ID_USER_ENTER    				| A member enters the room			| Member list		|
+|ITMG_EVENT_ID_USER_EXIT    				| A member exits the room			| Member list		|
+|ITMG_EVENT_ID_USER_HAS_AUDIO    		| A member sends audio packets		| Chat member list	|
+|ITMG_EVENT_ID_USER_NO_AUDIO    			| A member stops sending audio packets		| Chat member list	|
 
 #### Sample code  
 
@@ -401,7 +413,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
             case ITMG_MAIN_EVNET_TYPE_USER_UPDATE:
 		{
 		//Process
-		//The developer parses the parameter to obtain vent_id and user_list.
+		//The developer parses the parameter to obtain event_id and user_list.
 		    switch (eventID)
  		    {
  		    case ITMG_EVENT_ID_USER_ENTER:
@@ -411,10 +423,10 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
   			    //A member exits the room
 			    break;
 		    case ITMG_EVENT_ID_USER_HAS_AUDIO:
-			    //A member sends audio packages
+			    //A member sends audio packets
 			    break;
 		    case ITMG_EVENT_ID_USER_NO_AUDIO:
-			    //A member stops sending audio packages
+			    //A member stops sending audio packets
 			    break;
  		    default:
 			    break;
@@ -425,18 +437,28 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 }
 ```
 
+### Quality monitoring events
+The message for quality monitoring events is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY. The returned parameters include weight, floss, and delay, which represent the following information and are identified in the OnEvent function.
+
+| Parameter | Description |
+| ------------- |-------------|
+|weight    				| Its value ranges from 1 to 50. The value of 50 indicates excellent quality of audio packets, and the value of 1 indicates poor quality of audio packets, which can barely be used; and "0" represents an initial value and is meaningless. |
+|floss    				| Packet loss |
+|delay    		| Voice chat delay (ms) |
+
+
 ### Message details
 
-| Message     | Description of message   |
+| Message     | Description   |
 | ------------- |:-------------:|
-|ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				       |Enters the audio/video room |
-|ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				         	|Exits the audio/video room |
-|ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    		       |Room disconnection due to network or other reasons |
-|ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE				|Room type change event |
+|ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				       | Indicates that a member enters an audio/video room |
+|ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				         	| Indicates that a member exits an audio/video room |
+|ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    		       | Indicates that a room is disconnected due to network or other reasons |
+|ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE				| Indicates a room type change event |
 
-### Details of Data corresponding to the message
+### Details of Data for the messages
 
-| Message | Data         | Example |
+| Message     | Data         | Example |
 | ------------- |:-------------:|------------- |
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				|result; error_info					|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				|result; error_info  					|{"error_info":"","result":0}|
@@ -446,41 +468,48 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ## Audio APIs for Voice Chat
 The audio APIs for Voice Chat can only be called after the SDK is initialized and there are members in the room.
+Call scenario examples:
+
+To enable or disable the microphone or speaker:
+- For most game Apps, it's recommended to call EnableMic and EnableSpeaker APIs. Because calling EnableMic is equivalent to calling EnableAudioCaptureDevice and EnableAudioSend at the same time, and calling EnableSpeaker is equivalent to calling EnableAudioPlayDevice and EnableAudioRecv at the same time.
+- For other mobile Apps (such as social networking Apps), enabling/disabling a capturing device will restart both the capturing and the playback devices. If the App is playing background music, it will also be interrupted. Playback won't be interrupted if the microphone is enabled/disabled through control of upstream/downstream. Calling method: Call EnableAudioCaptureDevice(true) and EnableAudioPlayDevice(true) once after a member enters the room, and call EnableAudioSend/Recv to send/receive audio streams when the microphone is clicked to enable or disable.
+
+If you do not need to enable both the microphone and the speaker (releasing the recording permission to other modules), it is recommended to call PauseAudio/ResumeAudio.
 
 | API | Description |
 | ------------- |:-------------:|
-|PauseAudio    				       	|Pauses audio engine |
-|ResumeAudio    				      	|Resumes audio engine |
-|GetMicListCount    				       	|Obtains the number of microphones |
-|GetMicList    				      	|Enumerates microphones |
-|GetSpeakerListCount    				      	|Obtains the number of speakers |
-|GetSpeakerList    				      	|Enumerates speakers |
-|SelectMic    				      	|Searches microphones |
-|SelectSpeaker    				|Searches speakers |
-|EnableMic    						|Enables/disables the microphone |
-|GetMicState    						|Obtains the microphone status |
-|EnableAudioCaptureDevice    		|Enables/disables the capturing device	|
-|IsAudioCaptureDeviceEnabled    	|Get the status of the capturing device	|
-|EnableAudioSend    				|Enables/disables sending audio data	|
-|IsAudioSendEnabled    				|Get the status of audio uplink |
-|GetMicLevel    					|Obtains real-time microphone volume |
-|SetMicVolume    					|Sets microphone volume |
-|GetMicVolume    					|Obtains microphone volume |
-|EnableSpeaker    					|Enables/disables the speaker |
-|GetSpeakerState    				|Obtains the speaker status |
-|EnableAudioPlayDevice    			|Enables/disables the playing device	|
-|IsAudioPlayDeviceEnabled    		|Get the status of the playing device|
-|EnableAudioRecv    				|Enables/disables receiving audio data	|
-|IsAudioRecvEnabled    				|Get the status of audio downlink|
-|GetSpeakerLevel    				|Obtains real-time speaker volume |
-|SetSpeakerVolume    				|Sets speaker volume |
-|GetSpeakerVolume    				|Obtains speaker volume |
-|EnableLoopBack    					|Enables/disables in-ear monitoring |
+|PauseAudio    				       	   |Pauses the audio engine		 |
+|ResumeAudio    				      	 | Resumes the audio engine		 |
+| GetMicListCount | Obtains the number of microphones |
+| GetMicList | Enumerates microphones |
+| GetSpeakerListCount | Obtains the number of speakers |
+| GetSpeakerList | Enumerates speakers |
+| SelectMic | Searches microphones |
+| SelectSpeaker | Searches speakers |
+|EnableMic	 	| Enables/disables the microphone |
+|GetMicState    						| Obtains the microphone status |
+|EnableAudioCaptureDevice    		| Enables/disables the capturing device		|
+|IsAudioCaptureDeviceEnabled    	| Obtains the capturing device status		|
+|EnableAudioSend    				| Enables/disables audio upstream	|
+|IsAudioSendEnabled    				| Obtains the audio upstream status	|
+|GetMicLevel    						| Obtains real-time microphone volume	|
+|SetMicVolume    					| Sets microphone volume |
+|GetMicVolume    					| Obtains microphone volume	|
+|EnableSpeaker | Enables/disables the speaker |
+|GetSpeakerState | Obtains the speaker status |
+|EnableAudioPlayDevice    			| Enables/disables the playback device		|
+|IsAudioPlayDeviceEnabled    		| Obtains the playback device status	|
+|EnableAudioRecv    					| Enables/disables audio downstream	|
+|IsAudioRecvEnabled    				| Obtains the audio downstream status	|
+|GetSpeakerLevel    					| Obtains real-time speaker volume |
+|SetSpeakerVolume    				| Sets speaker volume |
+|GetSpeakerVolume    				| Obtains speaker volume |
+|EnableLoopBack    					| Enables/disables in-ear monitoring			|
 
 ### Pause the capture and playback features of the audio engine
-This API is called to pause the capture and playback features of the audio engine, and only works when members have entered the room.
-You can get the microphone permission after calling the EnterRoom API successfully, and other programs cannot capture audio data from the microphone during your use of microphone. Calling EnableMic(false) does not release the microphone.
-If you really need to release the microphone, call PauseAudio, which can cause the engine to be paused entirely. To resume audio capturing, call ResumeAudio.
+This API is called to pause the capture and playback features of the audio engine. It is a synchronous API and only works when members have entered the room.
+For releasing only the capturing or the playback device, see APIs EnableAudioCaptureDevice and EnableAudioPlayDevice.
+
 #### Function prototype  
 
 ```
@@ -493,7 +522,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->PauseAudio();
 ```
 
 ### Resume the capture and playback features of the audio engine
-This API is called to resume the capture and playback features of the audio engine, and only works when members have entered the room.
+This API is called to resume the capture and playback features of the audio engine. It is a synchronous API and only works when members have entered the room.
 #### Function prototype  
 
 ```
@@ -535,8 +564,8 @@ public:
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| ppDeviceInfoList    	|TMGAudioDeviceInfo   	| Device list		|
-| nCount    		|int     		| Obtains the number of microphones	|
+| ppDeviceInfoList | TMGAudioDeviceInfo | Device list |
+| nCount | int | Obtains the number of microphones |
 #### Sample code  
 
 ```
@@ -553,12 +582,13 @@ ITMGAudioCtrl virtual int SelectMic(const char* pMicID)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| pMicID    |char*      |Microphone ID |
+| pMicID | char* | Microphone ID |
 #### Sample code  
 ```
 const char* pMicID ="1";
 ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 ```
+
 
 ### Enable/disable the microphone
 This API is used to enable/disable the microphone. Microphone and speaker are not enabled by default after a user enters a room.
@@ -569,7 +599,7 @@ ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| bEnabled    |bool     |To enable the microphone, set this parameter to true, otherwise, set it to false. |
+| bEnabled | bool | To enable the microphone, set this parameter to true, otherwise set it to false. |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
@@ -585,69 +615,73 @@ ITMGAudioCtrl virtual int GetMicState()
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->GetMicState();
 ```
-### Enable/disable capturing device
-This API is used to Enable/disable capturing device。The Deivce is not enabled by default after a user enters a room.。
-- This API only be called after entering the room, and device is default disabled after exiting room.
-- On the mobile(ios/android), opening the capturing device is usually accompanied by permission requests, volume type adjustments, etc.。
 
-> Function prototype 
 
+### Enable/disable a capturing device
+This API is used to enable/disable a capturing device. The device is not enabled by default after a user enters the room.
+- This API can only be called after a user enters the room. The device is disabled after the user exits the room.
+- Operations such as permission application and volume type adjustment come with enabling the capturing device on mobile.
+
+#### Function prototype  
 ```
 ITMGContext virtual int EnableAudioCaptureDevice(bool enable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable    |bool     |To enable the capturing device, set this parameter to true, otherwise, set it to false. |
+| enable | bool | To enable the capturing device, set this parameter to true, otherwise set it to false. |
 
-> Sample code
+#### Sample code
 
 ```
+Enable a capturing device
 ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioCaptureDevice(true);
 ```
 
-### Obtain the capture device status
-This API is used to obtain the capturing device status。
-> Function prototype
+### Obtain the status of a capturing device
+This API is used to obtain the status of a capturing device.
+#### Function prototype
 
 ```
 ITMGContext virtual bool IsAudioCaptureDeviceEnabled()
 ```
-> Sample code
+#### Sample code
 
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->IsAudioCaptureDeviceEnabled();
 ```
 
 ### Enable/disable audio upstream
-This API is used to enable/disable audio upstream. If the capturing device is already turned on, the captured audio data is sent. If the capturing device is not turned on, it is still silent.
-> Function prototype
+This API is used to enable/disable audio upstream. If the capturing device is already enabled, it will send captured audio data. If not, it remains mute. Use the API EnableAudioCaptureDevice to enable or disable the capturing device.
+
+#### Function prototype
 
 ```
 ITMGContext  virtual int EnableAudioSend(bool bEnable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| bEnable    |bool     |To enable the audio upstream, set this parameter to true, otherwise, set it to false.|
+| bEnable | bool | To enable the audio upstream, set this parameter to true, otherwise set it to false. |
 
-> Sample code  
+#### Sample code  
 
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioSend(true);
 ```
 
-### Obtain the capture audio upstream
-
-> Function prototype
+### Obtain the status of audio upstream
+This API is used to obtain the status of audio upstream.
+#### Function prototype  
 ```
 ITMGContext virtual bool IsAudioSendEnabled()
 ```
-> Sample code  
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->IsAudioSendEnabled();
 ```
 
+
 ### Obtain real-time microphone volume
-This API is used to obtain real time microphone volume. An int value is returned.
+This API is used to obtain real-time microphone volume. An int value is returned.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetMicLevel()
@@ -657,23 +691,25 @@ ITMGAudioCtrl virtual int GetMicLevel()
 ITMGContextGetInstance()->GetAudioCtrl()->GetMicLevel();
 ```
 
-### Set software volume for the microphone
-This API is used to set software volume for the microphone. The corresponding parameter is "volume". The value "0" sets the volume to Mute, and "100" means the volume remains unchanged. Default is 100.
+### Set the microphone volume
+This API is used to set microphone volume. The corresponding parameter is "volume". The value "0" sets the volume to Mute, and "100" means the volume remains unchanged. It is 100 by default.
+
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int SetMicVolume(int vol)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| vol    |int      | Sets the volume, value range: 0 to 200 |
+| vol | int | Sets the volume, value range: 0 to 200. |
 #### Sample code  
 ```
 int vol = 100;
 ITMGContextGetInstance()->GetAudioCtrl()->SetMicVolume(vol);
 ```
 
-### Obtain software volume for the microphone
-This API is used to obtain the software volume for the microphone. An int value is returned.
+### Obtain the microphone volume
+This API is used to obtain the microphone volume. An int value is returned. Value 101 represents API SetMicVolume has not been called.
+
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetMicVolume()
@@ -713,14 +749,14 @@ public:
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| ppDeviceInfoList    	|TMGAudioDeviceInfo    	| Device list		|
-| nCount   		|int     		| Obtains the number of speakers	|
+| ppDeviceInfoList | TMGAudioDeviceInfo | Device list |
+| nCount | int | Obtains the number of speakers |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerList(ppDeviceInfoList,nCount);
 ```
 
-### Select speakers
+### Select the speaker
 This API is used to select the playback device. If this API is not called or an empty string is passed in, the default device is selected.
 #### Function prototype  
 ```
@@ -728,12 +764,13 @@ ITMGAudioCtrl virtual int SelectSpeaker(const char* pSpeakerID)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| pSpeakerID    |char*      |Speaker ID |
+| pSpeakerID | char* | Speaker ID |
 #### Sample code  
 ```
 const char* pSpeakerID ="1";
 ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 ```
+
 
 ### Enable/disable the speaker
 This API is used to enable/disable the speaker.
@@ -744,7 +781,7 @@ ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable   		|bool       	| To disable the speaker, set this parameter to false, otherwise, set it to true.	|
+| enable | bool | To disable the speaker, set this parameter to false, otherwise set it to true. |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
@@ -761,59 +798,62 @@ ITMGAudioCtrl virtual int GetSpeakerState()
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerState();
 ```
-### Enable/disable the playing device
 
-> Function prototype
+### Enable/disable a playback device
+This API is used to enable/disable a playback device.
+
+#### Function prototype  
 ```
 ITMGContext virtual int EnableAudioPlayDevice(bool enable) 
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable   		|bool       	| To enable the playing device, set this parameter to true, otherwise, set it to false.	|
-
->Sample code  
+| enable | bool | To disable the playback device, set this parameter to false, otherwise set it to true. |
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioPlayDevice(true);
 ```
 
-### Obtain the playing device status
-
-> Function prototype
+### Obtain the status of a playback device
+This API is used to obtain the status of a playback device.
+#### Function prototype
 
 ```
 ITMGContext virtual bool IsAudioPlayDeviceEnabled()
 ```
-> Sample code
-
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->IsAudioPlayDeviceEnabled();
 ```
 
-###  Enable/disable audio downstream
-This API is used to enable/disable the audio downstream. If the playing device is already turned on, the audio data of other people in the room will be played. If the playing device is not turned on, it is still silent.
+### Enable/disable audio downstream
+This API is used to enable/disable audio downstream. If the playback device is already enabled, it will play audio data from other members of the room. If not, it remains mute. Use the API EnableAudioPlayDevice to enable and disable the playback device.
 
-> Function prototype
+#### Function prototype  
 
 ```
 ITMGContext virtual int EnableAudioRecv(bool enable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable   		|bool       	| To enable audio downstream, set this parameter to true, otherwise, set it to false.	|
+| enable | bool | To enable audio downstream, set this parameter to true, otherwise set it to false. |
 
-> Sample code
+#### Sample code  
 
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioRecv(true);
 ```
 
-### Obtain audio downstream status
-> Function prototype 
+
+
+### Obtain the status of audio downstream
+This API is used to obtain the status of audio downstream.
+#### Function prototype  
 ```
 ITMGContext virtual bool IsAudioRecvEnabled() 
 ```
 
-> Sample code  
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->IsAudioRecvEnabled();
 ```
@@ -830,8 +870,8 @@ ITMGAudioCtrl virtual int GetSpeakerLevel()
 ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerLevel();
 ```
 
-### Set software volume for the speaker
-This API is used to set the software volume for the speaker.
+### Set the speaker volume
+This API is used to set the speaker volume.
 The corresponding parameter is "volume". The value "0" sets the volume to Mute, and "100" means the volume remains unchanged. Default is 100.
 
 #### Function prototype  
@@ -840,16 +880,16 @@ ITMGAudioCtrl virtual int SetSpeakerVolume(int vol)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| vol    |int        | Sets the volume, value range: 0 to 200 |
+| vol | int | Sets the volume, value range: 0 to 200. |
 #### Sample code  
 ```
 int vol = 100;
 ITMGContextGetInstance()->GetAudioCtrl()->SetSpeakerVolume(vol);
 ```
 
-### Obtain software volume for the speaker
-This API is used to obtain the software volume for the speaker. An int value is returned to indicate the software volume for the speaker.
-"Level" indicates the real-time volume, and "Volume" the software volume for the speaker. The ultimate volume equals to Level*Volume%. For example, if the value for "Level" is 100 and the one for "Volume" is 60, the ultimate volume will be "60".
+### Obtain the speaker volume
+This API is used to obtain the speaker volume. An int value is returned to indicate the speaker volume. Value 101 represents the API SetSpeakerVolume has not been called.
+"Level" indicates the real-time volume, and "Volume" the speaker volume. The ultimate volume equals to Level*Volume%. For example, if the value for "Level" is 100 and the one for "Volume" is 60, the ultimate volume will be "60".
 
 #### Function prototype  
 ```
@@ -869,54 +909,38 @@ ITMGAudioCtrl virtual int EnableLoopBack(bool enable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable    |bool         | Specifies whether to enable in-ear monitoring |
+| enable | bool | Specifies whether to enable in-ear monitoring |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableLoopBack(true);
 ```
-### Message details
-
-| Message | Description of message |   
-| ------------- |:-------------:|
-|ITMG_MAIN_EVENT_TYPE_ENABLE_MIC    				       |Enables the microphone |
-|ITMG_MAIN_EVENT_TYPE_DISABLE_MIC    				       |Disables the microphone |
-|ITMG_MAIN_EVENT_TYPE_ENABLE_SPEAKER				       |Enables the speaker |
-|ITMG_MAIN_EVENT_TYPE_DISABLE_SPEAKER				       |Disables the speaker |
-
-### Details of Data corresponding to the message
-| Message | Data         | Example |
-| ------------- |:-------------:|------------- |
-| ITMG_MAIN_EVENT_TYPE_ENABLE_MIC    				|result; error_info  					|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_DISABLE_MIC    				|result; error_info  					|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_ENABLE_SPEAKER    			|result; error_info  					|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_DISABLE_SPEAKER    			|result; error_info  					|{"error_info":"","result":0}|
 
 
-## Accompaniment APIs for Voice Chat (For Mobile Only)
+## APIs Related to the Accompaniment in Voice Chat
 | API | Description |
 | ------------- |:-------------:|
-|StartAccompany    				       |Starts playing back the accompaniment |
-|StopAccompany    				   	|Stops playing back the accompaniment |
-|IsAccompanyPlayEnd				|Indicates whether the accompaniment is over |
-|PauseAccompany    					|Pauses playing back the accompaniment |
-|ResumeAccompany					|Replays the accompaniment |
-|SetAccompanyVolume 				|Sets the accompaniment volume |
-|GetAccompanyVolume				|Obtains the volume of the accompaniment |
-|SetAccompanyFileCurrentPlayedTimeByMs 				|Sets the playback progress |
+|StartAccompany    				       | Start playing back the accompaniment |
+|StopAccompany    				   	| Stop playing back the accompaniment |
+|IsAccompanyPlayEnd				| Indicates whether the accompaniment is over |
+|PauseAccompany    					| Pauses playing back the accompaniment |
+|ResumeAccompany					| Resumes playing back the accompaniment |
+|SetAccompanyVolume 				| Sets the accompaniment volume |
+|GetAccompanyVolume				| Obtains the volume of the accompaniment |
+|SetAccompanyFileCurrentPlayedTimeByMs 				| Sets the playback progress |
 
 ### Start playing back the accompaniment
-This API is called to play back the accompaniment. Supported formats include M4A, AAC, WAV, and MP3. Calling this API resets the volume.
+This API is called to play back the accompaniment. Supported formats include m4a, wav, and mp3. Calling this API resets the volume.
 
 #### Function prototype  
 ```
-ITMGAudioEffectCtrl virtual void StartAccompany(const char* filePath, bool loopBack, int loopCount, int msTime) 
+ITMGAudioEffectCtrl virtual int StartAccompany(const char* filePath, bool loopBack, int loopCount, int msTime) 
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------
-| filePath    	|char* 	|Accompaniment's playback path						|
-| loopBack  	|bool	|Indicates whether to send a mix. This is generally set to true, indicating that other users can also hear the accompaniment.	|
-| loopCount	|int 	|Number of loops. Value -1 means an infinite loop.				|
-| msTime	|int   	| Delay time						|
+| filePath | char* | Accompaniment's playback path |
+| loopBack | bool | Indicates whether to send a mix. This is generally set to true, indicating that other users can also hear the accompaniment. |
+| loopCount | int | The number of loops. Value -1 means an infinite loop. |
+| msTime | int | Delay time |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->StartAccompany(filePath,true,-1,0);
@@ -951,7 +975,7 @@ ITMGAudioEffectCtrl virtual int StopAccompany(int duckerTime)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| duckerTime	|int             | Fading time |
+| duckerTime | int | Fading time |
 
 #### Sample code  
 ```
@@ -980,8 +1004,8 @@ ITMGAudioEffectCtrl virtual int PauseAccompany()
 ITMGContextGetInstance()->GetAudioEffectCtrl()->PauseAccompany();
 ```
 
-### Replay the accompaniment
-This API is used to replay the accompaniment.
+### Resume playing back the accompaniment
+This API is used to resume playing back the accompaniment.
 #### Function prototype  
 ```
 ITMGAudioEffectCtrl virtual int ResumeAccompany()
@@ -999,7 +1023,7 @@ ITMGAudioEffectCtrl virtual int EnableAccompanyPlay(bool enable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|--------------|
-| enable    |bool | Indicates whether you can hear the accompaniment |
+| enable | bool | Indicates whether you can hear the accompaniment |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->EnableAccompanyPlay(false);
@@ -1013,7 +1037,7 @@ ITMGAudioEffectCtrl virtual int EnableAccompanyLoopBack(bool enable)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|--------------|
-| enable    |bool | Indicates whether you can hear the accompaniment |
+| enable | bool | Indicates whether you can hear the accompaniment |
 
 #### Sample code  
 ```
@@ -1028,7 +1052,7 @@ ITMGAudioEffectCtrl virtual int SetAccompanyVolume(int vol)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| vol    |int | Indicates the volume value |
+| vol | int | Indicates the volume value |
 
 #### Sample code  
 ```
@@ -1068,7 +1092,7 @@ ITMGAudioEffectCtrl virtual int SetAccompanyFileCurrentPlayedTimeByMs(unsigned i
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| time    |int | Indicates the playback progress in milliseconds |
+| time | int | Indicates the playback progress in milliseconds |
 
 #### Sample code  
 ```
@@ -1077,36 +1101,37 @@ ITMGContextGetInstance()->GetAudioEffectCtrl()->SetAccompanyFileCurrentPlayedTim
 
 
 
-## Voice Effect APIs for Voice Chat (For Mobile Only)
+## APIs Related to Sound Effect in Voice Chat
 
 | API | Description |
 | ------------- |:-------------:|
-|PlayEffect    		|Plays the sound effect |
-|PauseEffect    	|Pauses the sound effect |
-|PauseAllEffects	|Pauses all sound effects |
-|ResumeEffect    	|Replays the sound effect |
-|ResumeAllEffects	|Replays all sound effects |
-|StopEffect 		|Stops the sound effect |
-|StopAllEffects		|Stops all sound effects |
-|SetVoiceType 		|Voice changing effects |
-|GetEffectsVolume	|Obtains the volume of sound effects |
-|SetEffectsVolume 	|Sets the volume of sound effects |
+|PlayEffect    		| Plays the sound effect |
+|PauseEffect    	| Pauses the sound effect |
+|PauseAllEffects	| Pauses all sound effects |
+|ResumeEffect    	| Resumes playing back the sound effect |
+|ResumeAllEffects	| Resumes playing back all sound effects |
+|StopEffect 		| Stops the sound effect |
+|StopAllEffects		| Stops all sound effects |
+|SetVoiceType 		| Voice changing effects |
+|SetKaraokeType 		| Special karaoke sound effects |
+|GetEffectsVolume	| Obtains the volume of sound effects |
+|SetEffectsVolume 	| Sets the volume of sound effects |
 
 
 ### Play the sound effect
-This API is used to play sound effects. The sound effect ID in the parameter needs to be managed by the App side, uniquely identifying a separate file.
+This API is used to play sound effects. The sound effect ID in the parameter needs to be managed by the App side, uniquely identifying a separate file. Three file formats are supported: m4a, wav, and mp3.
 #### Function prototype  
 ```
 ITMGAudioEffectCtrl virtual int PlayEffect(int soundId,  const char* filePath, bool loop, double pitch, double pan, double gain)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| soundId  	|int        	|Indicates the sound effect ID |
-| filePath    	|char*     	|Indicates the sound effect path |
-| loop    		|bool  	|Indicates whether to repeat playback |
-| pitch    	|double	|Indicates the playback frequency, and the default is 1.0. The smaller the value, the slower the playback speed and the longer the time.|
-| pan    		|double	|Indicates the channel, value range: -1.0 to 1.0. -1.0 means only the left channel is turned on. |
-| gain    		|double	|Indicates the gain volume, ranging from 0.0 to 1.0. The default is 1.0 |
+| soundId | int | Indicates the sound effect ID |
+| filePath | char* | Indicates the sound effect path |
+| loop | bool | Indicates whether to repeat playback |
+| pitch | double | Indicates the playback frequency, and the default is 1.0. The smaller the value, the slower the playback speed and the longer the time. |
+| pan | double | Indicates the channel, value range: -1.0 to 1.0. -1.0 means only the left channel is turned on. |
+| gain | double | Indicates the gain volume, value range: 0.0 to 1.0. The default is 1.0 |
 
 #### Sample code  
 ```
@@ -1124,7 +1149,7 @@ ITMGAudioEffectCtrl virtual int PauseEffect(int soundId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| soundId    |int | Indicates the sound effect ID |
+| soundId | int | Indicates the sound effect ID |
 
 #### Sample code  
 ```
@@ -1142,22 +1167,22 @@ ITMGAudioEffectCtrl virtual int PauseAllEffects()
 ITMGContextGetInstance()->GetAudioEffectCtrl()->PauseAllEffects();
 ```
 
-### Replay the sound effect
-This API is used to replay the sound effect.
+### Resume playing back the sound effect
+This API is used to resume playing back the sound effect.
 #### Function prototype  
 ```
 ITMGAudioEffectCtrl virtual int ResumeEffect(int soundId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| soundId    |int | Indicates the sound effect ID |
+| soundId | int | Indicates the sound effect ID |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->ResumeEffect(soundId);
 ```
 
-### Replay all sound effects
-This API is used to replay all sound effects.
+### Resume playing back all sound effects
+This API is used to resume playing back all sound effects.
 #### Function prototype  
 ```
 ITMGAudioEffectCtrl virtual int ResumeAllEffects()
@@ -1175,7 +1200,7 @@ ITMGAudioEffectCtrl virtual int StopEffect(int soundId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| soundId    |int | Indicates the sound effect ID |
+| soundId | int | Indicates the sound effect ID |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->StopEffect(soundId);
@@ -1204,30 +1229,58 @@ TMGAudioEffectCtrl int setVoiceType(int type)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| type    |int | Indicates the type of local voice changing effect |
+| type | int | Indicates the type of local voice changing effect |
+
 
 
 | Type | Parameter | Description |
 | ------------- |-------------|------------- |
-| ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|Original sound 			|
-| ITMG_VOICE_TYPE_LOLITA    				|1	|Lolita			|
-| ITMG_VOICE_TYPE_UNCLE  				|2	|Uncle			|
-| ITMG_VOICE_TYPE_INTANGIBLE    			|3	|Intangible			|
-| ITMG_VOICE_TYPE_DEAD_FATBOY  			|4	|Dead fatboy			|
-| ITMG_VOICE_TYPE_HEAVY_MENTA			|5	|Heavy menta		|
-| ITMG_VOICE_TYPE_DIALECT 				|6	|Dialect		|
-| ITMG_VOICE_TYPE_INFLUENZA 				|7	|Influenza			|
-| ITMG_VOICE_TYPE_CAGED_ANIMAL 			|8	|Caged animal			|
-| ITMG_VOICE_TYPE_HEAVY_MACHINE		|9	|Heavy machine			|
-| ITMG_VOICE_TYPE_STRONG_CURRENT		|10	|Strong current			|
-| ITMG_VOICE_TYPE_KINDER_GARTEN			|11	|Kinder garten			|
-| ITMG_VOICE_TYPE_HUANG 					|12	|Huang		|
+| ITMG_VOICE_TYPE_ORIGINAL_SOUND | 0 | Original sound |
+| ITMG_VOICE_TYPE_LOLITA | 1 | Lolita |
+| ITMG_VOICE_TYPE_UNCLE | 2 | Uncle |
+| ITMG_VOICE_TYPE_INTANGIBLE | 3 | Ethereal |
+| ITMG_VOICE_TYPE_DEAD_FATBOY | 4 | Fat boy |
+| ITMG_VOICE_TYPE_HEAVY_MENTA | 5 | Heavy metal |
+| ITMG_VOICE_TYPE_DIALECT | 6 | Dialect |
+| ITMG_VOICE_TYPE_INFLUENZA | 7 | Catching cold |
+| ITMG_VOICE_TYPE_CAGED_ANIMAL | 8 | Trapped beast |
+| ITMG_VOICE_TYPE_HEAVY_MACHINE | 9 | Mechanic sound |
+| ITMG_VOICE_TYPE_STRONG_CURRENT | 10 | Strong current |
+| ITMG_VOICE_TYPE_KINDER_GARTEN | 11 | Kindergarten |
+| ITMG_VOICE_TYPE_HUANG | 12 | Minions |
 
 
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->setVoiceType(0);
 ```
+
+### Special karaoke sound effects
+This API is used to set special karaoke sound effects.
+#### Function prototype  
+```
+TMGAudioEffectCtrl int SetKaraokeType(int type)
+```
+| Parameter | Type | Description |
+| ------------- |:-------------:|-------------|
+| type | int | Indicates the type of local voice changing effect |
+
+
+| Type | Parameter | Description |
+| ------------- |-------------|------------- |
+| ITMG_KARAOKE_TYPE_ORIGINAL | 0 | Original sound |
+| ITMG_KARAOKE_TYPE_POP | 1 | Popular |
+| ITMG_KARAOKE_TYPE_ROCK | 2 | Rock |
+| ITMG_KARAOKE_TYPE_RB | 3 | Hip-hop |
+| ITMG_KARAOKE_TYPE_DANCE | 4 | Dance music |
+| ITMG_KARAOKE_TYPE_HEAVEN | 5 | Ethereal |
+| ITMG_KARAOKE_TYPE_TTS | 6 | TTS |
+
+#### Sample code  
+```
+ITMGContextGetInstance()->GetAudioEffectCtrl()->SetKaraokeType(0);
+```
+
 
 ### Obtain the volume of sound effects
 This API is used to obtain the volume (linear volume) of sound effects. A value greater than 100 means volume up, otherwise volume down.
@@ -1248,39 +1301,42 @@ ITMGAudioEffectCtrl virtual int SetEffectsVolume(int volume)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| volume    |int | Indicates the volume value |
+| volume | int | Indicates the volume value |
 
 #### Sample code  
 ```
 int volume=1;
 ITMGContextGetInstance()->GetAudioEffectCtrl()->SetEffectsVolume(volume);
 ```
-## Offline Voice
+## Voice Message
+Initialize the SDK before using voice message and voice-to-text converting features.
+
 | API | Description |
 | ------------- |:-------------:|
-|ApplyPTTAuthbuffer    		|Indicates the offline voice authentication |
-|SetMaxMessageLength    |Specifies the maximum length of a voice message |
-|StartRecording		|Starts recording |
-|StopRecording    	|Stops recording |
-|CancelRecording	|Cancels recording |
-|UploadRecordedFile 	|Uploads voice files |
-|DownloadRecordedFile	|Downloads voice files |
-|PlayRecordedFile 	|Plays voice files |
-|StopPlayFile		|Stops playing voice files |
-|GetFileSize 		|Indicates the size of a voice file |
-|GetVoiceFileDuration	|Indicates the length of a voice file |
-|SpeechToText 		|Converts the voice file into text with Speech Recognition |
+|ApplyPTTAuthbuffer    | Initializes authentication	|
+|SetMaxMessageLength    | Specifies the maximum length of a voice message	|
+|StartRecording		| Starts recording		|
+|StartRecordingWithStreamingRecognition		| Starts streaming recording		|
+|StopRecording    	| Stops recording		|
+|CancelRecording	| Cancels recording		|
+|UploadRecordedFile 	| Uploads voice files		|
+|DownloadRecordedFile	| Downloads voice files		|
+|PlayRecordedFile 	| Plays voice files		|
+|StopPlayFile		| Stops playing voice files		|
+|GetFileSize 		| Indicates the size of a voice file		|
+|GetVoiceFileDuration	| Indicates the length of a voice file		|
+|SpeechToText | Converts the voice file into text with Speech Recognition |
 
-### Initialization for integrating the offline voice technology
-Passing the authentication access token to the ApplyPTTAuthbuffer function is required for initialization. For more information on how to obtain authentication, please see [GME Key](../GME%20Key%20Manual_intl.md) document.  
-
+### Authentication initialization
+Call authentication initialization after initializing the SDK. To obtain authBuffer, see the API of voice chat authentication.
+#### Function prototype  
 ```
 ITMGPTT virtual void ApplyPTTAuthbuffer(const char* authBuffer, int authBufferLen)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| authBuffer    |char* | Authentication key	 |
-| authBufferLen    |int| Length of the authentication key |
+| authBuffer | char* | Authentication |
+| authBufferLen | int | Length of the authentication |
 
 #### Sample code  
 ```
@@ -1295,7 +1351,7 @@ ITMGPTT virtual void SetMaxMessageLength(int msTime)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| msTime    |int | Indicates the length of a voice message |
+| msTime    |int                    |Indicates the length of a voice message in ms |
 #### Sample code  
 ```
 int msTime = 10;
@@ -1303,21 +1359,21 @@ ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(msTime);
 ```
 
 ### Start recording
-This API is used to start recording.
+This API is used to start recording. The recorded file has to be uploaded before you can perform operations such as voice-to-text conversion.
 #### Function prototype  
 ```
 ITMGPTT virtual void StartRecording(const char* fileDir)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| fileDir    |char* | Indicates the path for storing the voice file
+| fileDir | char* | Indicates the path for storing the voice file |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(fileDir);
 ```
 
 ### Callback for starting recordings
-The callback function OnEvent is called after the recording is started. Th event message is ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE is returned, which is identified in the OnEvent function.
+The callback function OnEvent is called after the recording is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE is returned, which is identified in the OnEvent function.
 
 #### Sample code  
 ```
@@ -1330,6 +1386,58 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 	    }
 		...
         case ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE:
+		{
+		//Process
+		break;
+		}
+	}
+}
+
+```
+
+### Start streaming recording
+This API is used to start streaming recording. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
+
+#### Function prototype  
+```
+ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,const char*translateLanguage) 
+```
+| Parameter | Type | Description |
+| ------------- |:-------------:|-------------|
+| filePath | char* | Indicates the path for storing the voice file |
+| translateLanguage | char* | Indicates the language code to be translated: "cmn-Hans-CN" |
+
+#### Sample code  
+```
+ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
+```
+
+### Callback for starting streaming recordings
+The callback function OnEvent is called after the recording is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, which is identified in the OnEvent function. The passed parameter includes the following messages.
+
+| Message Name | Description |
+| ------------- |:-------------:|
+| result | Error code indicating whether streaming recording is successful |
+| text | Indicates the text obtained from voice-to-text conversion |
+| file_path | Indicates the local path for saving the recording |
+| file_id | Indicates the URL to background recording |
+
+| Error Code | Description | Recommended Action |
+| ------------- |:-------------:|:-------------:|
+|32775	| Recording is successful but streaming voice to text failed	| Call the API UploadRecordedFile to upload the recording, and then call the API SpeechToText to perform voice-to-text conversion.
+|32777	| Recording is successful and is uploaded, but streaming voice to text failed.	| The message returned includes a backend URL for successful upload. Call the API SpeechToText to perform voice-to-text conversion.
+
+#### Sample code  
+```
+void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
+	switch (eventType) {
+		case ITMG_MAIN_EVENT_TYPE_ENTER_ROOM:
+		{
+		//Process
+		break;
+	    }
+		...
+        case ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE:
 		{
 		//Process
 		break;
@@ -1369,7 +1477,8 @@ ITMGPTT virtual void UploadRecordedFile(const char* filePath)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| filePath    |char* | Indicates the path for uploading voice files |
+| filePath | char* | Indicates the path for uploading voice files |
+
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->UploadRecordedFile(filePath);
@@ -1399,12 +1508,13 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 This API is used to download voice files.
 #### Function prototype  
 ```
-ITMGPTT virtual void DownloadRecordedFile(const char* fileId,const char* filePath)
+ITMGPTT virtual void DownloadRecordedFile(const char* fileId, const char* filePath) 
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| fileId  		|char*   	|URL to a file |
-| filePath 	|char*  	|Local path for saving the file |
+| fileId | char* | URL to the file |
+| filePath | char* | Local path for saving the file |
+
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->DownloadRecordedFile(fileID,filePath);
@@ -1438,7 +1548,7 @@ ITMGPTT virtual void PlayRecordedFile(const char* filePath)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| filePath    |char* | Indicates the path a file |
+| filePath | char* | Path to the file |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->PlayRecordedFile(filePath);
@@ -1482,7 +1592,7 @@ ITMGPTT virtual int GetFileSize(const char* filePath)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| filePath    |char* | Indicates the path to a voice file |
+| filePath | char* | Path to the voice file |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->GetFileSize(filePath);
@@ -1496,7 +1606,7 @@ ITMGPTT virtual int GetVoiceFileDuration(const char* filePath)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| filePath    |char* | Indicates the path to a voice file |
+| filePath | char* | Path to the voice file |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->GetVoiceFileDuration(filePath);
@@ -1512,7 +1622,7 @@ ITMGPTT virtual void SpeechToText(const char* fileID)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| fileID    |char* | Indicates the URL to a voice file |
+| fileID | char* | URL to the voice file |
 #### Sample code  
 ```
 ITMGContextGetInstance()->GetPTT()->SpeechToText(fileID);
@@ -1542,7 +1652,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 ## Advanced APIs
 
 ### Obtain diagnostic messages
-This API is used to obtain information about the quality of real-time audio/video calls. This API is mainly used to check the quality of real-time calls and troubleshoot problems, and can be ignored at the business side.
+This API is used to obtain information about the quality of real-time audio/video calls. This API is mainly used to check the quality of real-time calls and troubleshoot problems, and can be ignored for this service.
 #### Function prototype  
 
 ```
@@ -1566,26 +1676,26 @@ ITMGContext virtual const char* GetSDKVersion()
 ITMGContextGetInstance()->GetSDKVersion();
 ```
 
-### Set the print log level
-This API is used to set the print log level.
+### Set the level of logs to be printed
+This API is used to set the level of logs to be printed.
 #### Function prototype
 ```
 ITMGContext virtual void SetLogLevel(int logLevel, bool enableWrite, bool enablePrint)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| logLevel    		|int | Indicates the print log level |
-| enableWrite    	| bool | Indicates whether to write a file. The default is Yes |
-| enablePrint    	|bool | Indicates whether to write a console. The default is Yes |
+| logLevel | int | Level of logs to be printed |
+| enableWrite | bool | Indicates whether to write data to a file. Default is Yes. |
+| enablePrint | bool | Indicates whether to write data to the console. Default is Yes. |
 
 
-|ITMG_LOG_LEVEL|Description |
+| ITMG_LOG_LEVEL | Description |
 | -------------------------------|:-------------:|
-|TMG_LOG_LEVEL_NONE=0		|Do not print logs |
-|TMG_LOG_LEVEL_ERROR=1		|Prints error logs (default) |
-|TMG_LOG_LEVEL_INFO=2			|Prints prompt logs |
-|TMG_LOG_LEVEL_DEBUG=3		|Prints development and debugging logs |
-|TMG_LOG_LEVEL_VERBOSE=4		| Prints high-frequency logs |
+|TMG_LOG_LEVEL_NONE=0		| Do not print logs			|
+|TMG_LOG_LEVEL_ERROR=1		| Prints error logs (default)	|
+|TMG_LOG_LEVEL_INFO=2			| Prints prompt logs		|
+|TMG_LOG_LEVEL_DEBUG=3		| Prints development and debugging logs	|
+|TMG_LOG_LEVEL_VERBOSE=4		| Prints high-frequency logs		|
 
 #### Sample code  
 ```
@@ -1593,8 +1703,8 @@ ITMGContext* context = ITMGContextGetInstance();
 context->SetLogLevel(0,true,true);
 ```
 
-### Set the print log path
-This API is used to set the print log path.
+### Set the path of logs to be printed
+This API is used to set the path of logs to be printed.
 The default path is:
 
 | Platform | Path |
@@ -1611,7 +1721,7 @@ ITMGContext virtual void SetLogPath(const char* logDir)
 
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| logDir    		|char* | Path |
+| logDir | char* | Path |
 #### Sample code  
 ```
 cosnt char* logDir = ""// You can set your own path
@@ -1628,7 +1738,7 @@ ITMGContext ITMGAudioCtrl int AddAudioBlackList(const char* openId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| openId    |char* | ID that needs to be added to the blacklist |
+| openId | char* | Indicates the ID to be added to the blacklist |
 #### Sample code  
 
 ```
@@ -1644,7 +1754,7 @@ ITMGContext ITMGAudioCtrl int RemoveAudioBlackList(const char* openId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| openId    |char*       | ID that needs to be removed from the blacklist |
+| openId | char* | Indicates the ID to be removed from the blacklist |
 #### Sample code  
 
 ```
@@ -1656,48 +1766,41 @@ ITMGContextGetInstance()->GetAudioCtrl()->RemoveAudioBlackList(openId);
 
 #### Message list:
 
-| Message | Description of message |   
+| Message | Description   
 | ------------- |:-------------:|
-|ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    		| Enters the audio room |
-|ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    		| Exits the audio room |
-|ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT		| Room disconnection due to network or other reasons |
-|ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE		|Room type change event |
-|ITMG_MAIN_EVENT_TYPE_ENABLE_MIC    		|Enables the microphone |
-|ITMG_MAIN_EVENT_TYPE_DISABLE_MIC    		|Disables the microphone |
-|ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|Adds a microphone |
-|ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|Loses a microphone |
-|ITMG_MAIN_EVENT_TYPE_ENABLE_SPEAKER		|Enables the speaker |
-|ITMG_MAIN_EVENT_TYPE_DISABLE_SPEAKER		|Disables the speaker |
-|ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|Adds a speaker |
-|ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE	|Loses a speaker |
-|ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH		|The accompaniment is over |
-|ITMG_MAIN_EVNET_TYPE_USER_UPDATE		|The room members are updated |
-|ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE	|PTT recording is completed |
-|ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE	|PTT is successfully uploaded |
-|ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE	|PTT is successfully downloaded |
-|ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE		|The playback of PTT is completed |
-|ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|The voice-to-text conversion is completed |
+|ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				       | Indicates that a member enters an audio room |
+|ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				         	| Indicates that a member exits an audio room |
+|ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    		       | Indicates that a room is disconnected due to network or other reasons |
+|ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE				| Indicates a room type change event |
+| ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE | Adds a microphone |
+|ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE | Loses a microphone |
+|ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE | Adds a speaker |
+|ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE | Loses a speaker |
+|ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH		| Indicates that the accompaniment is over			|
+|ITMG_MAIN_EVNET_TYPE_USER_UPDATE		| Indicates that the room members are updated		|
+|ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE	| Indicates that PTT recording is completed			|
+|ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE	| Indicates that the PTT is successfully uploaded			|
+|ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE	| Indicates that the PTT is successfully downloaded			|
+|ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE		| Indicates that the playback of PTT is completed			|
+|ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	| Indicates that the voice-to-text conversion is completed			|
 
-#### Data list
+#### Data list:
 
-| Message | Data         | Example |
+| Message     | Data         | Example |
 | ------------- |:-------------:|------------- |
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    		|result; error_info			|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    		|result; error_info  			|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    	|result; error_info  			|{"error_info":"waiting timeout, please check your network","result":0}|
 | ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE    	|result; error_info; new_room_type	|{"error_info":"","new_room_type":0,"result":0}|
-| ITMG_MAIN_EVENT_TYPE_ENABLE_MIC    		|result; error_info  			|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_DISABLE_MIC    		|result; error_info  			|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_ENABLE_SPEAKER    	|result; error_info  			|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_DISABLE_SPEAKER    	|result; error_info  			|{"error_info":"","result":0}|
-| ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"Speaker (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":false,"result":0} |
-| ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"Speaker (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":false,"result":0} |
-| ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"Microphone (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":true,"result":0} |
-| ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|result; error_info 			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"Microphone (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":true,"result":0} |
+| ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"Speaker  (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":false,"result":0}|
+| ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"Speaker  (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":false,"result":0}|
+| ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"Microphone  (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":true,"result":0}|
+| ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|result; error_info 			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"Microphone  (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":true,"result":0}|
 | ITMG_MAIN_EVNET_TYPE_USER_UPDATE    		|user_list;  event_id			|{"event_id":1,"user_list":["0"]}|
 | ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE 	|result; file_path;file_id  		|{"file_id":"","filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE	|result; file_path;file_id  		|{"file_id":"","filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|result; file_path;file_id		|{"file_id":"","filepath":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE	|result; text; file_path;file_id		|{"file_id":"","filepath":","text":"","result":0}|
 
