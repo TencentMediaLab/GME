@@ -12,7 +12,7 @@ public abstract int InitSpatializer(string modelPath)
 ```
 | Parameter	| Type | Description |
 | ------- |---------|------|
-| modelPath    	|string    	|Path of 3D effect model file，contact Tencent for details about 3D effect model file|
+| modelPath    	|string    	|Path of 3D effect model file，download model file from this [url](http://dldir1.qq.com/hudongzhibo/QCloud_TGP/GME/pubilc/GME_2.X_3d_model),md5: d0b76aa64c46598788c2f35f5a8a8694,and you should put this file into the disk of any enduser.|
 
 ### 2. Enable/disable 3D sound effect
 This function is used to enable/disable 3D sound effect.

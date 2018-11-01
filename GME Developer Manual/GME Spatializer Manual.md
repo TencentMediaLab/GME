@@ -13,7 +13,7 @@ public abstract int InitSpatializer(string modelPath)
 
 |参数	|类型	|意义 |
 | ------- |---------|------|
-| modelPath    	|string    	|3D音效资源文件路径，资源文件详情咨询腾讯云相关工作人员|
+| modelPath    	|string    	|3D音效资源文件路径，资源文件请在此路径[下载](http://dldir1.qq.com/hudongzhibo/QCloud_TGP/GME/pubilc/GME_2.X_3d_model)，md5: d0b76aa64c46598788c2f35f5a8a8694，存放于本地中，并通过该参数将存放路径传递给 SDK|
 
 ### 2、开启或关闭 3D 音效
 此函数用于开启或关闭 3D 音效。开启之后可以听到 3D 音效。
