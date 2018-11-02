@@ -968,7 +968,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().EnableAccompanyLoopBack(true);
 
 
 ### 设置伴奏音量
-设置 DB 音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 - 200。
+设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 - 200。
 > 函数原型  
 
 ```
@@ -985,7 +985,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetAccompanyVolume(vol);
 ```
 
 ### 获取播放伴奏的音量
-此接口用于获取 DB 音量。
+此接口用于获取伴奏音量。
 > 函数原型  
 
 ```
