@@ -194,7 +194,7 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | appId    		|int   		| The SdkAppId obtained from Tencent Cloud console		|
-| authId    		|int   		| Room ID. 32-bit is supported.	|
+| dwRoomID    		|char*   		| Room ID，maximum to 127 characters（the offline voice room ID must be null）	|
 | strOpenID  		|char*    	| User ID					|
 | strkey    		|char*	    	| The key obtained from Tencent Cloud console	|
 | retAuthBuff   	|char*    	| Returned authbuff				|
@@ -220,7 +220,7 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId			|char*   		| Room ID. 32-bit is supported.	|
+| roomId			|char*   		| Room ID，maximum to 127 characters	|
 | roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
 | authBuffer    		|char*     	| Authentication key			|
 | buffLen   			|int   		| Length of the authentication key		|
@@ -252,7 +252,7 @@ ITMGContext virtual void EnterTeamRoom(const char* roomId, ITMG_ROOM_TYPE roomTy
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId		|char*   		| Room I. 32-bit is supported.	|
+| roomId		|char*   		| Room ID，maximum to 127 characters|
 | roomType 		|ITMG_ROOM_TYPE	|Audio type of the room |
 | authBuffer    	|char*    	| Authentication key					|
 | buffLen   		|int   		| Length of the authentication key				|
@@ -565,7 +565,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 
 ### Enable/disable the microphone
 This API is used to enable/disable the microphone. Microphone and speaker are not enabled by default after a user enters a room.
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
@@ -579,7 +579,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
 
 ### Obtain the microphone status
-This API is used to obtain the microphone status. "0" means microphone is enabled, "1" means microphone is disabled, "2" means microphone is under working, "3" means no microphones exits, "4" means microphone is not initialized well.
+This API is used to obtain the microphone status. "0" means microphone is enabled, "1" means microphone is disabled, "2" means microphone is under working.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetMicState()
@@ -743,7 +743,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 
 ### Enable/disable the speaker
 This API is used to enable/disable the speaker.
-
+EnableSpeaker = EnableAudioPlayDevice + EnableAudioRecv.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
@@ -757,7 +757,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ```
 
 ### Obtain the speaker status
-This API is used to obtain the speaker status. "0" means speaker is enabled, "1" means speaker is disabled, "2" means speaker is under working, "3" means no speaker exits, "4" means speaker is not initialized well.
+This API is used to obtain the speaker status. "0" means speaker is enabled, "1" means speaker is disabled, "2" means speaker is under working.
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual int GetSpeakerState()
@@ -1358,8 +1358,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ```
 
-### Enable streaming recording
-This API is used to start streaming recording. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
+### Enable streaming speech recognition
+This API is used to start streaming speech recognition. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
 
 #### Function prototype 
 ```
@@ -1375,12 +1375,12 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
 ```
 
-### Callback for starting streaming recordings
+### Callback for starting streaming speech recognition
 The callback function OnEvent is called after the recording is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 
 |Message Name     | Description         |
 | ------------- |:-------------:|
-| result    	|Error code indicating whether streaming recording is successful			|
+| result    	|Error code indicating whether streaming speech recognition is successful			|
 | text    		|text obtained from voice-to-text conversion	|
 | file_path 	|local path for saving the recording		|
 | file_id 		|URL to background recording	|
