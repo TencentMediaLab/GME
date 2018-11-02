@@ -5,6 +5,7 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 ## How to Use
 ![](https://main.qcloudimg.com/raw/810d0404638c494d9d5514eb5037cd37.png)
 
+
 ### Key considerations for using GME
 
 | Important API | Description |
@@ -18,6 +19,7 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 **Notes:**
 
 **When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
+
 **GME APIs should be called in the same thread.**
 
 **Authentication is needed before entering a room. Refer to the authentication section in relevant documentation for more information.**
@@ -193,12 +195,12 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| appId    		|int   		| The SdkAppId obtained from Tencent Cloud console		|
-| dwRoomID    		|char*   		| Room ID，maximum to 127 characters（the offline voice room ID must be null）	|
-| strOpenID  		|char*    	| User ID					|
-| strkey    		|char*	    	| The key obtained from Tencent Cloud console	|
-| retAuthBuff   	|char*    	| Returned authbuff				|
-| buffLenght   		|int    	| Length of returned authbuff				|
+| nAppId | int | The SdkAppId obtained from the Tencent Cloud console |
+| dwRoomID |char* | Room ID, maximum to 127 characters (The room number parameter for voice message must be set to 0) |
+| strOpenID | char*   | User ID |
+| strKey | char* | The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) |
+| strAuthBuffer | char* | Returned authbuff |
+| buffLenght | int | Length of returned authbuff |
 
 
 
@@ -220,7 +222,7 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId			|char*   		| Room ID，maximum to 127 characters	|
+| roomId			|char*   		| Room ID. maximum to 127 characters.	|
 | roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
 | authBuffer    		|char*     	| Authentication key			|
 | buffLen   			|int   		| Length of the authentication key		|
@@ -244,7 +246,7 @@ context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen
 
 
 ### Team voice chat room
-For more information on how to integrate team voice chat, please see relevant [integration document](/GME%20Introduction_intl.md).
+For more information on how to integrate team voice chat, please refer to [integration document](/GME%20Introduction_intl.md).
 
 #### Function prototype
 ```
@@ -252,7 +254,7 @@ ITMGContext virtual void EnterTeamRoom(const char* roomId, ITMG_ROOM_TYPE roomTy
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId		|char*   		| Room ID，maximum to 127 characters|
+| roomId		|char*   		| Room ID. maximum to 127 characters.	|
 | roomType 		|ITMG_ROOM_TYPE	|Audio type of the room |
 | authBuffer    	|char*    	| Authentication key					|
 | buffLen   		|int   		| Length of the authentication key				|
@@ -1358,8 +1360,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ```
 
-### Enable streaming speech recognition
-This API is used to start streaming speech recognition. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
+### Enable streaming recording
+This API is used to start streaming recording. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
 
 #### Function prototype 
 ```
@@ -1375,12 +1377,12 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
 ```
 
-### Callback for starting streaming speech recognition
+### Callback for starting streaming recordings
 The callback function OnEvent is called after the recording is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 
 |Message Name     | Description         |
 | ------------- |:-------------:|
-| result    	|Error code indicating whether streaming speech recognition is successful			|
+| result    	|Error code indicating whether streaming recording is successful			|
 | text    		|text obtained from voice-to-text conversion	|
 | file_path 	|local path for saving the recording		|
 | file_id 		|URL to background recording	|
