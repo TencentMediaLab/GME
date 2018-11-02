@@ -519,7 +519,7 @@ ITMGContext GetAudioCtrl -(QAVResult)ResumeAudio
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 > 函数原型  
 
 ```
@@ -535,7 +535,7 @@ ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 ```
 
 ### 麦克风状态获取
-此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态，返回值 2 为麦克风设备正在操作中，返回值 3 为麦克风设备不存在，返回值 4 为设备没初始化好。
+此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
 > 函数原型  
 
 ```
@@ -658,6 +658,7 @@ ITMGContext GetAudioCtrl -(int) GetMicVolume
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
+EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
 > 函数原型  
 
 ```
@@ -673,7 +674,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 
 ### 扬声器状态获取
-此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中，返回值 3 为扬声器设备不存在，返回值 4 为设备没初始化好。
+此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
 > 函数原型  
 
 ```
@@ -1281,8 +1282,8 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 }
 ```
 
-### 启动流式录音
-此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+### 启动流式语音识别
+此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
 
 > 函数原型  
 
@@ -1299,7 +1300,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const char* filePa
 [[[ITMGContext GetInstance] GetPTT] StartRecordingWithStreamingRecognition:recordfilePath language:@"cmn-Hans-CN"];
 ```
 
-### 启动流式录音的回调
+### 启动流式语音识别的回调
 启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
 
 |消息名称     | 意义         |
@@ -1343,7 +1344,7 @@ ITMGContext GetPTT -(QAVResult)StopRecording
 ```
 
 ### 取消录音
-调用此接口取消录音。
+调用此接口取消录音。取消之后没有回调。
 > 函数原型  
 
 ```

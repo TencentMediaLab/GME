@@ -221,7 +221,6 @@ context->Uninit();
 离线语音获取鉴权时，房间号参数必须填null。
 
 > 函数原型
-
 ```
 QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
@@ -229,7 +228,7 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 | ------------- |:-------------:|-------------|
 | nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
 | dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填null）|
-| strOpenID  		|char*     	|用户标识|
+| strOpenID  		|char*    		|用户标识								|
 | strKey    			|char*	    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|
 | buffLenght   		|int    		|返回的authbuff的长度					|
@@ -243,7 +242,7 @@ QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strA
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
-如果普通语音进房，业务方面无涉及小队语音需求，则使用普通进房接口。详细信息请查阅[GME小队语音文档](../GME%20TeamAudio%20Manual.md)。
+如果普通语音进房，业务方面无涉及小队语音需求，则使用普通进房接口。详细信息请查阅[GME 小队语音文档](../GME%20TeamAudio%20Manual.md)。
 
 > 函数原型
 
@@ -334,7 +333,7 @@ context->IsRoomEntered();
 ```
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+通过调用此接口可以退出所在房间。这是一个异步接口，返回值为AV_OK的时候代表异步投递成功。
 > 函数原型  
 
 ```
@@ -470,6 +469,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 |floss    				|丢包率|
 |delay    		|音频触达延迟时间（ms）|
 
+
 ### 消息详情
 
 |消息     | 消息代表的意义   
@@ -518,8 +518,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 |GetMicLevel    						|获取实时麦克风音量	|
 |SetMicVolume    					|设置麦克风音量		|
 |GetMicVolume    					|获取麦克风音量		|
-|EnableSpeaker    					|开关扬声器 |
-|GetSpeakerState    				|获取扬声器状态|
+|EnableSpeaker    					|开关扬声器|
+|GetSpeakerState    					|获取扬声器状态|
 |EnableAudioPlayDevice    			|开关播放设备		|
 |IsAudioPlayDeviceEnabled    		|获取播放设备状态	|
 |EnableAudioRecv    					|打开关闭音频下行	|
@@ -615,7 +615,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 > 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
@@ -629,7 +629,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
 
 ### 麦克风状态获取
-此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态，返回值 2 为麦克风设备正在操作中，返回值 3 为麦克风设备不存在，返回值 4 为设备没初始化好。
+此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
 > 函数原型  
 ```
 ITMGAudioCtrl virtual int GetMicState()
@@ -796,7 +796,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
-
+EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
 > 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
@@ -810,7 +810,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ```
 
 ### 扬声器状态获取
-此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中，返回值 3 为扬声器设备不存在，返回值 4 为设备没初始化好。
+此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
 > 函数原型  
 ```
 ITMGAudioCtrl virtual int GetSpeakerState()
@@ -845,6 +845,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioPlayDevice(true);
 ITMGContext virtual bool IsAudioPlayDeviceEnabled()
 ```
 > 示例代码  
+
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->IsAudioPlayDeviceEnabled();
 ```
@@ -1258,10 +1259,10 @@ TMGAudioEffectCtrl int setVoiceType(int type)
 
 |类型参数     |参数代表|意义|
 | ------------- |-------------|------------- |
-| ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|原声			|
-| ITMG_VOICE_TYPE_LOLITA    				|1	|萝莉			|
-| ITMG_VOICE_TYPE_UNCLE  				|2	|大叔			|
-| ITMG_VOICE_TYPE_INTANGIBLE    			|3	|空灵			|
+|ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|原声			|
+|ITMG_VOICE_TYPE_LOLITA    				|1	|萝莉			|
+|ITMG_VOICE_TYPE_UNCLE  				|2	|大叔			|
+|ITMG_VOICE_TYPE_INTANGIBLE    			|3	|空灵			|
 | ITMG_VOICE_TYPE_DEAD_FATBOY  			|4	|死肥仔			|
 | ITMG_VOICE_TYPE_HEAVY_MENTA			|5	|重金属			|
 | ITMG_VOICE_TYPE_DIALECT 				|6	|歪果仁			|
@@ -1271,7 +1272,6 @@ TMGAudioEffectCtrl int setVoiceType(int type)
 | ITMG_VOICE_TYPE_STRONG_CURRENT		|10	|强电流			|
 | ITMG_VOICE_TYPE_KINDER_GARTEN			|11	|幼稚园			|
 | ITMG_VOICE_TYPE_HUANG 					|12	|小黄人			|
-
 
 > 示例代码  
 ```
@@ -1303,7 +1303,6 @@ TMGAudioEffectCtrl int SetKaraokeType(int type)
 ```
 ITMGContextGetInstance()->GetAudioEffectCtrl()->SetKaraokeType(0);
 ```
-
 
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
@@ -1394,7 +1393,7 @@ ITMGPTT virtual void StartRecording(const char* fileDir)
 | fileDir    |char*                      |存放的语音路径|
 > 示例代码  
 ```
-ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(fileDir);
+ITMGContextGetInstance()->GetPTT()->StartRecording(fileDir);
 ```
 
 ### 启动录音的回调
@@ -1420,8 +1419,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ```
 
-### 启动流式录音
-此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+### 启动流式语音识别
+此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
 
 > 函数原型  
 ```
@@ -1437,7 +1436,7 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
 ```
 
-### 启动流式录音的回调
+### 启动流式语音识别的回调
 启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
 
 |消息名称     | 意义         |
@@ -1484,7 +1483,7 @@ ITMGContextGetInstance()->GetPTT()->StopRecording();
 ```
 
 ### 取消录音
-调用此接口取消录音。
+调用此接口取消录音。取消之后没有回调。
 > 函数原型  
 ```
 ITMGPTT virtual int CancelRecording()
@@ -1843,4 +1842,3 @@ ITMGContextGetInstance()->GetAudioCtrl()->RemoveAudioBlackList(openId);
 | ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|result; file_path;file_id		|{"file_id":"","filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE	|result; text; file_path;file_id		|{"file_id":"","filepath":","text":"","result":0}|
-

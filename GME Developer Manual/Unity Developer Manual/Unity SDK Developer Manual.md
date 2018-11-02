@@ -495,7 +495,7 @@ IQAVContext.GetInstance ().GetAudioCtrl ().ResumeAudio();
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 > 函数原型  
 ```
 ITMGAudioCtrl EnableMic(bool isEnabled)
@@ -510,7 +510,7 @@ IQAVContext.GetInstance().GetAudioCtrl().EnableMic(true);
 ```
 
 ### 麦克风状态获取
-此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态，返回值 2 为麦克风设备正在操作中，返回值 3 为麦克风设备不存在，返回值 4 为设备没初始化好。
+此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
 > 函数原型  
 ```
 ITMGAudioCtrl GetMicState()
@@ -633,6 +633,7 @@ IQAVContext.GetInstance().GetAudioCtrl().GetMicVolume();
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
+EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
 > 函数原型  
 ```
 ITMGAudioCtrl EnableSpeaker(bool isEnabled)
@@ -649,7 +650,7 @@ IQAVContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
 
 
 ### 扬声器状态获取
-此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中，返回值 3 为扬声器设备不存在，返回值 4 为设备没初始化好。
+此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
 > 函数原型  
 ```
 ITMGAudioCtrl GetSpeakerState()
@@ -1309,7 +1310,8 @@ IQAVContext.GetInstance().GetPttCtrl().SetMaxMessageLength(60000);
 ```
 
 ### 启动录音
-此接口用于启动录音。
+此接口用于启动录音。需要将录音文件上传后才可以进行语音转文字等操作。
+
 > 函数原型  
 
 ```
@@ -1351,8 +1353,8 @@ void mInnerHandler(int code, string filepath){
 }
 ```
 
-### 启动流式录音
-此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+### 启动流式语音识别
+此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
 
 > 函数原型  
 
@@ -1370,7 +1372,7 @@ string recordPath = Application.persistentDataPath + string.Format("/{0}.silk", 
 int ret = ITMGContext.GetInstance().GetPttCtrl().StartRecordingWithStreamingRecognition(recordPath, "cmn-Hans-CN");
 ```
 
-### 启动流式录音的回调
+### 启动流式语音识别的回调
 启动录音完成后的回调通过委托传递消息。
 ```
 委托函数：
@@ -1415,7 +1417,7 @@ IQAVContext.GetInstance().GetPttCtrl().StopRecording();
 ```
 
 ### 取消录音
-调用此接口取消录音。
+调用此接口取消录音。取消之后没有回调。
 > 函数原型  
 
 ```
