@@ -1,7 +1,13 @@
 ## Overview
 
-Thank you for using [Tencent Cloud Game Multimedia Engine SDK](https://cloud.tencent.com/product/tmg?idx=1). This document provides a detailed description that makes it easy for developers to integrate GME SDK.
+Thank you for using [Tencent Cloud Game Multimedia Engine SDK](https://intl.cloud.tencent.com/product/tmg?idx=2). This document provides a detailed steps  that makes it easy for developers to integrate GME SDK.
 
+Follow the steps below to use GME:
+1. [Create a GME service in Tencent Cloud backend](https://intl.cloud.tencent.com/document/product/607/10782#create-a-service);
+2. [Download the corresponding version SDK](https://intl.cloud.tencent.com/document/product/607/10782#download-sdk);
+3. [Import the SDK to your project by referring to the integration API document](https://intl.cloud.tencent.com/document/product/607/10782#related-sdk-technical-documents);
+4. [Check the daily operation backend statistics](https://intl.cloud.tencent.com/document/product/607/10782#usage-statistics-on-the-console);
+5. [Troubleshoot special problems during integration and provide feedback](https://intl.cloud.tencent.com/document/product/607/10782#special-problems-handling);
 
 
 ## Create a service
@@ -10,7 +16,7 @@ Thank you for using [Tencent Cloud Game Multimedia Engine SDK](https://cloud.ten
 
 #### 2. Enter required information.  
 Enter required information on the page, and select the services as needed. 
-> The charges vary with different billing modes. The billing mode cannot be modified once set. For more information on the charges, please see [Product Prices](https://cloud.tencent.com/product/tmg?idx=1#price) and consult relevant Tencent Cloud service personnel.
+> The charges vary with different billing modes. The billing mode cannot be modified once set. For more information on the charges, please see [Product Prices](https://intl.cloud.tencent.com/product/tmg?idx=1#price) and consult relevant Tencent Cloud service personnel.
 > If you are creating a game application, you need to select the corresponding platform engine, and select an applicable sampling rate according to the solution provided by the technician.
 > The setting for voice messaging and voice-to-context conversion services can be modified.
 
@@ -38,7 +44,7 @@ You can click **Modify** to modify the information in the Application Informatio
  
 ![](https://main.qcloudimg.com/raw/2eb67cb291d211ed6eaa352fd08c10f6.png)
 
--  **For more information on authentication, please see the [GME key documentation](./GME%20Developer%20Manual/GME%20Key%20Manual_intl.md)**.
+-  **For more information on authentication, please see the [GME key documentation](https://intl.cloud.tencent.com/document/product/607/12218)**.
 
 
 #### 6. Enable and disable businesses and services
@@ -59,8 +65,8 @@ To integrate the SDK, you need to use the AppID and the permission key provided 
 
 For the configuration for other platforms, please see the project configuration document of relevant platform.
 
-#### 3. Notes for using the official Demo
-The Demo provides a Tencent Cloud test account for you to experience features. If you want to use personal or corporate test account, you need to change the Tencent Cloud test account AppID to the AppID obtained in the console on relevant page in the Demo, and modify the permission key for voice chat in the AVChatViewController-GetAuthBuffer function.
+#### 3. Notes for using the official sample code
+The sample code provides a Tencent Cloud test account for you to experience features. If you want to use personal or corporate test account, you need to change the Tencent Cloud test account AppID to the AppID obtained in the console on relevant page in the Demo, and modify the permission key for voice chat in the AVChatViewController-GetAuthBuffer function.
 
 ## Related SDK Technical Documents
 **Unity engine** 
@@ -97,9 +103,9 @@ Usage statistics include statistics for voice chat, and for voice messaging and 
 
 ### Usage statistics for voice chat
 
-This page displays the DAU data of the voice chat application.
+This page displays the real-time DAU data of the voice chat application.
 - **Total Voice Chat DAU** displays the total DAU of voice chat yesterday
-- **Mainland China Voice Chat DAU** displays the DAU of voice chat in Mainland China
+- **China Mainland Voice Chat DAU** displays the DAU of voice chat in Mainland China
 - **Overseas Voice Chat DAU** displays the DAU of voice chat overseas
 - The total DAU data in the last seven days are displayed by default. You can also view the usage data for other statistical periods and other regions.
 
