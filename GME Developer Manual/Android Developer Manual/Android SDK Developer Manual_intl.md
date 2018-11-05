@@ -1,5 +1,5 @@
 ## Overview
-Thank you for using Tencent Cloud Game Multimedia Engine (GME) SDK. This document provides a detailed description that makes it easy for Android developers to debug and integrate the APIs for GME.
+Thank you for using Tencent Cloud Game Multimedia Engine (GME) SDK. This document provides a detailed description that makes it easy for Android developers to debug and integrate the APIs of GME.
 
 
 ## How to Use
@@ -16,7 +16,8 @@ Thank you for using Tencent Cloud Game Multimedia Engine (GME) SDK. This documen
 |EnableMic	 	| Enables the microphone 	|
 |EnableSpeaker		| Enables the speaker 	|
 
->**Notes:**
+**Notes:**
+
 **When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
 
 **GME APIs should be called in the same thread.**
@@ -29,7 +30,7 @@ Thank you for using Tencent Cloud Game Multimedia Engine (GME) SDK. This documen
 
 **Device related operations can only be done after entering a room**
 
-**This document is applicable to GME sdk version：2.2。**
+**This document is applicable to GME sdk version：2.2**
 
 ## Initialization-related APIs
 GME should be initialized with the authentication data before entering a room.
@@ -40,11 +41,11 @@ GME should be initialized with the authentication data before entering a room.
 |Poll    	|Triggers event callback	|
 |Pause   	|Pauses the system	|
 |Resume 	|Resumes the system	|
-|Uninit    	|Initializes GME 	|
+|Uninit    	|Deinitializes GME 	|
 
 
 ### Get a singleton
-This API is used to get the ITMGContext object when using the voice feature.
+This API is used to get the ITMGContext instance when using the voice feature.
 #### Function prototype 
 
 ```
@@ -107,7 +108,7 @@ TMGContext.GetInstance(this).SetTMGDelegate(itmgDelegate);
 ### Initialize the SDK
 
 For more information on how to obtain parameters, please see [GME Integration Guide](https://cloud.tencent.com/document/product/607/10782).
-This API should contain SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
+This API call needs SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
 SDK must be initialized before a user can enter a room.
 #### Function prototype 
 
@@ -187,8 +188,8 @@ After the initialization, API for entering a room should be called before Voice 
 
 
 ### Authentication information
-This API is used to generate AuthBuffer for encryption and authentication of appropriate features. For more information on deployment at backend, see [GME Key](https://cloud.tencent.com/document/product/607/12218).    
-A value of type Byte[] is returned by this API. When voice message is obtaining authentication, the parameter of room number must be set to "null".
+AuthBuffer is generated for the purpose of encryption and authentication. For more information about the authentication data, refer to [GME Key](https://cloud.tencent.com/document/product/607/12218).    
+A value of type Byte[] is returned by this API. The room ID parameter for voice message must be set to "null"
 
 > Function prototype
 ```
@@ -197,7 +198,7 @@ AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, Strin
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | appId    		|int   		| The SdkAppId obtained from the Tencent Cloud console |
-| roomId    		|String   		|  Room ID, maximum to 127 characters (The room number parameter for voice message must be set to "null") |
+| roomId    		|String   		|  Room ID, maximum to 127 characters (The room room ID for voice message must be set to "null") |
 | openID    	|String 	| User ID					|
 | key    		|string 	| The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) 				|
 
@@ -229,7 +230,7 @@ ITMGContext public abstract void  EnterRoom(String roomId, int roomType, byte[] 
 | ITMG_ROOM_TYPE_HIGHQUALITY		|High-quality	|3|Speaker: media volume; headset: media volume	| To ensure optimum effect, it is recommended to enable HQ configuration with 48k sampling rate	| Super-high sound quality and relative high delay which is suitable for scenarios demanding high sound quality, such as music playback and online karaoke.	|
 
 - If you have special requirements on the sound quality for certain scenario, contact the customer service.
-- The sound effect in a game depends directly on the sampling rate set on the console. Please confirm whether the sampling rate you set on the [console](https://console.cloud.tencent.com/gamegme) is suitable for the project's application scenario.
+- The sound quality in a game depends directly on the sampling rate set on the console. Please confirm whether the sampling rate you set on the [console](https://console.cloud.tencent.com/gamegme) is suitable for the project's application scenario.
 
 
 #### Sample code  
@@ -239,7 +240,7 @@ ITMGContext.GetInstance(this).EnterRoom(Integer.parseInt(roomId),roomType, authB
 ```
 
 ### Callback for entering a room
-This API is used to send the ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message after a user enters a room, which is checked in the OnEvent function.
+ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message is received after a user enters a room, the action of this event should be implemented in the OnEvent function.
 
 #### Sample code  
 ```
@@ -306,7 +307,7 @@ ITMGContext.GetInstance(this).GetRoom().ChangeRoomType(nRoomType);
 
 
 ### Obtain the audio type of the user's room
-This API is used to obtain the audio type of the user's room. The returned value is the audio type of the room. Returned value of 0 means error happens. The audio type definition be found in the API EnterRoom.
+This API is used to obtain the audio type of the user's room. The returned value is the audio type of the room. Returned value of 0 means error happens. The audio type definition can be found in the API EnterRoom.
 
 #### Function prototype  
 ```
@@ -379,9 +380,8 @@ public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
 	}
 }
 ```
-
 ### Quality monitoring events
-The message for quality monitoring events is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY. The returned parameters include weight, floss, and delay, which represent the following information and are identified in the OnEvent function.
+The message for quality monitoring event is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY. The returned parameters include weight, floss, and delay, which represent the following information and the action of this event should be implemented in the OnEvent function.
 
 | Parameter | Description |
 | ------------- |-------------|
@@ -413,11 +413,12 @@ The message for quality monitoring events is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QU
 
 ## Audio APIs for Voice Chat
 The audio APIs for Voice Chat can only be called after the SDK is initialized and the room is entered successfully.
+Call scenario examples:
 
-To enable or disable the microphone or speaker:
+To enable or disable the microphone or speaker from UI:
 - For most game Apps, it's recommended to call EnableMic and EnableSpeaker APIs. Because calling EnableMic is equivalent to calling EnableAudioCaptureDevice and EnableAudioSend at the same time, and calling EnableSpeaker is equivalent to calling EnableAudioPlayDevice and EnableAudioRecv at the same time.
 
-- For other mobile Apps (such as social networking Apps), enabling/disabling a capturing device will restart both the capturing and the playback devices. If the App is playing background music, it will also be interrupted. Playback won't be interrupted if the microphone is enabled/disabled through control of upstream/downstream. Calling method: Call EnableAudioCaptureDevice(true) and EnableAudioPlayDevice(true) once after a member enters the room, and call EnableAudioSend/Recv to send/receive audio streams when the microphone is clicked to enable or disable.
+- For other mobile Apps (such as social networking Apps), enabling/disabling a capturing device will restart both the capturing and the playback devices. If the App is playing background music, it will also be interrupted. Playback won't be interrupted if the microphone is enabled/disabled through control of upstream/downstream. So the calling method is: Call EnableAudioCaptureDevice(true) and EnableAudioPlayDevice(true) once after entering the room, and call EnableAudioSend/Recv to send/receive audio streams when the microphone is clicked to enable or disable.
 
 If you do not need to enable both the microphone and the speaker (releasing the recording permission to other modules), it is recommended to call PauseAudio/ResumeAudio.
 
@@ -517,7 +518,7 @@ Enable a capturing device
 ITMGContext.GetInstance(this).GetAudioCtrl().EnableAudioCaptureDevice(true);
 ```
 
-### Objtain the audio capture device status
+### Obtain the audio capture device status
 This API is used to obtain the audio capture device status.
 #### Function prototype
 
@@ -747,7 +748,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableLoopBack(true);
 |PauseAccompany    					|Pauses playing back the accompaniment |
 |ResumeAccompany					|Resumes playing back the accompaniment |
 |SetAccompanyVolume 				|Sets the accompaniment volume |
-|GetAccompanyVolume				|Obtains accompaniment volume |
+|GetAccompanyVolume				|Obtains the accompaniment volume |
 |SetAccompanyFileCurrentPlayedTimeByMs 				|Sets the playback progress |
 
 ### Start playing back the accompaniment
@@ -768,7 +769,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().StartAccompany(filePath,true,
 ```
 
 ### Callback for accompaniment playback
-After the accompaniment is over, the event message ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH is returned, which is identified in the OnEvent function.
+After the accompaniment is over, the event message ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH is returned, the action of this event should be implemented in OnEvent function.
 The passed parameter "intent" includes result and file_path.
 #### Sample code  
 ```
@@ -788,7 +789,7 @@ ITMGContext TMGAudioEffectCtrl public int StopAccompany(int duckerTimeMs)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| duckerTimeMs    |int             | Indicates the fading time |
+| duckerTimeMs    |int             | Indicates the fading out time |
 
 #### Sample code  
 ```
@@ -938,7 +939,7 @@ ITMGContext TMGAudioEffectCtrl public int PauseEffect(int soundId)
 ITMGContext.GetInstance(this).GetAudioEffectCtrl().PauseEffect(soundId);
 ```
 
-### Pause all sound effects
+### Pause all the sound effects
 This API is used to pause all the sound effects.
 #### Function prototype  
 ```
@@ -950,7 +951,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().PauseAllEffects();
 ```
 
 ### Resume the sound effect
-This API is used to resume the sound effect.
+This API is used to resume playing back the sound effect.
 #### Function prototype  
 ```
 ITMGContext TMGAudioEffectCtrl public int ResumeEffect(int soundId)
@@ -964,7 +965,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().ResumeEffect(soundId);
 ```
 
 ### Resume all the sound effects
-This API is used to replay all sound effects.
+This API is used to resume all the sound effects.
 #### Function prototype  
 ```
 ITMGContext TMGAudioEffectCtrl public int ResumeAllEffects()
@@ -1163,7 +1164,7 @@ public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
 ```
 
 ### Enable streaming speech recognition
-This API is used to start streaming recording. Texts obtained from voice-to-text conversion will be returned in real time in its callback.
+This API is used to start streaming speech recognition. Texts obtained from voice-to-text conversion will be returned in real time in its callback. The recognition only supports Chinese and English.
 
 #### Function prototype 
 ```
@@ -1172,7 +1173,7 @@ ITMGContext TMGPTT public void StartRecordingWithStreamingRecognition (String fi
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | filePath | String | Indicates the path for storing the voice file |
-| language | String | Indicates the language code to be translated: "cmn-Hans-CN" |
+| language | String | Language code, refer to [language reference list](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md) |
 
 #### Sample code  
 ```
@@ -1180,20 +1181,20 @@ String  temple = getActivity().getExternalFilesDir(null).getAbsolutePath() + "/t
 ITMGContext.GetInstance(getActivity()).GetPTT().StartRecordingWithStreamingRecognition(temple,"cmn-Hans-CN");
 ```
 
-### Callback for starting streaming speech recognition
-The callback function OnEvent is called after the recognition is started. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
+### Callback for streaming speech recognition
+The callback function OnEvent is called after the recognition is finished. The event message ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 
 |Message Name     | Description         |
 | ------------- |:-------------:|
-| result    	|Error code indicating whether streaming recording is successful			|
+| result    	|Error code indicating whether streaming speech recognition is successful			|
 | text    		|text obtained from voice-to-text conversion	|
-| file_path 	|local path for saving the recording		|
-| file_id 		|URL to background recording	|
+| file_path 	|local path for the recorded voice file		|
+| file_id 		|URL for the recorded voice file uploaded to server	|
 
 |Error Code     | Description         |Recommended Action|
 | ------------- |:-------------:|:-------------:|
-|32775	|Recognition is successful but streaming voice to text is failed	|Call the API UploadRecordedFile to upload the recording, and then call the API SpeechToText to perform voice-to-text conversion.
-|32777	|Recognition and uploading is successful, but streaming voice to text is failed.	|The message returned includes a URL for successful upload. Call the SpeechToText API to perform voice-to-text conversion.
+|32775	|Recording is successful but streaming voice to text is failed	|Call the API UploadRecordedFile to upload the recording, and then call the API SpeechToText to perform voice-to-text conversion.
+|32777	|Recording and uploading is successful, but streaming voice to text is failed.	|The message returned includes a URL for successful upload. Call the SpeechToText API to perform voice-to-text conversion.
 
 #### Sample code
 ```
@@ -1244,7 +1245,7 @@ ITMGContext.GetInstance(this).GetPTT().UploadRecordedFile(filePath);
 
 
 ### Callback for uploading voice files
-After the voice file is uploaded, the event message ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE is returned, which is identified in the OnEvent function.
+After the voice file is uploaded, the event message ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 The passed parameter includes result, file_path and file_id.
 ```
 public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
@@ -1273,7 +1274,7 @@ ITMGContext.GetInstance(this).GetPTT().DownloadRecordedFile(url,path);
 
 
 ### Callback for downloading voice files
-After the voice file is downloaded, the event message ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE is returned, which is identified in the OnEvent function.
+After the voice file is downloaded, the event message ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 The passed parameter includes result, file_path and file_id.
 
 ```
@@ -1295,7 +1296,7 @@ ITMGContext TMGPTT public int PlayRecordedFile(String downloadFilePath)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| downloadFilePath | String |Indicates the path a file to be played |
+| downloadFilePath | String |Indicates the path of the file to be played |
 #### Sample code  
 ```
 ITMGContext.GetInstance(this).GetPTT().PlayRecordedFile(downloadFilePath);
@@ -1303,7 +1304,7 @@ ITMGContext.GetInstance(this).GetPTT().PlayRecordedFile(downloadFilePath);
 
 
 ### Callback for playing voice files
-After the voice file is played back, the event message ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE is returned, which is identified in the OnEvent function.
+After the voice file is played back, the event message ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE is returned, the action of this event should be implemented in the OnEvent function.
 The passed parameter includes result and file_path.
 ```
 public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
@@ -1366,6 +1367,21 @@ ITMGContext TMGPTT public int SpeechToText(String fileID)
 #### Sample code  
 ```
 ITMGContext.GetInstance(this).GetPTT().SpeechToText(fileID);
+```
+
+### Convert the specified voice file into text with Speech Recognition(specify language)
+This API is used to convert the specified voice file into text with Speech Recognition.
+#### Function prototype  
+```
+ITMGContext TMGPTT public int SpeechToText(String fileID, String language)
+```
+| Parameter | Type | Description |
+| ------------- |:-------------:|-------------|
+| fileID    |char* | Indicates the URL to a voice file |
+| language    |char*                     |Language code, refer to [language reference list](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+#### Sample code  
+```
+ITMGContext.GetInstance(this).GetPTT().SpeechToText(fileID,"cmn-Hans-CN");
 ```
 
 ### Callback for Speech Recognition
