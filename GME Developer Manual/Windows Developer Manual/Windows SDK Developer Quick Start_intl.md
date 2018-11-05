@@ -1,70 +1,95 @@
-## 简介
+## Overview
 
-欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便 Windows 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Windows 开发的快速接入文档。
-
-
-## 使用流程图
-![](https://main.qcloudimg.com/raw/bf2993148e4783caf331e6ffd5cec661.png)
+Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document provides an overview that makes it easy for Windows developers to debug and integrate the APIs for Game Multimedia Engine (GME).
 
 
-### 使用 GME 重要事项
+## How to Use
+![](https://main.qcloudimg.com/raw/810d0404638c494d9d5514eb5037cd37.png)
 
-GME 快速入门文档只提供最主要的接入接口，更多详细接口请参考 [相关接口文档](https://cloud.tencent.com/document/product/607/15232)。
+
+### Key considerations for using GME
+
+This document only provides the most important APIs to help you get started with GME. For more APIs, see [API Documentation](https://cloud.tencent.com/document/product/607/15231).
 
 
-|重要接口     | 接口含义|
-| ------------- |-------------|
-|Init   				|初始化 GME 	|
-|Poll    				|触发事件回调	|
-|EnterRoom	 		|进房  			|
-|EnableMic	 		|开麦克风 		|
-|EnableSpeaker		|开扬声器 		|
+| Important API | Description |
+| ------------- |:-------------:|
+|Init    		|Initializes GME 	|
+|Poll    		|Triggers event callback	|
+|EnterRoom	 	|Enters a room  		|
+|EnableMic	 	|Enables the microphone 	|
+|EnableSpeaker		|Enables the speaker 	|
 
->**说明：**
+**Notes:**
 
-**GME 的接口调用成功后返回值为 QAVError.OK，数值为 0。**
+**When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
 
-**GME 的接口调用要在同一个线程下。**
+**GME APIs should be called in the same thread.**
 
-**GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
+**Authentication is needed before entering a room. Refer to the authentication section in relevant documentation for more information.**
 
-**GME 需要周期性的调用 Poll 接口触发事件回调。**
+**The Poll API should be called for GME to trigger event callback.**
 
-**GME 回调信息参考回调消息列表。**
+**Refer to the callback message list for callback related information.**
 
-**设备的操作要在进房成功之后。**
+**Device related operations can only be done after entering a room.**
 
-**此文档对应GME sdk version：2.2。**
-## 快速接入步骤
+**This document is applicable to GME sdk version：2.2.**
 
-### 1、获取单例
-在使用语音功能时，需要首先获取 ITMGContext 对象。
-
-#### 示例代码  
+### 1. Get a singleton
+Get ITMGContext single instance first and all calls should be done accroding to this instance. ITMGDelegate is defined in the Application which is used to receive and process the callback from this instance.    
+#### Function prototype 
 
 ```
-ITMGContext* context = ITMGContextGetInstance();
-context->SetTMGDelegate(this);
+ITMGContext virtual void TMGDelegate(ITMGDelegate* delegate)
+```
+#### Sample code  
+
+```
+ITMGContext* m_pTmgContext;
+m_pTmgContext = ITMGContextGetInstance();
 ```
 
 
+### Message passing
+With the API class, the Delegate method is used to send callback notifications to your application. ITMG_MAIN_EVENT_TYPE indicates the message type. The data under Windows is in json string format. See the relevant documentation for the key-value pairs.
 
-### 2、初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](https://cloud.tencent.com/document/product/607/10782)。
-此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
-初始化 SDK 之后才可以进房。
-#### 函数原型
+#### Sample code 
+
+```
+//Function implementation:
+class Callback : public SetTMGDelegate 
+{
+	virtual void OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data)
+	{
+  		switch(eventType)
+  		{
+   			//Determine the message type and process the message
+  		}
+ 	}
+}
+
+Callback*  p = new Callback ();
+m_pTmgContext->TMGDelegate(p);
+
+```
+
+### 2. Initialize the SDK
+For more information on how to obtain parameters, please see [GME Integration Guide](https://cloud.tencent.com/document/product/607/10782).
+This API call needs SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
+SDK must be initialized before a user can enter a room.
+#### Function prototype 
 
 ```
 ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
 ```
-
-|参数     | 类型         |意义|
+| Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|char*  	|来自腾讯云控制台的 SdkAppId 号码					|
-| openID    		|char*   	|OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 	|
+| sdkAppId    	|char*   	|The SdkAppId obtained from Tencent Cloud console					|
+| openID    	|char*   	|The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. 	|
 
-#### 示例代码 
+#### Sample code  
+
 ```
 #define SDKAPPID3RD "1400035750"
 cosnt char* openId="10001";
@@ -72,9 +97,9 @@ ITMGContext* context = ITMGContextGetInstance();
 context->Init(SDKAPPID3RD, openId);
 ```
 
-### 3、触发事件回调
-通过在 update 里面周期的调用 Poll 可以触发事件回调。
-#### 函数原型
+### 3. Trigger event callback
+This API is used to trigger the event callback via periodic Poll call in update.
+#### Function prototype
 
 ```
 class ITMGContext {
@@ -84,117 +109,121 @@ protected:
 public:    	
 	virtual void Poll()= 0;
 }
+
 ```
-#### 示例代码
+#### Sample code
 ```
-ITMGContextGetInstance()->Poll();
+void TMGTestScene::update(float delta)
+{
+    ITMGContextGetInstance()->Poll();
+}
 ```
 
-### 4、加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。
-- 加入房间默认不打开麦克风及扬声器。
-- 在 EnterRoom 接口调用之前要先调用 Init 接口。
+### 4. Join a room
+This API is used to enter a room with the generated authentication data, and the ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message is received as a callback. Microphone and speaker are not enabled by default after a user enters the room.
+For entering a common voice chat room that does not involve team voice chat, use the common API for entering a room. For more information, please see the [GME team voice chat documentation](https://cloud.tencent.com/document/product/607/17972).
 
-#### 函数原型
+#### Function prototype
+
 ```
-ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
+ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//Common API for entering a room
 ```
-|参数     | 类型         |意义|
+| Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| roomId			| char*    		|房间号，最大支持127字符	|
-| roomType 			|ITMG_ROOM_TYPE	|房间音频类型	|
-| authBuffer    		|char*    				|鉴权码			|
-| buffLen   			|int   				|鉴权码长度		|
+| roomId			|char*   		| Room ID. maximum to 127 characters.	|
+| roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
+| authBuffer    		|char*     	| Authentication key			|
+| buffLen   			|int   		| Length of the authentication key		|
 
-|音频类型     	|含义|参数|音量类型|控制台推荐采样率设置|适用场景|
+| Audio Type | Meaning | Parameter | Volume Type | Recommended Sampling Rate on the Console | Application Scenarios |
 | ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|扬声器：通话音量；耳机：媒体音量	|如对音质无特殊需求，16K 采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于 FPS、MOBA 等类型的游戏；	|							
-| ITMG_ROOM_TYPE_STANDARD			|标准音质	|2|扬声器：通话音量；耳机：媒体音量	|根据对音质的需求，可以选择16k/48k采样率				|音质较好，延时适中，适用于狼人杀、棋牌等休闲游戏的实时通话场景；	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|高清音质	|3|扬声器：媒体音量；耳机：媒体音量	|为了保证最佳效果，建议控制台设置 48k 采样率的高音质配置	|超高音质，延时相对大一些，适用于音乐舞蹈类游戏以及语音社交类 APP；适用于播放音乐、线上 K 歌等有高音质要求的场景；	|
+| ITMG_ROOM_TYPE_FLUENCY			|Fluent	|1|Speaker: chat volume; headset: media volume 	| 16k sampling rate is recommended if there is no special requirement for sound quality					| Fluent sound quality and ultra-low delay which is suitable for team speak scenarios in games like FPS and MOBA.	|							
+| ITMG_ROOM_TYPE_STANDARD			|Standard	|2|Speaker: chat volume; headset: media volume	| Choose 16k or 48k sampling rate depending on different requirements for sound quality				| Good sound quality and medium delay which is suitable for voice chat scenarios in casual games like Werewolf and board games.	|												
+| ITMG_ROOM_TYPE_HIGHQUALITY		|High-quality	|3|Speaker: media volume; headset: media volume	| To ensure optimum effect, it is recommended to enable HQ configuration with 48k sampling rate	| Super-high sound quality and relative high delay which is suitable for scenarios demanding high sound quality, such as music playback and online karaoke.	|
 
-- 如对音量类型或场景有特殊需求，请联系一线客服反馈；
-- 控制台采样率设置会直接影响游戏语音效果，请在 [控制台](https://console.cloud.tencent.com/gamegme) 上再次确认采样率设置是否符合项目使用场景。
+- If you have special requirements on the sound quality for certain scenario, contact the customer service.
+- The sound quality in a game depends directly on the sampling rate set on the console. Please confirm whether the sampling rate you set on the [console](https://console.cloud.tencent.com/gamegme) is suitable for the project's application scenario.
 
-#### 示例代码  
+
+#### Sample code  
+
 ```
 ITMGContext* context = ITMGContextGetInstance();
-context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);
-```
-
-### 5、加入房间事件的回调
-加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
-#### 示例代码  
+context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);//Sample code for entering a common voice chat room
 ```
 
 
-//实现代码
+
+### 5. Callback for entering a room
+ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message is received after a user enters a room, the action of this event should be implemented in the OnEvent function.
+#### Code Description
+
+```
+
 void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 	switch (eventType) {
             case ITMG_MAIN_EVENT_TYPE_ENTER_ROOM:
 		{
-		//进行处理
+		//Process
 		break;
 		}
 	}
 }
 ```
 
-### 6、开启关闭麦克风
-此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
-#### 函数原型  
+### 6. Enable/Disable the microphone
+This API is used to enable/disable the microphone. Microphone and speaker are not enabled by default after a user enters a room.
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
+#### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 ```
-
-|参数     | 类型         |意义|
+| Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| bEnabled    |bool     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false		|
-
-#### 示例代码  
+| bEnabled    |bool     |To enable the microphone, set this parameter to true, otherwise, set it to false. |
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
 
 
-### 7、开启关闭扬声器
-此接口用于开启关闭扬声器。
-
-#### 函数原型  
+### 7. Enable/Disable the speaker
+This API is used to enable/disable the speaker.
+EnableSpeaker = EnableAudioPlayDevice + EnableAudioRecv.
+#### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 ```
-
-|参数     | 类型         |意义|
+| Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| enable   		|bool       	|如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true	|
-
-#### 示例代码  
+| enable   		|bool       	| To disable the speaker, set this parameter to false, otherwise, set it to true.	|
+#### Sample code  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ```
 
 
-## 关于鉴权
-### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署详情见 [GME 密钥文档](https://cloud.tencent.com/document/product/607/12218)。  
-离线语音获取鉴权时，房间号参数必须填null。
+## Authentication
+### Authentication information
+AuthBuffer is generated for the purpose of encryption and authentication. For more information about the authentication data, refer to [GME Key](https://cloud.tencent.com/document/product/607/12218).    
+The room ID parameter for voice message must be set to "null".
 
-#### 函数原型
+#### Function prototype
 ```
 QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
-|参数     | 类型         |意义|
+| Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填null）|
-| strOpenID  		|char*    		|用户标识								|
-| strKey    			|char*	    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
-|strAuthBuffer		|char*	    	|返回的 authbuff							|
-| buffLenght   		|int    		|返回的authbuff的长度					|
+| nAppId | int | The SdkAppId obtained from the Tencent Cloud console |
+| dwRoomID |char* | Room ID, maximum to 127 characters (The room room ID for voice message must be set to "null") |
+| strOpenID | char*   | User ID |
+| strKey | char* | The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) |
+| strAuthBuffer | char* | Returned authbuff |
+| buffLenght | int | Length of returned authbuff |
 
 
-#### 示例代码  
+
+#### Sample code  
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};

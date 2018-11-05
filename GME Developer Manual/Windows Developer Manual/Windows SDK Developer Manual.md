@@ -177,6 +177,7 @@ ITMGContext  int Resume()
 反初始化 SDK，进入未初始化状态。
 
 > 函数原型 
+
 ```
 ITMGContext int Uninit()
 
@@ -1055,7 +1056,7 @@ ITMGContextGetInstance()->GetAudioEffectCtrl()->EnableAccompanyLoopBack(false);
 ```
 
 ### 设置伴奏音量
-设置 DB 音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0-200。
+设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0-200。
 > 函数原型  
 ```
 ITMGAudioEffectCtrl virtual int SetAccompanyVolume(int vol)
@@ -1071,7 +1072,7 @@ ITMGContextGetInstance()->GetAudioEffectCtrl()->SetAccompanyVolume(vol);
 ```
 
 ### 获取播放伴奏的音量
-此接口用于获取 DB 音量。
+此接口用于获取伴奏音量。
 > 函数原型  
 ```
 ITMGAudioEffectCtrl virtual int GetAccompanyVolume()
@@ -1368,6 +1369,7 @@ ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(msTime);
 
 ### 启动录音
 此接口用于启动录音。需要将录音文件上传后才可以进行语音转文字等操作。
+
 > 函数原型  
 ```
 ITMGPTT virtual void StartRecording(const char* fileDir)
@@ -1403,8 +1405,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ```
 
-### 启动流式录音
-此接口用于启动流式录音，同时在回调中会有实时的语音转文字返回。
+### 启动流式语音识别
+此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
 
 > 函数原型  
 ```
@@ -1420,7 +1422,7 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(filePath,"cmn-Hans-CN");
 ```
 
-### 启动流式录音的回调
+### 启动流式语音识别的回调
 启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
 
 |消息名称     | 意义         |
@@ -1467,7 +1469,7 @@ ITMGContextGetInstance()->GetPTT()->StopRecording();
 ```
 
 ### 取消录音
-调用此接口取消录音。
+调用此接口取消录音。取消之后没有回调。
 > 函数原型  
 ```
 ITMGPTT virtual int CancelRecording()
@@ -1648,7 +1650,7 @@ ITMGPTT virtual void SpeechToText(const char* fileID, const char* language)
 
 > 示例代码  
 ```
-ITMGContextGetInstance()->GetPTT()->GetVoiceFileDuration(filePath,"cmn-Hans-CN");
+ITMGContextGetInstance()->GetPTT()->SpeechToText(filePath,"cmn-Hans-CN");
 ```
 
 ### 识别回调

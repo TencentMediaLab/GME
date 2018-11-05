@@ -16,7 +16,8 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 |EnableMic	 	| Enables the microphone 	|
 |EnableSpeaker		| Enables the speaker 	|
 
->**Notes:**
+**Notes:**
+
 **When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
 
 **GME APIs should be called in the same thread.**
@@ -25,11 +26,11 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 
 **The Poll API should be called for GME to trigger event callback.**
 
-**Refer to the callback message list for callback related information**
+**Refer to the callback message list for callback related information.**
 
-**Device related operations can only be done after entering a room**
+**Device related operations can only be done after entering a room.**
 
-**This document is applicable to GME sdk version：2.2**
+**This document is applicable to GME sdk version：2.2.**
 
 ## Initialization-related APIs
 GME should be initialized with the authentication data before entering a room.
@@ -132,7 +133,7 @@ ITMGContext -(QAVResult)Resume
 
 
 ### Deinitialize the SDK
-This API is used to deinitialize an SDK to make it uninitialized.
+This API is used to deinitialize SDK to make it uninitialized.
 #### Function prototype
 
 ```
@@ -342,9 +343,9 @@ ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE message is received after a user change th
 
 | Event Sub-type | Parameters | Description |
 | ------------- |:-------------:|-------------|
-| ITMG_ROOM_CHANGE_EVENT_ENTERROOM		|1 	|Indicates that the existing audio type is inconsistent with and changed to that of the room to enter.	|
-| ITMG_ROOM_CHANGE_EVENT_START			|2	|Indicates that there are members in the room and the audio type starts changing (e.g., the audio type is changed after the ChangeRoomType API is called.) |
-| ITMG_ROOM_CHANGE_EVENT_COMPLETE		|3	|Indicates that there are members in the room and the audio type has changed |
+| ITMG_ROOM_CHANGE_EVENT_ENTERROOM		|1 	|Indicates that the audio type is inconsistent with that of the room to be entered and it is changed to that of the room.	|
+| ITMG_ROOM_CHANGE_EVENT_START			|2	|Indicates that the room is entered and the audio type starts changing (e.g., the audio type is changed after the ChangeRoomType API is called.) |
+| ITMG_ROOM_CHANGE_EVENT_COMPLETE		|3	|Indicates that the room is entered and the audio type has changed |
 | ITMG_ROOM_CHANGE_EVENT_REQUEST			|4	|Indicates that a room member calls the ChangeRoomType API to request a change in the audio type |	
 
 
@@ -435,10 +436,10 @@ The message for quality monitoring event is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUA
 The audio APIs for Voice Chat can only be called after the SDK is initialized and the room is entered successfully.
 Call scenario examples:
 
-To enable or disable the microphone or speaker from UI:
+When a user click the UI button to enable or disable the microphone or speaker:
 - For most game Apps, it's recommended to call EnableMic and EnableSpeaker APIs. Because calling EnableMic is equivalent to calling EnableAudioCaptureDevice and EnableAudioSend at the same time, and calling EnableSpeaker is equivalent to calling EnableAudioPlayDevice and EnableAudioRecv at the same time.
 
-- For other mobile Apps (such as social networking Apps), enabling/disabling a capturing device will restart both the capturing and the playback devices. If the App is playing background music, it will also be interrupted. Playback won't be interrupted if the microphone is enabled/disabled through control of upstream/downstream. So the calling method is: Call EnableAudioCaptureDevice(true) and EnableAudioPlayDevice(true) once after entering the room, and call EnableAudioSend/Recv to send/receive audio streams when the microphone is clicked to enable or disable.
+- For other mobile Apps (such as social networking Apps), enabling/disabling a capturing device will restart both the capturing and the playback devices. If the App is playing background music, it will also be interrupted. But if the microphone is enabled/disabled through control of upstream/downstream, playback will not be interrupted . So the calling method is: Call EnableAudioCaptureDevice(true) and EnableAudioPlayDevice(true) once after entering the room, and call EnableAudioSend/Recv to send/receive audio streams when the microphone button is clicked to enable or disable.
 
 If you do not need to enable both the microphone and the speaker (releasing the recording permission to other modules), it is recommended to call PauseAudio/ResumeAudio.
 
@@ -562,7 +563,7 @@ BOOL IsAudioCaptureDevice = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioCap
 
 ### Enable/disable the audio sending
 
-This API is used to enable/disable the audio sending. Enable means the captured voice will be sent. 
+This API is used to enable/disable the audio sending. Enable means sending the captured voice. 
 
 #### Function prototype
 
@@ -619,7 +620,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
 ```
 
 ### Obtain software volume for the microphone
-This API is used to obtain the software volume for the microphone. An int value is returned. Retured value of 101 means SetMicVolume() has not been called.
+This API is used to obtain the software volume for the microphone. An int value is returned to indicate the software volume for the microphone. Returned value of 101 means SetMicVolume() has not been called.
 
 #### Function prototype  
 
@@ -694,7 +695,7 @@ BOOL IsAudioPlayDevice =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioPlayD
 ```
 
 ### Enable/disable the audio receiving
-This API is used to enable/disable the audio receving. Enable means the received voice will be played. 
+This API is used to enable/disable the audio receving. Enable means playing the received voice. 
 
 #### Function prototype  
 
@@ -758,7 +759,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetSpeakerVolume:(int)vol
 ```
 
 ### Obtain software volume for the speaker
-This API is used to obtain the software volume for the speaker. An int value is returned to indicate the software volume for the speaker.
+This API is used to obtain the software volume for the speaker. An int value is returned to indicate the software volume for the speaker. Returned value of 101 means SetSpeakerVolume() has not been called.
 "Level" indicates the real-time volume, and "Volume" is the software volume for the speaker. The ultimate volume equals to Level*Volume%. For example, if the value for "Level" is 100 and the one for "Volume" is 60, the ultimate volume will be "60".
 
 #### Function prototype  
@@ -963,11 +964,11 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeB
 | ------------- |:-------------:|
 |PlayEffect    		|Plays the sound effect |
 |PauseEffect    	|Pauses the sound effect |
-|PauseAllEffects	|Pauses all sound effects |
-|ResumeEffect    	|Replays the sound effect |
-|ResumeAllEffects	|Replays all sound effects |
+|PauseAllEffects	|Pauses all the sound effects |
+|ResumeEffect    	|Rsumes the sound effect |
+|ResumeAllEffects	|Rsumes all the sound effects |
 |StopEffect 		|Stops the sound effect |
-|StopAllEffects		|Stops all sound effects |
+|StopAllEffects		|Stops all the sound effects |
 |SetVoiceType 		|Voice changing effects |
 |SetKaraokeType     |Sets kalaok effects|
 |GetEffectsVolume	|Obtains the volume of sound effects |

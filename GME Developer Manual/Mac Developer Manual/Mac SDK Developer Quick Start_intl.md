@@ -9,14 +9,10 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 
 ### Key considerations for using GME
 
-This document only provides the most important APIs to help you get started with GME. For more APIs, see [API Documentation](https://cloud.tencent.com/document/product/607/15221).
-
-
 | Important API | Description |
 | ------------- |:-------------:|
 | InitEngine | Initializes GME |
 |Poll    		| Triggers event callback	|
-| SetDefaultAudienceAudioCategory | Sets background playback |
 |EnterRoom	 	| Enters a room  		|
 |EnableMic	 	| Enables the microphone 	|
 |EnableSpeaker		| Enables the speaker 	|
