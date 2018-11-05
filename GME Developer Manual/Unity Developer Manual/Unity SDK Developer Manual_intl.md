@@ -116,7 +116,6 @@ After the initialization, API for entering a room should be called before Voice 
 | ------------- |:-------------:|
 |GenAuthBuffer    	|Generates authentication data |
 |EnterRoom   		| Enters a room |
-|EnterTeamRoom | Enters a team chatting room |
 |IsRoomEntered   	|Indicates whether the room is entered successfully |
 |ExitRoom 		|Exits the room |
 |ChangeRoomType 	| Modifies the audio type of the user's room |
