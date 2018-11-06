@@ -8,7 +8,7 @@ This function is used to enter a room with the generated authentication data.
 ### Real-time voice chat room
 #### Function prototype
 ```
-ITMGContext EnterRoom(string?roomId,?ITMG_ROOM_TYPE roomType,?byte[]?authBuffer)
+ITMGContext EnterRoom(string roomId, ITMG_ROOM_TYPE roomType, byte[] authBuffer)
 ```
 
 | Parameter | Type | Description |
