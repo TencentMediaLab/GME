@@ -198,7 +198,7 @@ AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, Strin
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | appId    		|int   		| The SdkAppId obtained from the Tencent Cloud console |
-| roomId    		|String   		|  Room ID, maximum to 127 characters (The room room ID for voice message must be set to "null") |
+| roomId    		|String   		|  Room ID, maximum to 127 characters (The room ID parameter for voice message must be set to "null") |
 | openID    	|String 	| User ID					|
 | key    		|string 	| The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) 				|
 

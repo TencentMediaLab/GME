@@ -41,7 +41,7 @@ GME should be initialized with the authentication data before entering a room.
 |Poll    	|Triggers event callback	|
 |Pause   	|Pauses the system	|
 |Resume 	|Resumes the system	|
-|Uninit    	|Initializes GME 	|
+|Uninit    	|Deinitializes GME 	|
 
 ### Obtain the instance
 Obtain the Context instance using ITMGContext instead of QAVContext.GetInstance().
@@ -49,7 +49,7 @@ Obtain the Context instance using ITMGContext instead of QAVContext.GetInstance(
 ### Initialize the SDK
 
 For more information on how to obtain parameters, please see [GME Integration Guide](https://cloud.tencent.com/document/product/607/10782).
-This API should contain SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
+This API call needs SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
 SDK must be initialized before a user can enter a room.
 #### Function prototype 
 
@@ -58,7 +58,7 @@ IQAVContext Init(string sdkAppID, string openID)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|String  | The SdkAppId obtained from Tencent Cloud console				|
+| sdkAppId    	|String  | The SdkAppId obtained from the Tencent Cloud console				|
 | openID |String | The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. |
 #### Sample code  
 ```
@@ -1578,7 +1578,7 @@ The default path is:
 
 #### Function prototype
 ```
-ITMGContext  SetLogPath(string logDir)
+ITMGContext int SetLogPath(string logDir)
 ```
 
 | Parameter | Type | Description |

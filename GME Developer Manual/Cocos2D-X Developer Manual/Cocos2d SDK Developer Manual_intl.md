@@ -1,6 +1,7 @@
 ## Overview
-Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document provides a detailed description that makes it easy for Cocos2d developers to debug and integrate the APIs for Game Multimedia Engine (GME).
+Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document provides a detailed description that makes it easy for Cocos2d developers to debug and integrate the APIs of Game Multimedia Engine (GME).
 
+**Configure the project before using GME, otherwise SDK is not valid.**
 
 ## How to Use
 ![](https://main.qcloudimg.com/raw/810d0404638c494d9d5514eb5037cd37.png)
@@ -17,7 +18,6 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 |EnableSpeaker		|Enables the speaker 	|
 
 **Notes:**
-**Configure the project before using GME, otherwise SDK is not valid.**
 
 **When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
 
