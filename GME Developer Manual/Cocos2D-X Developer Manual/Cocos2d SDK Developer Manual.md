@@ -507,8 +507,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 |GetMicList    				      	|枚举麦克风设备|
 |GetSpeakerListCount    				      	|获取扬声器设备数量|
 |GetSpeakerList    				      	|枚举扬声器设备|
-|SelectMic    				      	|搜索麦克风设备|
-|SelectSpeaker    				|搜索扬声器设备|
+|SelectMic    				      	|选定麦克风设备|
+|SelectSpeaker    				|选定扬声器设备|
 |EnableMic    						|开关麦克风|
 |GetMicState    						|获取麦克风状态|
 |EnableAudioCaptureDevice    		|开关采集设备		|
@@ -598,7 +598,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->GetMicList(ppDeviceInfoList,nCount);
 
 
 ### 选中麦克风设备
-此接口用来选中麦克风设备。如果不调用或者传空字符，则选中系统默认设备。
+此接口用来选中麦克风设备。如果不调用或者传入"DEVICEID_DEFAULT"，则选中系统默认设备。设备 ID 来自于 GetMicList 返回列表。
 > 函数原型  
 ```
 ITMGAudioCtrl virtual int SelectMic(const char* pMicID)
@@ -608,7 +608,7 @@ ITMGAudioCtrl virtual int SelectMic(const char* pMicID)
 | pMicID    |char*      |麦克风设备 ID|
 > 示例代码  
 ```
-const char* pMicID ="1";
+const char* pMicID ="{0.0.1.00000000}.{7b0b712d-3b46-4f7a-bb83-bf9be4047f0d}";
 ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
 ```
 
@@ -780,7 +780,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerList(ppDeviceInfoList,nCount
 ```
 
 ### 选中扬声器设备
-此接口用来选中播放设备。如果不调用或者传入空字符串，则选中系统默认播放设备。
+此接口用来选中播放设备。如果不调用或者传入"DEVICEID_DEFAULT"，则选中系统默认播放设备。设备 ID 来自于 GetSpeakerList 返回列表。
 > 函数原型  
 ```
 ITMGAudioCtrl virtual int SelectSpeaker(const char* pSpeakerID)
@@ -790,7 +790,7 @@ ITMGAudioCtrl virtual int SelectSpeaker(const char* pSpeakerID)
 | pSpeakerID    |char*      |扬声器设备 ID|
 > 示例代码  
 ```
-const char* pSpeakerID ="1";
+const char* pSpeakerID ="{0.0.1.00000000}.{7b0b712d-3b46-4f7a-bb83-bf9be4047f0d}";
 ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
 ```
 
@@ -1664,7 +1664,7 @@ ITMGPTT virtual void SpeechToText(const char* fileID, const char* language)
 
 > 示例代码  
 ```
-ITMGContextGetInstance()->GetPTT()->GetVoiceFileDuration(filePath,"cmn-Hans-CN");
+ITMGContextGetInstance()->GetPTT()->SpeechToText(filePath,"cmn-Hans-CN");
 ```
 
 ### 识别回调
