@@ -14,7 +14,7 @@
 | ---------------- |-------------------|--------------|
 | cVer				|unsigned char/1	|版本号，填写数值：1		|
 | wOpenIDLen		|unsigned short/2	|自己的帐号长度	|
-| strOpenID			|wAccountLen		|自己的帐号字符	|
+| strOpenID			|wOpenIDLen		|自己的帐号字符	|
 | dwSdkAppid		|unsigned short/4	|自己的 SDKappid		|
 | dwReserved1		|unsigned int/4		|填写数值：0				|
 | dwExpTime		|unsigned int/4		|过期时刻（当前时间+有效期[单位：秒，建议 300 秒]）|
