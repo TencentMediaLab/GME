@@ -13,15 +13,15 @@
 |字段描述    		| 类型/长度			| 值定义/备注|
 | ---------------- |-------------------|--------------|
 | cVer				|unsigned char/1	|版本号，填写数值：1		|
-| wOpenIDLen		|wAccountLen	|第三方自己的帐号长度	|
-| strOpenID			|unsigned short/2		|第三方自己的帐号字符	|
-| dwSdkAppid		|unsigned short/4	|第三方自己的 SDKappid		|
+| wOpenIDLen		|unsigned short/2	|自己的帐号长度	|
+| strOpenID			|wAccountLen		|自己的帐号字符	|
+| dwSdkAppid		|unsigned short/4	|自己的 SDKappid		|
 | dwReserved1		|unsigned int/4		|填写数值：0				|
 | dwExpTime		|unsigned int/4		|过期时刻（当前时间+有效期[单位：秒，建议 300 秒]）|
 | dwReserved2		|unsigned int/4		|填写数值：-1 或者 0xFFFFFFFF|
 | dwReserved3		|unsigned int/4		|填写数值：0				|
-| wRoomIDLen		|wRoomIDLen	|第三方自己的房间长度				|
-| strRoomID			|unsigned short/2		|第三方自己的房间字符				|
+| wRoomIDLen		|unsigned short/2	|自己的房间号码长度，如果是离线语音服务，请填写 0				|
+| strRoomID			|wRoomIDLen		|自己的房间号码字符				|
 
 ### 1.密钥
 腾讯云 GME 控制台获取相关权限密钥。
