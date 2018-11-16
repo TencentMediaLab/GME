@@ -1,7 +1,8 @@
-## 简介
+## 简介（Overview）
 欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍 GME 语音转文字的语言参数参考列表。
+Thank you for using Tencent Cloud Game Multimedia Engine (GME) SDK. This document provides a language reference list of GME.
 
-|语言     | 参数         |中文翻译|
+|语言language     | 参数 Parameter        |中文Chinese|
 | ------------- |:-------------:|-------------
 普通话 (中国大陆)					|cmn-Hans-CN		|中文，普通话（简体中文，中文）
 國語 (台灣)							|cmn-Hant-TW		|中文，普通话（繁体，台湾）

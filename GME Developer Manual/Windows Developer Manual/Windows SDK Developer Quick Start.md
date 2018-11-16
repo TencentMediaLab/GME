@@ -28,11 +28,13 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
+
+**GME 回调信息参考回调消息列表。**
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.1.1.39800。**
+**此文档对应GME sdk version：2.2。**
 ## 快速接入步骤
 
 ### 1、获取单例
@@ -171,7 +173,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ## 关于鉴权
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署详情见[GME密钥文档](../GME%20Key%20Manual.md)。  
-离线语音获取鉴权时，房间号参数必须填0。
+离线语音获取鉴权时，房间号参数必须填null。
 
 > 函数原型
 ```
@@ -180,7 +182,7 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填0）|
+| dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填null）|
 | strOpenID  		|char*    		|用户标识								|
 | strKey    			|char*	    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|

@@ -16,15 +16,15 @@ Click the "Voice Chat" button in Figure 2 to enter the following interface :
 ![image](Image/u8.png)
 > Figure 3 enters the room interface
 
-Room Id: Members with the same room number will enter the same room.
+Room Id: Members with the same room ID will enter the same room.
 
 RoomType: Select voice quality:
 
-- Fluency: Smooth priority, ultra-low latency real-time voice, applied in the game to open team play scenes, suitable for FPS, MOBA and other types of games;
+- Fluency: Smooth priority, ultra-low latency real-time voice, applied in the game to open team voice chat scenes, suitable for FPS, MOBA and other types of games;
 
-- Standard: The sound quality is good, the lag is moderate, suitable for real-time call scenes of casual games such as table games, chess and so on;
+- Standard: The sound quality is good, the latency is medium, suitable for real-time call scenes of casual games such as table games, chess and so on;
 
-- Hign Quality: High sound quality, relatively laggy, suitable for music and dance games and voice social apps; suitable for playing music, online karaoke and other scenes with high sound quality requirements.
+- High Quality: Super-high sound quality, relatively high latency, suitable for music and dance games and voice social apps; suitable for playing music, online karaoke and other scenes with high sound quality requirements.
 
 Click the "JoinRoom" button to enter the room.
 
@@ -33,17 +33,17 @@ Click the "JoinRoom" button to enter the room.
 
 Talking Members：Show the members who are talking in the room.
 
-3D Voice Effect: Switch 3D voice and show or hide the 3D voice settings interface.
+3D Voice Effect: Switch for 3D voice. Show or hide the 3D voice settings interface.
 
-Voice Change：Select voice type. 10 kinds of voice type are supported.
+Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 3D Voice Effect setting:
 
-- Userid: The user id using 3D voice, you can select any speaking members except yourself in the room.
+- Userid: The user id expected to use 3D voice, you can select any speaking members except yourself in the room.
 
-- Azimuth: The angle of the horizontal direction relative to yourself, which will be 0 at the front, 90 at the right, -90 at the left and 180 or -180 at the back.
+- Azimuth: The angle in the horizontal direction relative to yourself, which will be 0 at the front, 90 at the right, -90 at the left and 180 or -180 at the back.
 
-- Elevation: The angle of the vertical direction relative to yourself. On a horizontal plane with yourself, the angle will be 0, directly below will be -90, and directly above will be 90.
+- Elevation: The angle in the vertical direction relative to yourself. On a horizontal plane with yourself, the angle will be 0, directly below will be -90, and directly above will be 90.
 
 - Distance: Relative distance from yourself.
 
@@ -54,9 +54,11 @@ Click the "Voice Message" button in Figure 2 to enter the voice message interfac
 ![image](Image/u10.png)
 > Figure 5 voice message interface
 
+Language: Language being used
+
 Audio：Recorded voice messages and voice duration. Click ![image](Image/u11.png) to play audio, and click it again to end playback.
 
 
 
 
-Audio-to-Text：Text converted from audio.Press and hold the “Push To Talk” button to record voice and release it to end recording.
+Audio-to-Text：Text recognized from voice. Press and hold the “Push To Talk” button to record voice and release it to end recording.

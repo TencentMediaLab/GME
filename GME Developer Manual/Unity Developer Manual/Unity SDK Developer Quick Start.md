@@ -27,11 +27,13 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
+
+**GME 回调信息参考回调消息列表。**
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.1.1.39800。**
+**此文档对应GME sdk version：2.2。**
 ## 快速接入步骤
 
 
@@ -48,6 +50,7 @@ IQAVContext Init(string sdkAppID, string openID)
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码						|
 | openID    	|String  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 	|
+
 > 示例代码  
 ```
 int ret = IQAVContext.GetInstance().Init(str_appId, str_userId);
@@ -154,7 +157,7 @@ IQAVContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
 ### 鉴权信息
 
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。    
-离线语音获取鉴权时，房间号参数必须填0。
+离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 Byte[] 类型。
 > 函数原型
 
@@ -165,7 +168,7 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填0）|
+| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填null）|
 | openId    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
 > 示例代码  

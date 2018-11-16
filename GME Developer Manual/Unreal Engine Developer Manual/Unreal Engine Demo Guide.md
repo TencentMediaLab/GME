@@ -16,15 +16,15 @@ Click the "Voice Chat" button in Figure 2 to enter the following interface :
 ![image](Image/ue10.png)
 > Figure 3 enters the room interface
 
-Room Id: Members with the same room number will enter the same room.
+Room Id: Members with the same room ID will enter the same room.
 
 RoomType: Select voice quality:
 
-- Fluency: Smooth priority, ultra-low latency real-time voice, applied in the game to open team play scenes, suitable for FPS, MOBA and other types of games;
+- Fluency: Smooth priority, ultra-low latency real-time voice, applied in the game to open team voice chat scenes, suitable for FPS, MOBA and other types of games;
 
-- Standard: The sound quality is good, the lag is moderate, suitable for real-time call scenes of casual games such as table games, chess and so on;
+- Standard: The sound quality is good, the latency is medium, suitable for real-time call scenes of casual games such as table games, chess and so on;
 
-- Hign Quality: High sound quality, relatively laggy, suitable for music and dance games and voice social apps; suitable for playing music, online karaoke and other scenes with high sound quality requirements.
+- High Quality: Super-high sound quality, relatively high latency, suitable for music and dance games and voice social apps; suitable for playing music, online karaoke and other scenes with high sound quality requirements.
 
 Click the "JoinRoom" button to enter the room,and click the “Back” button to Return to the previous interface.
 
@@ -33,14 +33,13 @@ Click the "JoinRoom" button to enter the room,and click the “Back” button to
 
 Mic: Turn on/off the microphone.
 
-Spearker: Turn on/off the speaker.
+Speaker: Turn on/off the speaker.
 
-Talking Members: Show the members who are talking in the room.
+3D Voice Effect: Switch for 3D voice
 
-3D Voice Effect: Switch 3D voice and show or hide the 3D voice settings interface.
+Voice Change: Select voice font type. 10 kinds of voice font are supported.
 
-Voice Change: Select voice type. 10 kinds of voice type are supported.
-The members in the room will appear in the scene as a actor. Moving around the members, you can experience the 3D sound effect.
+The member in the room will appear in the scene and move around the player, you can experience the 3D sound effect according to his position change.
 
 ## 3.Voice Message
 
@@ -49,9 +48,13 @@ Click the "Voice Message" button in Figure 2 to enter the voice message interfac
 ![image](Image/ue12.png)
 > Figure 5 voice message interface
 
+Language: Language being used
+
 Audio：Recorded voice messages and voice duration. Click ![image](Image/ue13.png) to play audio, and click it again to end playback.
 
 
 
 
-Audio-to-Text：Text converted from audio.Press and hold the “Push To Talk” button to record voice and release it to end recording.Click the “Back” button to Return to the previous interface.
+Audio-to-Text：Text recognized from voice. Press and hold the “Push To Talk” button to record voice and release it to end recording.
+
+Click the “Back” button to Return to the previous interface.

@@ -1,6 +1,6 @@
 ## Overview
 
-Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document provides an overview that makes it easy for iOS developers to debug and integrate the APIs of Game Multimedia Engine.
+Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document provides an overview that makes it easy for Mac developers to debug and integrate the APIs of Game Multimedia Engine.
 
 
 ## How to Use
@@ -9,14 +9,10 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 
 ### Key considerations for using GME
 
-This document only provides the most important APIs to help you get started with GME. For more APIs, see [API Documentation](https://intl.cloud.tencent.com/document/product/607/15221).
-
-
 | Important API | Description |
 | ------------- |:-------------:|
 | InitEngine | Initializes GME |
 |Poll    		| Triggers event callback	|
-| SetDefaultAudienceAudioCategory | Sets background playback |
 |EnterRoom	 	| Enters a room  		|
 |EnableMic	 	| Enables the microphone 	|
 |EnableSpeaker		| Enables the speaker 	|
@@ -69,6 +65,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 | ------------- |:-------------:|-------------|
 | sdkAppId | NSString | The SdkAppId obtained from Tencent Cloud console |
 | openID | NSString | The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. |
+
 #### Sample code  
 
 ```

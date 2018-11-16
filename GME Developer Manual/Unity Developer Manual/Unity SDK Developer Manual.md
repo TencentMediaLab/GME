@@ -21,8 +21,11 @@
 [回调消息列表](./Unity%20SDK%20Developer%20Manual.md#%E5%9B%9E%E8%B0%83%E6%B6%88%E6%81%AF)
 
 ## 使用流程图
+### 实时语音流程图
 ![image](Image/i0.png)
 
+### 离线语音语音转文字流程图
+![image](Image/l0.png)
 
 ### 使用GME 重要事项
 
@@ -34,7 +37,8 @@
 |EnableMic	 	|开麦克风 	|
 |EnableSpeaker		|开扬声器 	|
 
-**说明：**
+
+**说明**
 
 **GME 的接口调用成功后返回值为 QAVError.OK，数值为0。**
 
@@ -42,13 +46,13 @@
 
 **GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
 
-**GME 需要调用 Poll 接口触发事件回调。**
-
-**设备的操作要在进房成功之后。**
+**GME 需要周期性的调用 Poll 接口触发事件回调。**
 
 **GME 回调信息参考回调消息列表。**
 
-**此文档对应GME sdk version：2.1.1.39800。**
+**设备的操作要在进房成功之后。**
+
+**此文档对应GME sdk version：2.2。**
 
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
@@ -148,7 +152,7 @@ ITMGContext public abstract int Uninit()
 ### 鉴权信息
 
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。    
-离线语音获取鉴权时，房间号参数必须填0。
+离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 Byte[] 类型。
 > 函数原型
 
@@ -158,7 +162,7 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填0）|
+| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填null）|
 | openId    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
 
@@ -249,7 +253,7 @@ IQAVContext.GetInstance().IsRoomEntered();
 ```
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个同步接口，调用返回时会释放所占用的设备资源。
+通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
 > 函数原型  
 
 ```
@@ -491,7 +495,7 @@ IQAVContext.GetInstance ().GetAudioCtrl ().ResumeAudio();
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
-
+EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
 > 函数原型  
 ```
 ITMGAudioCtrl EnableMic(bool isEnabled)
@@ -506,7 +510,7 @@ IQAVContext.GetInstance().GetAudioCtrl().EnableMic(true);
 ```
 
 ### 麦克风状态获取
-此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态，返回值 2 为麦克风设备正在操作中，返回值 3 为麦克风设备不存在，返回值 4 为设备没初始化好。
+此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
 > 函数原型  
 ```
 ITMGAudioCtrl GetMicState()
@@ -629,6 +633,7 @@ IQAVContext.GetInstance().GetAudioCtrl().GetMicVolume();
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
+EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
 > 函数原型  
 ```
 ITMGAudioCtrl EnableSpeaker(bool isEnabled)
@@ -645,7 +650,7 @@ IQAVContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
 
 
 ### 扬声器状态获取
-此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中，返回值 3 为扬声器设备不存在，返回值 4 为设备没初始化好。
+此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
 > 函数原型  
 ```
 ITMGAudioCtrl GetSpeakerState()
@@ -831,7 +836,7 @@ void QAVAudioDeviceStateCallback(){
 |SetAccompanyFileCurrentPlayedTimeByMs 				|设置播放进度|
 
 ### 开始播放伴奏
-调用此接口开始播放伴奏。支持 m4a、AAC、wav、mp3 一共四种格式。调用此 API，音量会重置。
+调用此接口开始播放伴奏。支持 m4a、wav、mp3 一共三种格式。调用此 API，音量会重置。
 > 函数原型
 
 ```
@@ -963,7 +968,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().EnableAccompanyLoopBack(true);
 
 
 ### 设置伴奏音量
-设置 DB 音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 - 200。
+设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 - 200。
 > 函数原型  
 
 ```
@@ -980,7 +985,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetAccompanyVolume(vol);
 ```
 
 ### 获取播放伴奏的音量
-此接口用于获取 DB 音量。
+此接口用于获取伴奏音量。
 > 函数原型  
 
 ```
@@ -1037,11 +1042,12 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetAccompanyFileCurrentPlayedTime
 |StopEffect 		|停止播放音效|
 |StopAllEffects		|停止播放所有音效|
 |SetVoiceType 		|变声特效|
+|SetKaraokeType 		|K歌音效特效|
 |GetEffectsVolume	|获取播放音效的音量|
 |SetEffectsVolume 	|设置播放音效的音量|
 
 ### 播放音效
-此接口用于播放音效。参数中音效 id 需要 App 侧进行管理，唯一标识一个独立文件。文件支持 m4a、AAC、wav、mp3 一共四种格式。
+此接口用于播放音效。参数中音效 id 需要 App 侧进行管理，唯一标识一个独立文件。文件支持 m4a、wav、mp3 一共三种格式。
 > 函数原型  
 
 ```
@@ -1186,6 +1192,35 @@ IQAAudioEffectCtrl int setVoiceType(int type)
 IQAVContext.GetInstance().GetAudioEffectCtrl().setVoiceType(0);
 ```
 
+### K歌音效特效
+调用此接口设置K歌音效特效。
+>  函数原型  
+```
+IQAAudioEffectCtrl int SetKaraokeType(int type)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| type    |int                    |表示本端音频变声类型|
+
+
+|类型参数     |参数代表|意义|
+| ------------- |-------------|------------- |
+|ITMG_KARAOKE_TYPE_ORIGINAL 		|0	|原声			|
+|ITMG_KARAOKE_TYPE_POP 				|1	|流行			|
+|ITMG_KARAOKE_TYPE_ROCK 			|2	|摇滚			|
+|ITMG_KARAOKE_TYPE_RB 				|3	|嘻哈			|
+|ITMG_KARAOKE_TYPE_DANCE 			|4	|舞曲			|
+|ITMG_KARAOKE_TYPE_HEAVEN 			|5	|空灵			|
+|ITMG_KARAOKE_TYPE_TTS 				|6	|语音合成		|
+
+> 示例代码  
+```
+IQAVContext.GetInstance().GetAudioEffectCtrl().SetKaraokeType(0);
+```
+
+
+
+
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
 > 函数原型  
@@ -1231,6 +1266,7 @@ IQAVContext.GetInstance().GetAudioEffectCtrl().SetEffectsVolume(volume);
 |ApplyPTTAuthbuffer    |鉴权初始化	|
 |SetMaxMessageLength    |限制最大语音信息时长	|
 |StartRecording		|启动录音		|
+|StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
 |UploadRecordedFile 	|上传语音文件		|
@@ -1265,7 +1301,8 @@ ITMGPTT int SetMaxMessageLength(int msTime)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长|
+| msTime    |int                    |语音时长，单位ms|
+
 > 示例代码  
 
 ```
@@ -1273,7 +1310,8 @@ IQAVContext.GetInstance().GetPttCtrl().SetMaxMessageLength(60000);
 ```
 
 ### 启动录音
-此接口用于启动录音。
+此接口用于启动录音。需要将录音文件上传后才可以进行语音转文字等操作。
+
 > 函数原型  
 
 ```
@@ -1315,8 +1353,58 @@ void mInnerHandler(int code, string filepath){
 }
 ```
 
+### 启动流式语音识别
+此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
+
+> 函数原型  
+
+```
+ITMGPTT int StartRecordingWithStreamingRecognition(string filePath, string language)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| filePath    	|String	|存放的语音路径	|
+| language 	|String	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+
+> 示例代码  
+```
+string recordPath = Application.persistentDataPath + string.Format("/{0}.silk", sUid++);
+int ret = ITMGContext.GetInstance().GetPttCtrl().StartRecordingWithStreamingRecognition(recordPath, "cmn-Hans-CN");
+```
+
+### 启动流式语音识别的回调
+启动录音完成后的回调通过委托传递消息。
+```
+委托函数：
+public delegate void QAVStreamingRecognitionCallback(int code, string fileid, string filepath, string result);
+事件函数：
+public abstract event QAVStreamingRecognitionCallback OnStreamingSpeechComplete;
+```
+
+|消息名称     | 意义         |
+| ------------- |:-------------:|
+| code    	|用于判断流式录音是否成功的返回码		|
+| result    		|语音转文字识别的文本	|
+| filepath 	|录音存放的本地地址		|
+| fileid 		|录音在后台的 url 地址	|
+
+|错误码     | 意义         |处理方式|
+| ------------- |:-------------:|:-------------:|
+|32775	|流式语音转文本失败，但是录音成功	|调用 UploadRecordedFile 接口上传录音，再调用 SpeechToText 接口进行语音转文字操作
+|32777	|流式语音转文本失败，但是录音成功，上传成功	|返回的信息中有上传成功的后台 url 地址，调用 SpeechToText 接口进行语音转文字操作
+
+> 示例代码  
+```
+对事件进行监听：
+IQAVContext.GetInstance().GetPttCtrl().OnStreamingSpeechComplete += mInnerHandler;
+监听处理：
+void mInnerHandler(int code, string fileid, string filepath, string result){
+    //启动流式录音的回调
+}
+
+```
 ### 停止录音
-此接口用于停止录音。
+此接口用于停止录音。停止录音后会有录音完成回调。
 > 函数原型  
 
 ```
@@ -1329,7 +1417,7 @@ IQAVContext.GetInstance().GetPttCtrl().StopRecording();
 ```
 
 ### 取消录音
-调用此接口取消录音。
+调用此接口取消录音。取消之后没有回调。
 > 函数原型  
 
 ```
@@ -1366,8 +1454,10 @@ IQAVContext.GetInstance().GetPttCtrl().UploadRecordedFile(filePath);
 ```
 委托函数：
 public delegate void QAVUploadFileCompleteCallback(int code, string filepath, string fileid);
+
 事件函数：
 public abstract event QAVUploadFileCompleteCallback OnUploadFileComplete;
+
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -1546,6 +1636,24 @@ IQAVPTT int SpeechToText(String fileID)
 ```
 IQAVContext.GetInstance().GetPttCtrl().SpeechToText(fileID);
 ```
+
+### 将指定的语音文件识别成文字（指定语言）
+此接口用于将指定的语音文件识别成指定语言的文字。
+
+>  函数原型  
+```
+IQAVPTT int SpeechToText(String fileID,String language)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| fileID    |String                     |语音文件 url|
+| language    |String                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+
+>  示例代码  
+```
+IQAVContext.GetInstance().GetPttCtrl().SpeechToText(fileID,"cmn-Hans-CN");
+```
+
 
 ### 识别回调
 

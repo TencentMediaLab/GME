@@ -8,8 +8,12 @@
 
 > 函数原型  
 ```
-public abstract int InitSpatializer()
+public abstract int InitSpatializer(string modelPath)
 ```
+
+|参数	|类型	|意义 |
+| ------- |---------|------|
+| modelPath    	|string    	|3D音效资源文件路径，资源文件请在此路径[下载](http://dldir1.qq.com/hudongzhibo/QCloud_TGP/GME/pubilc/GME_2.X_3d_model)，md5: d0b76aa64c46598788c2f35f5a8a8694，存放于本地中，并通过该参数将存放路径传递给 SDK|
 
 ### 2、开启或关闭 3D 音效
 此函数用于开启或关闭 3D 音效。开启之后可以听到 3D 音效。
@@ -40,12 +44,12 @@ public abstract bool IsEnableSpatializer()
 
 #### 距离与声音衰减的关系
 
-3D 音效中，音源音量的大小与音源距离有一定的衰减关系。单位距离超过500之后，音量衰减到几乎为零。
+3D 音效中，音源音量的大小与音源距离有一定的衰减关系。单位距离超过 range 之后，音量衰减到几乎为零。
 
 |距离范围（引擎单位）|衰减公式	|
 | ------- |---------|
-| 0< N <range/5  	|衰减系数：1.0 （音量无衰减）	|
-| N≥range/5  |衰减系数：40/N          			|
+| 0< N <range/10  	|衰减系数：1.0 （音量无衰减）	|
+| N≥range/10|衰减系数：range/10/N        			|
 
 ![](https://github.com/TencentMediaLab/GME/blob/master/Image/t1.jpg)
 
@@ -60,9 +64,6 @@ public abstract void UpdateAudioRecvRange(int range)
 ```
 public abstract int UpdateSelfPosition(int position[3], float axisForward[3], float axisRight[3], float axisUp[3])
 ```
-
-在GME中设计的世界坐标系下（此坐标系与 Unreal 引擎坐标系相同，与 Unity 引擎不同，需要开发者注意）：
-- x 轴指向前方，y 轴指向右方，z 轴指向上方。
 
 
 |参数     | 类型         |意义|
@@ -85,7 +86,7 @@ float right[] = { matrix.GetColumn(0).Y,matrix.GetColumn(1).Y,matrix.GetColumn(2
 float up[] = { matrix.GetColumn(0).Z,matrix.GetColumn(1).Z,matrix.GetColumn(2).Z};
 ITMGContextGetInstance()->GetRoom()->UpdateSelfPosition(position, forward, right, up); 	
 ```
-Unity：
+Unity:
 ```
 Transform selftrans = currentPlayer.gameObject.transform;
 Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, selftrans.rotation, Vector3.one);

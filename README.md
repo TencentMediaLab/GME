@@ -63,6 +63,21 @@
 - [Android 开发接入技术文档](./GME%20Developer%20Manual/Android%20Developer%20Manual/Android%20SDK%20Developer%20Manual.md)
 
 ## SDK更新说明
+### GME_SDK2.2 2018-10-30
+#### 新增功能：
+1、支持多种K歌音效；
+
+2、优化超大房间体验，延时更低更流畅；
+
+3、离线语音消息支持流式语音转文字；
+
+4、windows端支持伴奏；
+
+#### 优化能力
+1、语音带宽优化，更省流量；
+
+2、CPU 及内存性能优化；
+
 ### GME_SDK2.1 2018-08-21
 
 #### 新增功能：
