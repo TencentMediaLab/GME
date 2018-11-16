@@ -12,14 +12,16 @@
 
 |字段描述    		| 类型/长度			| 值定义/备注|
 | ---------------- |-------------------|--------------|
-| cVer				|unsigned char/1	|版本号，填写数值：0		|
-| wOpenIDLen		|unsigned short/2	|第三方自己的帐号长度	|
-| dwOpenID			|wAccountLen		|第三方自己的帐号字符	|
-| dwSdkAppid		|unsigned short/4	|第三方自己的 appid		|
-| dwRoomID			|unsigned int/4		|如果是实时语音，请填写房间号码；如果是离线语音，请填写0			|
+| cVer				|unsigned char/1	|版本号，填写数值：1		|
+| wOpenIDLen		|wAccountLen	|第三方自己的帐号长度	|
+| strOpenID			|unsigned short/2		|第三方自己的帐号字符	|
+| dwSdkAppid		|unsigned short/4	|第三方自己的 SDKappid		|
+| dwReserved1		|unsigned int/4		|填写数值：0				|
 | dwExpTime		|unsigned int/4		|过期时刻（当前时间+有效期[单位：秒，建议 300 秒]）|
-| dwReserved1		|unsigned int/4		|填写数值：-1 或者 0xFFFFFFFF|
-| dwReserved2		|unsigned int/4		|填写数值：0		|
+| dwReserved2		|unsigned int/4		|填写数值：-1 或者 0xFFFFFFFF|
+| dwReserved3		|unsigned int/4		|填写数值：0				|
+| wRoomIDLen		|wRoomIDLen	|第三方自己的房间长度				|
+| strRoomID			|unsigned short/2		|第三方自己的房间字符				|
 
 ### 1.密钥
 腾讯云 GME 控制台获取相关权限密钥。
@@ -45,7 +47,7 @@ TEA对称加密算法。
 ### 3.算法加密详情
 - 密钥：APPID 对应鉴权密钥的 md5 值，长度 16 字节
 - 加密算法：TEA 加密
-- 加密库及例子：附件 [authbuffer.zip](https://main.qcloudimg.com/raw/eac8e36ca4a24edf9414dfe7f58a764a.zip)
+- 加密库及例子：附件 [authbuffer.zip](https://main.qcloudimg.com/raw/c8be793e20c85114499f52e0f8c29190.zip)
 
 >**注意：**
 > 控制台修改密钥后，15 分钟 ~ 1 小时内生效，不建议频繁更换。
