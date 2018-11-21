@@ -1288,12 +1288,12 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 > 函数原型  
 
 ```
-ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const char* filePath,const char*translateLanguage)
+ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* filePath,const NSString*translateLanguage)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| filePath    	|char*	|存放的语音路径	|
-| language 	|char*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| filePath    	|NSString*	|存放的语音路径	|
+| language 	|NSString*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```
