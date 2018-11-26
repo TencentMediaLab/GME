@@ -24,7 +24,7 @@
 ### 离线语音语音转文字流程图
 ![image](Image/l0.png)
 
-### 使用GME 重要事项
+### 使用 GME 重要事项
 
 |重要接口     | 接口含义|
 | ------------- |:-------------:|
@@ -91,7 +91,7 @@ _context.TMGDelegate =self;
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
     	NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
 		switch (eventType) {
-			//对eventType进行判断
+			//对 eventType 进行判断
 			}
 	}
 ```
@@ -111,6 +111,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
 | openID    		|NSString  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 |
+
 > 示例代码  
 
 ```
@@ -163,9 +164,6 @@ ITMGContext -(void)Uninit
 
 
 
-
-
-
 ### 设置后台播放声音
 设置后台播放声音，在进房前调用。
 同时，应用侧有如下两点需要注意：
@@ -210,6 +208,7 @@ ITMGContext -(QAVResult)SetDefaultAudienceAudioCategory:(ITMG_AUDIO_CATEGORY)aud
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
 > 函数原型
+
 ```
 @interface QAVAuthBuffer : NSObject
 + (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId identifier:(NSString*)identifier key:(NSString*)key;
@@ -248,12 +247,12 @@ ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBu
 
 |音频类型     	|含义|参数|音量类型|控制台推荐采样率设置|适用场景|
 | ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|扬声器：通话音量；耳机：媒体音量	|如对音质无特殊需求，16K采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于FPS、MOBA等类型的游戏；	|							
+| ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|扬声器：通话音量；耳机：媒体音量	|如对音质无特殊需求，16K 采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于 FPS、MOBA 等类型的游戏；	|							
 | ITMG_ROOM_TYPE_STANDARD			|标准音质	|2|扬声器：通话音量；耳机：媒体音量	|根据对音质的需求，可以选择16k/48k采样率				|音质较好，延时适中，适用于狼人杀、棋牌等休闲游戏的实时通话场景；	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|高清音质	|3|扬声器：媒体音量；耳机：媒体音量	|为了保证最佳效果，建议控制台设置48k采样率的高音质配置	|超高音质，延时相对大一些，适用于音乐舞蹈类游戏以及语音社交类APP；适用于播放音乐、线上K歌等有高音质要求的场景；	|
+| ITMG_ROOM_TYPE_HIGHQUALITY		|高清音质	|3|扬声器：媒体音量；耳机：媒体音量	|为了保证最佳效果，建议控制台设置 48k 采样率的高音质配置	|超高音质，延时相对大一些，适用于音乐舞蹈类游戏以及语音社交类 APP；适用于播放音乐、线上 K 歌等有高音质要求的场景；	|
 
 - 如对音量类型或场景有特殊需求，请联系一线客服反馈；
-- 控制台采样率设置会直接影响游戏语音效果，请在[控制台](https://console.cloud.tencent.com/gamegme)上再次确认采样率设置是否符合项目使用场景。
+- 控制台采样率设置会直接影响游戏语音效果，请在 [控制台](https://console.cloud.tencent.com/gamegme) 上再次确认采样率设置是否符合项目使用场景。
 
 > 示例代码  
 
@@ -528,6 +527,7 @@ ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
+
 > 示例代码  
 
 ```
@@ -612,7 +612,6 @@ ITMGContext GetAudioCtrl -(BOOL)IsAudioSendEnabled
 BOOL IsAudioSend =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioSendEnabled];
 ```
 
-
 ### 获取麦克风实时音量
 此接口用于获取麦克风实时音量，返回值为 int 类型。
 > 函数原型  
@@ -636,6 +635,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | volume    |int      |设置音量，范围 0 到 200|
+
 > 示例代码  
 
 ```
@@ -667,6 +667,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
+
 > 示例代码  
 
 ```
@@ -697,6 +698,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioPlayDevice:(BOOL)enabled
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | enabled    |BOOL        |如果需要关闭播放设备，则传入的参数为 NO，如果打开播放设备，则参数为 YES|
+
 > 示例代码
 
 ```
@@ -743,11 +745,13 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioRecv:(BOOL)enabled
 ```
 ITMGAudioCtrl bool IsAudioRecvEnabled()
 ```
+
 > 示例代码  
 
 ```
 BOOL IsAudioRecv = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioRecvEnabled];
 ```
+
 ### 获取扬声器实时音量
 此接口用于获取扬声器实时音量。返回值为 int 类型数值，表示扬声器实时音量。
 > 函数原型  
@@ -774,6 +778,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetSpeakerVolume:(int)vol
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | vol    |int        |设置音量，范围 0 到 200|
+
 > 示例代码  
 
 ```
@@ -806,6 +811,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | enable    |boolean         |设置是否启动|
+
 > 示例代码  
 
 ```
@@ -838,6 +844,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StartAccompany:(NSString*)filePath
 | filePath    	|NSString    		|播放伴奏的路径											|
 | loopBack  	|boolean         	|是否混音发送，一般都设置为 YES，即其他人也能听到伴奏	|
 | loopCount	|int          		|循环次数，数值为 -1 表示无限循环							|
+
 > 示例代码  
 
 ```
@@ -1007,6 +1014,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSS
 | soundId  	|int           	|音效 id			|
 | filePath    	|NSString    	|音效路径		|
 | loop    		|boolean  	|是否重复播放	|
+
 > 示例代码  
 
 ```
@@ -1053,6 +1061,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 id|
+
 > 示例代码  
 
 ```
@@ -1082,6 +1091,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 id|
+
 > 示例代码  
 
 ```
@@ -1111,6 +1121,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | type    |int                    |表示本端音频变声类型|
+
 
 
 
@@ -1162,8 +1173,6 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetKaraokeType:0];
 ```
-
-
 
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
@@ -1242,6 +1251,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | msTime    |int                    |语音时长，单位ms|
+
 > 示例代码  
 
 ```
@@ -1258,6 +1268,7 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileDir    |NSString                     |存放的语音路径|
+
 > 示例代码  
 
 ```
@@ -1292,7 +1303,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| filePath    	|NSString*	|存放的语音路径	|
+| filePath    	|NSString* 	|存放的语音路径	|
 | language 	|NSString*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
@@ -1301,11 +1312,11 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 ```
 
 ### 启动流式语音识别的回调
-启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
+启动流式语音识别完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。传递的参数包含以下四个信息。
 
 |消息名称     | 意义         |
 | ------------- |:-------------:|
-| result    	|用于判断流式录音是否成功的返回码			|
+| result    	|用于判断流式语音识别是否成功的返回码			|
 | text    		|语音转文字识别的文本	|
 | file_path 	|录音存放的本地地址		|
 | file_id 		|录音在后台的 url 地址	|
@@ -1322,7 +1333,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
     switch (eventType) {
         case ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE：
         {
-	    //启动流式录音的回调
+	    //流式语音识别的回调
         }
             break;
     }
@@ -1366,6 +1377,7 @@ ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                      |上传的语音路径|
+
 > 示例代码  
 
 ```
@@ -1399,6 +1411,7 @@ ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePat
 | ------------- |:-------------:|-------------|
 | fileID    			|NSString                      |文件的url路径		|
 | downloadFilePath 	|NSString                      |文件的本地保存路径	|
+
 > 示例代码  
 
 ```
@@ -1430,6 +1443,7 @@ ITMGContext GetPTT -(void)PlayRecordedFile:(NSString*)downloadFilePath
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | downloadFilePath    |NSString                      |文件的路径|
+
 > 示例代码  
 
 ```
@@ -1474,6 +1488,7 @@ ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
+
 > 示例代码  
 
 ```
@@ -1490,6 +1505,7 @@ ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
+
 > 示例代码  
 
 ```
@@ -1506,6 +1522,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileID    |NSString                     |语音文件 url|
+
 > 示例代码  
 
 ```
@@ -1584,6 +1601,7 @@ ITMGContext -(void)SetLogLevel:(ITMG_LOG_LEVEL)logLevel (BOOL)enableWrite (BOOL)
 |TMG_LOG_LEVEL_INFO=2			|打印提示日志		|
 |TMG_LOG_LEVEL_DEBUG=3		|打印开发调试日志	|
 |TMG_LOG_LEVEL_VERBOSE=4		|打印高频日志		|
+
 > 示例代码  
 ```
 [[ITMGContext GetInstance] SetLogLevel:TMG_LOG_LEVEL_NONE YES YES];
@@ -1628,7 +1646,8 @@ ITMGContext GetAudioCtrl -(QAVResult)AddAudioBlackList:(NSString*)identifier
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| identifier    |NSString      |需添加黑名单的id|
+| identifier    |NSString      |需添加黑名单的 id|
+
 > 示例代码  
 
 ```
@@ -1645,6 +1664,7 @@ ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)identifier
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | identifier    |NSString      |需移除黑名单的id|
+
 > 示例代码  
 
 ```
@@ -1687,4 +1707,3 @@ ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)identifier
 | ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|result; file_path;file_id		|{"file_id":"","filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE	|result; text; file_path;file_id		|{"file_id":"","filepath":","text":"","result":0}|
-
