@@ -20,7 +20,8 @@
 3、CPU 及内存性能优化；
 
 ## 主要接口更新
-- ### ExitRoom 退房操作由同步改为异步调用，参照RoomExitComplete回调函数处理，回值为AV_OK的时候代表异步投递成功。
+- ### ExitRoom 退房操作由同步改为异步调用，参照 RoomExitComplete 回调函数处理，回值为AV_OK的时候代表异步投递成功。
+- #### 如果应用中有退房后立即进房的场景，在接口调用流程上，需要先等接口 ExitRoom 的回调 RoomExitComplete 回来后，再调用 EnterRoom 接口。
 ```
 public abstract int ExitRoom();
 ```
