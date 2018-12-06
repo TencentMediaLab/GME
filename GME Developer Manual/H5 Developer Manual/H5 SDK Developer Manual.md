@@ -34,7 +34,7 @@
 > 函数原型
 
 ```
-WebGMEAPI.fn.Init = function (document, sdkAppId, openId) 
+WebGMEAPI.fn.Init = function (document, sdkAppId, openId) {...}
 ```
 
 |参数     |意义|
@@ -56,7 +56,7 @@ gmeAPI.Init(document, cSdkAppId(), cOpenID());
 
 > 函数原型
 ```
-WebGMEAPI.fn.SetTMGDelegate = function (delegate)
+WebGMEAPI.fn.SetTMGDelegate = function (delegate){...}
 ```
 |参数              |意义|
 | ------------- |-------------|
@@ -80,7 +80,7 @@ gmeAPI.SetTMGDelegate(onEvent);
 
 > 函数原型
 ```
-WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) 
+WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 ```
 |参数     |意义|
 | ------------- |-------------|
@@ -126,7 +126,7 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer)
 }
 ```
 
-### 加入房间事件的回调
+### 事件回调
 加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
 
 > 示例代码  
@@ -138,10 +138,9 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer)
         }
         else if (eventType === gmeAPI.event.ITMG_MAIN_EVNET_TYPE_USER_UPDATE)
         {
-	    //
-            app._data.downStreamInfoList = result.PeerInfo;
-            app._data.brSend = result.UploadBRSend;
-            app._data.rtt = result.UploadRTT;
+            app._data.downStreamInfoList = result.PeerInfo;//接收的对端的信息 ,参见下表
+            app._data.brSend = result.UploadBRSend;//上传码率
+            app._data.rtt = result.UploadRTT;//上传RTT
         }
         else if (eventType === gmeAPI.event.ITMG_MAIN_EVENT_TYPE_EXIT_ROOM)
         {
@@ -155,30 +154,33 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer)
 ```
 
 
+接收的对端的信息如下 downStreamInfoList: 
 
+|参数      |意义|
+| ------------- |------------|
+| brRecv      |接收的码率|
+| delay      |接收的延迟|
+| jitterBufferMs      |抖动延迟|
+| jitterReceived      |接收jitter|
 
 
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，退房之后有回调，返回值为AV_OK的时候代表异步投递成功。
 > 函数原型  
 ```
-WebGMEAPI.fn.ExitRoom = function ()
+WebGMEAPI.fn.ExitRoom = function (){...}
 ```
 > 示例代码  
 ```
 gmeAPI.ExitRoom();
 ```
 
-
-
-
-
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
 > 函数原型  
 ```
-WebGMEAPI.fn.EnableMic = function (bEnable) 
+WebGMEAPI.fn.EnableMic = function (bEnable) {...}
 ```
 |参数      |意义|
 | ------------- |------------|
@@ -196,7 +198,7 @@ gmeAPI.EnableMic(false);
 
 > 函数原型  
 ```
-WebGMEAPI.fn.SetMicVolume = function (volume)
+WebGMEAPI.fn.SetMicVolume = function (volume){...}
 ```
 |参数     |意义|
 | -------------|-------------|
@@ -212,7 +214,7 @@ gmeAPI.SetMicVolume(100);
 此接口用于开启关闭扬声器。
 > 函数原型  
 ```
-WebGMEAPI.fn.EnableSpeaker = function (bEnable)
+WebGMEAPI.fn.EnableSpeaker = function (bEnable){...}
 ```
 |参数              |意义|
 | ------------- |------------|
