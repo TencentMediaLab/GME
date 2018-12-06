@@ -73,7 +73,7 @@ gmeAPI.SetTMGDelegate(onEvent);
 
 ## 实时语音相关接口
 初始化之后，SDK 调用进房后进去了房间，才可以进行实时语音通话。
-鉴权的获取参考[准备工作文档](/GH5%20SDK%20Project%20Configuration.md)。
+鉴权的获取参考[准备工作文档](./GH5%20SDK%20Project%20Configuration.md)。
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
