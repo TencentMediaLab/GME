@@ -9,8 +9,8 @@
 | Init           | 初始化接口         |
 | SetTMGDelegate | 设置委托           |
 | EnterRoom      | 进入语音房间       |
-| EnableMic      | 开启或关闭采集设备 |
-| EnableSpeaker  | 开启或关闭播放设备 |
+| EnableMic      | 开启或关闭采集设备 |
+| EnableSpeaker  | 开启或关闭播放设备 |
 | SetMicVolume   | 设置麦克风音量      |
 | ExitRoom       | 退出语音房间        |
 
