@@ -83,12 +83,12 @@ gmeAPI.SetTMGDelegate(onEvent);
 WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) 
 ```
 |参数     |意义|
-| ------------- |:-------------:|-------------|
+| ------------- |-------------|
 | roomId 	|房间号，最大支持127字符|
 | roomType 	|房间音频类型|
 | authBuffer	|鉴权码|
 
-|音频类型     	|含义|参数|音量类型|控制台推荐采样率设置|适用场景|
+|音频类型     	|含义|参数|控制台推荐采样率设置|适用场景|
 | ------------- |------------ | ---- |---- |---- |---- |
 | ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|如对音质无特殊需求，16K采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于 FPS、MOBA 等类型的游戏；	|							
 | ITMG_ROOM_TYPE_STANDARD			|标准音质	|2|根据对音质的需求，可以选择 16k/48k 采样率				|音质较好，延时适中，适用于狼人杀、棋牌等休闲游戏的实时通话场景；	|												
@@ -136,7 +136,7 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer)
         }
         else if (eventType === gmeAPI.event.ITMG_MAIN_EVNET_TYPE_USER_UPDATE)
         {
-			//
+	    //
             app._data.downStreamInfoList = result.PeerInfo;
             app._data.brSend = result.UploadBRSend;
             app._data.rtt = result.UploadRTT;
@@ -147,7 +147,7 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer)
         }
         else if (eventType === gmeAPI.event.ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT)
         {
-            //房间断开连接
+            //房间断开连接
         }
     };
 ```
