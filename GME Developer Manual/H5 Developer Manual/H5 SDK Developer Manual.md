@@ -59,7 +59,7 @@ gmeAPI.Init(document, cSdkAppId(), cOpenID());
 WebGMEAPI.fn.SetTMGDelegate = function (delegate)
 ```
 |参数              |意义|
-| ------------- |:-------------:|-------------|
+| ------------- |-------------|
 | onEvent     |SDK 回调事件|
 
 > 示例代码  
@@ -196,9 +196,9 @@ gmeAPI.EnableMic(false);
 ```
 WebGMEAPI.fn.SetMicVolume = function (volume)
 ```
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| volume    |int      |设置音量，范围 0 到 100|
+|参数     |意义|
+| -------------|-------------|
+| volume    |设置音量，范围 0 到 100|
 
 > 示例代码  
 ```
