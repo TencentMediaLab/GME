@@ -119,7 +119,7 @@ ITMGContext  public abstract int Resume()
 
 
 ### 反初始化 SDK
-反初始化 SDK，进入未初始化状态。
+反初始化 SDK，进入未初始化状态。切换账号需要反初始化。
 > 函数原型
 
 ```
@@ -407,12 +407,12 @@ void OnEndpointsUpdateInfo(int eventID, int count, string[] openIdList)
 ## 实时语音音频接口
 初始化 SDK 之后进房，在房间中，才可以调用实时音频语音相关接口。
 **调用场景**
+
 当用户界面点击打开/关闭麦克风/扬声器按钮时，建议如下方式：
 - 对于大部分的游戏类 App，推荐调用 EnableMic 及 EnbaleSpeaker 接口，相当于总是应该同时调用 EnableAudioCaptureDevice/EnableAudioSend 和 EnableAudioPlayDevice/EnableAudioRecv 接口；
 - 其他类型的移动端 App 例如社交类型 App，打开或者关闭采集设备，会伴随整个设备（采集及播放）重启，如果此时 App 正在播放背景音乐，那么背景音乐的播放也会被中断。利用控制上下行的方式来实现开关麦克风效果，不会中断播放设备。具体调用方式为：在进房的时候调用 EnableAudioCaptureDevice(true) && EnabledAudioPlayDevice(true) 一次，点击开关麦克风时只调用 EnableAudioSend/Recv 来控制音频流是否发送/接收。
-
-如目的是互斥（释放录音权限给其他模块使用），建议使用 PauseAudio/ResumeAudio。
-
+- 如果想单独释放采集或者播放设备，请参考接口 EnableAudioCaptureDevice 及 EnableAudioPlayDevice。
+- 调用 pause 暂停音频引擎，调用 resume 恢复音频引擎。
 
 |接口     | 接口含义   |
 | ------------- |:-------------:|
@@ -439,30 +439,6 @@ void OnEndpointsUpdateInfo(int eventID, int count, string[] openIdList)
 |EnableLoopBack    					|开关耳返			|
 
 
-### 暂停音频引擎的采集和播放
-调用此接口暂停音频引擎的采集和播放，此接口为同步接口，且只在进房后有效。
-如果想单独释放采集或者播放设备，请参考接口 EnableAudioCaptureDevice 及 EnableAudioPlayDevice。
-> 函数原型  
-
-```
-ITMGAudioCtrl abstract int PauseAudio()
-```
-> 示例代码  
-```
-IQAVContext.GetInstance ().GetAudioCtrl ().PauseAudio();
-```
-
-### 恢复音频引擎的采集和播放
-调用此接口恢复音频引擎的采集和播放，此接口为同步接口，且只在进房后有效。
-
-> 函数原型
-```
-ITMGAudioCtrl abstract int ResumeAudio()
-```
-> 示例代码  
-```
-IQAVContext.GetInstance ().GetAudioCtrl ().ResumeAudio();
-```
 
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
@@ -1327,7 +1303,7 @@ void mInnerHandler(int code, string fileid, string filepath, string result){
 
 ```
 ### 停止录音
-此接口用于停止录音。停止录音后会有录音完成回调。
+此接口用于停止录音。此接口为异步接口，停止录音后会有录音完成回调，成功之后录音文件才可用。
 > 函数原型  
 ```
 ITMGPTT int StopRecording()
