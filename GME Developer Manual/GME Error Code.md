@@ -76,7 +76,7 @@
 |QAVPTTERROR_DOWNLOAD_TOKEN_CHECK_EXPIRED		|12296|下载错误 |TLS 签名校验明确过期，需要重新申请 TLS 签名|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。			|
 |QAVPTTERROR_DOWNLOAD_APPINFO_UNSET				|12297|下载错误 |没有设置 appinfo|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。									|
 |QAVPTTERROR_PLAYER_INIT_ERROR							|20481|播放错误 |初始化错误|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。											|
-|QAVPTTERROR_PLAYER_PLAYING_ERROR						|20482|播放错误 |正在播放中|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。											|
+|QAVPTTERROR_PLAYER_PLAYING_ERROR						|20482|播放错误 |正在播放中，试图打断并播放下一个失败了（正常是可以打断的）|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。											|
 |QAVPTTERROR_PLAYER_PARAM_NULL						|20483|播放错误 |参数为空|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。											|
 |QAVPTTERROR_PLAYER_OPEN_FILE_ERROR					|20484|播放错误 |文件访问错误|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。										|
 |QAVPTTERROR_V2T_INTERNAL_ERROR						|32769|语音转文字错误 |内部错误|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。										|
