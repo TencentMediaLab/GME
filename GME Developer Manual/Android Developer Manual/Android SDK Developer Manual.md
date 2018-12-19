@@ -900,14 +900,14 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().SetAccompanyFileCurrentPlayed
 
 
 ### 播放音效
-此接口用于播放音效。参数中音效 id 需要 App 侧进行管理，唯一标识一个独立文件。文件支持 m4a、wav、mp3 一共三种格式。
+此接口用于播放音效。参数中音效 ID 需要 App 侧进行管理，ID 代表一次独立的播放事件。后续可以根据此 ID 控制此次播放。文件支持 m4a、wav、mp3 一共三种格式。
 > 函数原型  
 ```
 ITMGContext TMGAudioEffectCtrl public int PlayEffect(int soundId, String filePath, boolean loop) 
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    	|int    		|音效 id|
+| soundId    	|int    		|音效 ID|
 | filePath    	|String		|音效路径|
 | loop    		|boolean	|是否重复播放|
 
