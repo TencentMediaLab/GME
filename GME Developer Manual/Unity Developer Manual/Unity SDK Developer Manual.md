@@ -52,7 +52,7 @@
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
@@ -410,8 +410,6 @@ void OnEndpointsUpdateInfo(int eventID, int count, string[] openIdList)
 
 |接口     | 接口含义   |
 | ------------- |:-------------:|
-|PauseAudio    				       	   |暂停音频引擎		|
-|ResumeAudio    				      	 |恢复音频引擎		|
 |EnableMic    						|开关麦克风|
 |GetMicState    						|获取麦克风状态|
 |EnableAudioCaptureDevice    		|开关采集设备		|
@@ -1257,7 +1255,7 @@ ITMGPTT int StartRecordingWithStreamingRecognition(string filePath, string langu
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    	|String	|存放的语音路径	|
-| language 	|String	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| language 	|String	|参数参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```

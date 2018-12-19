@@ -50,7 +50,7 @@
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 
 
 ## 初始化相关接口
@@ -234,7 +234,7 @@ QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strA
 > 函数原型
 
 ```
-ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
+ITMGContext virtual int EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -244,6 +244,7 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 | buffLen   			|int   		|鉴权码长度		|
 
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
+
 
 > 示例代码  
 
@@ -1369,7 +1370,7 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    	|char*	|存放的语音路径	|
-| translateLanguage 	|char*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| translateLanguage 	|char*	|参数参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```

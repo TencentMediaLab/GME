@@ -35,7 +35,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 
 ## 快速接入步骤
 
@@ -94,7 +94,7 @@ ITMGContext -(void)Poll
 
 > 函数原型
 ```
-ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
+ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|

@@ -33,7 +33,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 ## 快速接入步骤
 
 ### 1、获取单例
@@ -97,6 +97,7 @@ ITMGContext.GetInstance(this).Poll();
 ```
 ITMGContext public abstract void  EnterRoom(String roomId, int roomType, byte[] authBuffer)
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | roomId 	|String		|房间号，最大支持127字符|
@@ -107,7 +108,7 @@ ITMGContext public abstract void  EnterRoom(String roomId, int roomType, byte[] 
 
 > 示例代码  
 ```
-ITMGContext.GetInstance(this).EnterRoom(Integer.parseInt(roomId),roomType, authBuffer);    
+ITMGContext.GetInstance(this).EnterRoom(roomId,roomType, authBuffer);    
 ```
 
 ### 5、加入房间事件的回调
@@ -142,6 +143,7 @@ ITMGContext public void EnableMic(boolean isEnabled)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean     |如果需要关闭麦克风，则传入的参数为 false，如果打开麦克风，则参数为 true|
+
 > 示例代码  
 ```
 ITMGContext.GetInstance(this).GetAudioCtrl().EnableMic(true);
@@ -158,6 +160,7 @@ ITMGContext public void EnableSpeaker(boolean isEnabled)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true|
+
 > 示例代码  
 ```
 ITMGContext.GetInstance(this).GetAudioCtrl().EnableSpeaker(true);

@@ -50,7 +50,7 @@
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
@@ -156,7 +156,9 @@ ITMGContext -(QAVResult)Resume
 ```
 ITMGContext -(void)Uninit
 ```
+
 > 示例代码
+
 ```
 [[ITMGContext GetInstance] Uninit];
 ```
@@ -209,7 +211,7 @@ NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:
 > 函数原型
 
 ```
-ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
+ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -408,6 +410,7 @@ ITMGContext GetRoom -(int)GetRoomType
 |ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE				|房间类型变化事件|
 
 ### 消息对应的Data详情
+
 |消息     | Data         |例子|
 | ------------- |:-------------:|------------- |
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				|result; error_info					|{"error_info":"","result":0}|
@@ -754,6 +757,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
 
 
 ## 实时语音伴奏相关接口
+
 |接口     | 接口含义   |
 | ------------- |:-------------:|
 |StartAccompany    				       |开始播放伴奏|
@@ -921,6 +925,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeB
 ```
 
 ## 实时语音音效相关接口
+
 |接口     | 接口含义   |
 | ------------- |:-------------:|
 |PlayEffect    		|播放音效|
@@ -943,6 +948,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeB
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSString*)filePath loop:(BOOL)loop
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId  	|int           	|音效 id			|
@@ -962,6 +968,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSS
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)PauseEffect:(int)soundId
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 id|
@@ -992,6 +999,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PauseAllEffects
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 id|
@@ -1022,6 +1030,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeAllEffects
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 id|
@@ -1052,6 +1061,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopAllEffects
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | type    |int                    |表示本端音频变声类型|
@@ -1088,6 +1098,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) type
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | type    |int                    |表示本端音频变声类型|
@@ -1104,6 +1115,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 |ITMG_KARAOKE_TYPE_TTS 				|6	|语音合成		|
 
 > 示例代码  
+
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetKaraokeType:0];
 ```
@@ -1115,6 +1127,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 ```
 ITMGContext GetAudioEffectCtrl -(int)GetEffectsVolume
 ```
+
 > 示例代码  
 
 ```
@@ -1128,6 +1141,7 @@ ITMGContext GetAudioEffectCtrl -(int)GetEffectsVolume
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | volume    |int                    |音量数值|
@@ -1162,9 +1176,11 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 ### 鉴权初始化
 在初始化 SDK 之后调用鉴权初始化，authBuffer 的获取参见上文实时语音鉴权信息接口。
 > 函数原型  
+
 ```
 ITMGContext GetPTT -(QAVResult)ApplyPTTAuthbuffer:(NSData *)authBuffer
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | authBuffer    |NSData*                    |鉴权|
@@ -1182,6 +1198,7 @@ ITMGContext GetPTT -(QAVResult)ApplyPTTAuthbuffer:(NSData *)authBuffer
 ```
 ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | msTime    |int                    |语音时长，单位ms|
@@ -1199,6 +1216,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 ```
 ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileDir    |NSString                     |存放的语音路径|
@@ -1238,7 +1256,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    	|NSString* 	|存放的语音路径	|
-| language 	|NSString*	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| language 	|NSString*	|参数参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```
@@ -1295,6 +1313,7 @@ ITMGContext GetPTT -(QAVResult)StopRecording
 ```
 ITMGContext GetPTT -(QAVResult)CancelRecording
 ```
+
 > 示例代码  
 
 ```
@@ -1308,6 +1327,7 @@ ITMGContext GetPTT -(QAVResult)CancelRecording
 ```
 ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath 
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                      |上传的语音路径|
@@ -1320,6 +1340,7 @@ ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
 
 ### 上传语音完成的回调
 上传语音完成后，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。
+
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
     NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
@@ -1354,6 +1375,7 @@ ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePat
 
 ### 下载语音文件完成回调
 下载语音完成后，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。
+
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
     NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
@@ -1419,6 +1441,7 @@ ITMGContext GetPTT -(int)StopPlayFile
 ```
 ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
@@ -1436,6 +1459,7 @@ ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
 ```
 ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
@@ -1453,6 +1477,7 @@ ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
 ```
 ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileID    |NSString                     |语音文件 url|
@@ -1470,6 +1495,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 ```
 ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | fileID    |NSString*                     |语音文件 url|

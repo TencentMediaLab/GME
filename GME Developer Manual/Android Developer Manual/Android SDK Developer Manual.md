@@ -49,7 +49,7 @@
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 
 ## 初始化相关接口
 未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
@@ -227,12 +227,12 @@ byte[] authBuffer=AuthBuffer.getInstance().genAuthBuffer(Integer.parseInt(sdkApp
 
 
 ### 加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
 
 
 > 函数原型
 ```
-ITMGContext public abstract void  EnterRoom(String roomId, int roomType, byte[] authBuffer)
+ITMGContext public abstract int EnterRoom(String roomId, int roomType, byte[] authBuffer)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -828,7 +828,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().ResumeAccompany();
 
 
 ### 设置伴奏音量
-设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0-200。
+设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 到 200。
 > 函数原型  
 ```
 ITMGContext TMGAudioEffectCtrl public int SetAccompanyVolume(int vol)
@@ -1178,7 +1178,7 @@ ITMGContext TMGPTT public void StartRecordingWithStreamingRecognition (String fi
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    	|String	|存放的语音路径	|
-| language 	|String	|需要转换的语言代码，参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| language 	|String	|参数参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```
@@ -1451,7 +1451,7 @@ ITMGContext int SetLogLevel(int logLevel, bool enableWrite, bool enablePrint)
 
 
 |ITMG_LOG_LEVEL|意义|
-| -------------------------------|:-------------:|
+| -------------------------------|----------------------|
 |TMG_LOG_LEVEL_NONE=0		|不打印日志			|
 |TMG_LOG_LEVEL_ERROR=1		|打印错误日志（默认）	|
 |TMG_LOG_LEVEL_INFO=2			|打印提示日志		|

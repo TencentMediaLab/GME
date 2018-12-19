@@ -33,7 +33,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 ## 快速接入步骤
 
 
@@ -162,7 +162,7 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填null）|
+| roomId    		|string   		|房间号，最大支持127字符|
 | openId    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
 > 示例代码  

@@ -34,7 +34,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
 ## 快速接入步骤
 
 ### 1、获取单例
@@ -104,7 +104,7 @@ ITMGContextGetInstance()->Poll();
 
 > 函数原型
 ```
-ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
+ITMGContext virtual int EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -147,10 +147,12 @@ ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | bEnabled    |bool     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false		|
+
 > 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
+
 
 ### 7、开启关闭扬声器
 此接口用于开启关闭扬声器。
@@ -162,6 +164,7 @@ ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | enable   		|bool       	|如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true	|
+
 > 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
@@ -185,6 +188,7 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 | strKey    			|char*	    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|
 | buffLenght   		|int    		|返回的authbuff的长度					|
+
 
 > 示例代码  
 ```
