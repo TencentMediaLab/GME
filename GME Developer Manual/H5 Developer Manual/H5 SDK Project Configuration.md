@@ -4,7 +4,7 @@
 ## GME H5 SDK 支持的平台
 | 操作系统平台  | 浏览器/webview  | 版本要求  |  备注|
 | ------------------------- | -------- | ---------------------- |------- |
-| iOS          | Safari ( 只支持Safari ) | 11.1.2 | 由于苹果 Safari 仍有偶现的 bug，产品化方案建议先规避，待苹果解决后再使用，对于iOS可以考虑使用我们的[小程序解决方案](之后添加) |
+| iOS          | Safari ( 只支持Safari ) | 11.1.2 | 由于苹果 Safari 仍有偶现的 bug，产品化方案建议先规避，待苹果解决后再使用|
 | Android      | TBS （微信和手机QQ的默认Webview） | 43600                | 微信和手机QQ默认内置的浏览器内核为TBS。 [TBS 介绍](http://x5.tencent.com/) |
 | Android      | Chrome | 60+               | 需要支持 H264  |
 | Mac          | Chrome | 47+                |      |
@@ -68,7 +68,7 @@ const AuthBufferConfig = function () {
 > 注意：AuthKey 必须与你的sdkAppid相对应
 
 ### 安装npm包并运行
-进入到 signdemo 目录，执行以下语句以安装相关依赖：
+进入到 authBuffer 示例程序目录，执行以下语句以安装相关依赖：
 ```
 npm i
 ```
@@ -82,7 +82,7 @@ npm i
 ```
 //生成userSig:
 curl "http://127.0.0.1:10005/" --data "sdkappid=1400089356&roomid=1234123&openid=1234567
-（验证同样可以访问网站，但同样需要支持的SDK App ID；默认支持1400089356）
+（验证生成的userSig同样可以访问网站，但验证同样需要有支持验证的SDKappID；默认支持1400089356）
 ```
 
 返回参考：
