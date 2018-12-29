@@ -7,7 +7,7 @@
 
 ### Simple Code 实时语音界面截图
 
-![](https://main.qcloudimg.com/raw/8dedada55d29b5c9d4e6b5e6058caf24/iOSSimpleCode.png)
+![](https://main.qcloudimg.com/raw/2d449a408d4efe39cf13c161ef3d742c.jpg)
 
 ### 设置账号及 openID
 在点击 Init 按钮（即初始化 SDK ）之前，可以在界面中对 Appid、Key 及 OpenID 进行更改。
@@ -86,4 +86,4 @@
 |12	|小黄人			|
 
 
-## iOS Simple Code 离线语音使用文档
+
