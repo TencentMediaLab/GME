@@ -1,11 +1,11 @@
 ## 简介
 
-欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍 GME Native Simple Code 的使用文档。
+欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍 GME Native Sample Code 的使用文档。
 
 
-## iOS Simple Code 实时语音使用文档
+## iOS Sample Code 实时语音使用文档
 
-### Simple Code 实时语音界面截图
+### Sample Code 实时语音界面截图
 
 ![](https://main.qcloudimg.com/raw/2d449a408d4efe39cf13c161ef3d742c.jpg)
 
