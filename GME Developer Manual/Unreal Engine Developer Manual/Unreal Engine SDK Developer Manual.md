@@ -112,8 +112,7 @@ void AUEDemoLevelScriptActor::OnEvent(ITMG_MAIN_EVENT_TYPE eventType, const char
 ```
 
 ### 初始化 SDK
-
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+参数获取请参考 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 > 函数原型 
@@ -211,7 +210,7 @@ context->Uninit();
 
 
 ### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。  
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。  
 离线语音获取鉴权时，房间号参数必须填null。
 
 > 函数原型
@@ -221,12 +220,12 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填null）|
+| dwRoomID    		|char*     |房间号，最大支持 127 字符（离线语音房间号参数必须填 null）|
 | strOpenID  		|char*    		|用户标识								|
 | strKey    			|char*	    	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|
-| buffLenght   		|int    		|返回的authbuff的长度					|
-
+| buffLenght   		|int    		|传入的 authbuff 长度，建议为 500					|
+ 
 
 
 > 示例代码  
@@ -238,7 +237,7 @@ QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strA
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
-如果普通语音进房，业务方面无涉及范围语音需求，则使用普通进房接口。详细信息请查阅[GME 范围语音文档](../GME%20TeamAudio%20Manual.md)。
+如果普通语音进房，业务方面无涉及范围语音需求，则使用普通进房接口。详细信息请参考 [范围语音](../GME%20TeamAudio%20Manual.md)。
 
 > 函数原型
 
@@ -433,14 +432,15 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ### 消息详情
 
-|消息     | 消息代表的意义   
+|消息     | 消息代表的意义   |
 | ------------- |:-------------:|
 |ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				       |进入音视频房间消息|
 |ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				         	|退出音视频房间消息|
 |ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    		       |房间因为网络等原因断开消息|
 |ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE				|房间类型变化事件|
 
-### 消息对应的Data详情
+### 消息对应的 Data 详情
+
 |消息     | Data         |例子|
 | ------------- |:-------------:|------------- |
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				|result; error_info					|{"error_info":"","result":0}|
@@ -452,8 +452,6 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 ## 实时语音音频接口
 初始化 SDK 之后进房，在房间中，才可以调用实时音频语音相关接口。
-调用场景举例：
-
 当用户界面点击打开/关闭麦克风/扬声器按钮时，建议如下方式：
 - 对于大部分的游戏类 App，推荐调用 EnableMic 及 EnbaleSpeaker 接口，相当于总是应该同时调用 EnableAudioCaptureDevice/EnableAudioSend 和 EnableAudioPlayDevice/EnableAudioRecv 接口；
 - 其他类型的移动端 App 例如社交类型 App，打开或者关闭采集设备，会伴随整个设备（采集及播放）重启，如果此时 App 正在播放背景音乐，那么背景音乐的播放也会被中断。利用控制上下行的方式来实现开关麦克风效果，不会中断播放设备。具体调用方式为：在进房的时候调用 EnableAudioCaptureDevice(true) && EnabledAudioPlayDevice(true) 一次，点击开关麦克风时只调用 EnableAudioSend/Recv 来控制音频流是否发送/接收。
@@ -668,7 +666,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SetMicVolume(vol);
 ```
 
 ### 获取麦克风的音量
-此接口用于获取麦克风的音量。返回值为一个int类型数值，返回值为101代表没调用过接口 SetMicVolume。
+此接口用于获取麦克风的音量。返回值为一个 int 类型数值，返回值为 101 代表没调用过接口 SetMicVolume。
 
 > 函数原型  
 ```
@@ -794,7 +792,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->IsAudioPlayDeviceEnabled();
 ```
 
 ### 打开关闭音频下行
-此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见EnableAudioPlayDevice。
+此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见 EnableAudioPlayDevice。
 
 > 函数原型  
 
@@ -857,7 +855,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->SetSpeakerVolume(vol);
 
 ### 获取扬声器的音量
 此接口用于获取扬声器的音量。返回值为 int 类型数值，代表扬声器的音量，返回值为101代表没调用过接口 SetSpeakerVolume。
-Level 是实时音量，Volume 是扬声器的音量，最终声音音量相当于 Level*Volume%。举个例子：实时音量是数值是 100 的话，此时Volume的数值是 60，那么最终发出来的声音数值也是 60。
+Level 是实时音量，Volume 是扬声器的音量，最终声音音量相当于 Level*Volume%。举个例子：实时音量是数值是 100 的话，此时 Volume 的数值是 60，那么最终发出来的声音数值也是 60。
 
 > 函数原型  
 ```
@@ -1213,19 +1211,19 @@ TMGAudioEffectCtrl int setVoiceType(int type)
 
 |类型参数     |参数代表|意义|
 | ------------- |-------------|------------- |
-|ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|原声			|
-|ITMG_VOICE_TYPE_LOLITA    				|1	|萝莉			|
-|ITMG_VOICE_TYPE_UNCLE  				|2	|大叔			|
-|ITMG_VOICE_TYPE_INTANGIBLE    			|3	|空灵			|
-|ITMG_VOICE_TYPE_DEAD_FATBOY  			|4	|死肥仔			|
-|ITMG_VOICE_TYPE_HEAVY_MENTA			|5	|重金属			|
-|ITMG_VOICE_TYPE_DIALECT 				|6	|歪果仁			|
-|ITMG_VOICE_TYPE_INFLUENZA 				|7	|感冒			|
-|ITMG_VOICE_TYPE_CAGED_ANIMAL 			|8	|困兽			|
-|ITMG_VOICE_TYPE_HEAVY_MACHINE			|9	|重机器			|
-|ITMG_VOICE_TYPE_STRONG_CURRENT			|10	|强电流			|
-|ITMG_VOICE_TYPE_KINDER_GARTEN			|11	|幼稚园			|
-|ITMG_VOICE_TYPE_HUANG 					|12	|小黄人			|
+| ITMG_VOICE_TYPE_ORIGINAL_SOUND  		|0	|原声			|
+| ITMG_VOICE_TYPE_LOLITA    				|1	|萝莉			|
+| ITMG_VOICE_TYPE_UNCLE  				|2	|大叔			|
+| ITMG_VOICE_TYPE_INTANGIBLE    			|3	|空灵			|
+| ITMG_VOICE_TYPE_DEAD_FATBOY  			|4	|死肥仔			|
+| ITMG_VOICE_TYPE_HEAVY_MENTA			|5	|重金属			|
+| ITMG_VOICE_TYPE_DIALECT 				|6	|歪果仁			|
+| ITMG_VOICE_TYPE_INFLUENZA 				|7	|感冒			|
+| ITMG_VOICE_TYPE_CAGED_ANIMAL 			|8	|困兽			|
+| ITMG_VOICE_TYPE_HEAVY_MACHINE		|9	|重机器			|
+| ITMG_VOICE_TYPE_STRONG_CURRENT		|10	|强电流			|
+| ITMG_VOICE_TYPE_KINDER_GARTEN			|11	|幼稚园			|
+| ITMG_VOICE_TYPE_HUANG 					|12	|小黄人			|
 
 > 示例代码  
 ```
@@ -1391,7 +1389,7 @@ ITMGPTT virtual int StartRecordingWithStreamingRecognition(const char* filePath,
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | filePath    	|char*	|存放的语音路径	|
-| translateLanguage 	|char*	|参数参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| translateLanguage 	|char*	|参数请参考[语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
 > 示例代码  
 ```
@@ -1707,17 +1705,18 @@ ITMGContextGetInstance()->GetSDKVersion();
 ```
 
 ### 设置打印日志等级
-用于设置打印日志等级。
+用于设置打印日志等级。建议保持默认等级。
 > 函数原型
 ```
-ITMGContext virtual void SetLogLevel(int logLevel, bool enableWrite, bool enablePrint)
+ITMGContext virtual void SetLogLevel(ITMG_LOG_LEVEL levelWrite, ITMG_LOG_LEVEL levelPrint)
 ```
 
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| logLevel    		|int   		|打印日志级别		|
-| enableWrite    	|bool   				|是否写文件，默认为是	|
-| enablePrint    	|bool   				|是否写控制台，默认为是	|
+#### 参数含义
+
+|参数|类型|意义|
+|---|---|---|
+|levelWrite|ITMG_LOG_LEVEL|设置写入日志的等级，TMG_LOG_LEVEL_NONE 表示不写入，默认为 TMG_LOG_LEVEL_INFO|
+|levelPrint|ITMG_LOG_LEVEL|设置打印日志的等级，TMG_LOG_LEVEL_NONE 表示不打印，默认为 TMG_LOG_LEVEL_ERROR|
 
 
 |ITMG_LOG_LEVEL|意义|
@@ -1764,7 +1763,7 @@ context->SetLogPath(logDir);
 ```
 
 ### 加入音频数据黑名单
-将某个 ID 加入音频数据黑名单。返回值为 0 表示调用失败。
+将某个 ID 加入音频数据黑名单。返回值为0表示调用成功。
 > 函数原型  
 
 ```
@@ -1781,7 +1780,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->AddAudioBlackList(openId);
 ```
 
 ### 移除音频数据黑名单
-将某个 id 移除音频数据黑名单。返回值为 0 表示调用失败。
+将某个 ID 移除音频数据黑名单。返回值为0表示调用成功。
 > 函数原型  
 
 ```
@@ -1789,7 +1788,7 @@ ITMGContext ITMGAudioCtrl int RemoveAudioBlackList(const char* openId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| openId    |char*       |需移除黑名单的id|
+| openId    |char*       |需移除黑名单的 ID|
 
 > 示例代码  
 
@@ -1827,15 +1826,15 @@ ITMGContextGetInstance()->GetAudioCtrl()->RemoveAudioBlackList(openId);
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    		|result; error_info			|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    		|result; error_info  			|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    	|result; error_info  			|{"error_info":"waiting timeout, please check your network","result":0}|
-| ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE    	|result; error_info; new_room_type	|{"error_info":"","new_room_type":0,"result":0}|
+| ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE    	|result; error_info; sub_event_type; new_room_type	|{"error_info":"","new_room_type":0,"result":0}|
 | ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"扬声器 (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":false,"result":0}|
 | ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"扬声器 (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":false,"result":0}|
 | ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"麦克风 (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":true,"result":0}|
 | ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|result; error_info 			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"麦克风 (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":true,"result":0}|
 | ITMG_MAIN_EVNET_TYPE_USER_UPDATE    		|user_list;  event_id			|{"event_id":1,"user_list":["0"]}|
-| ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
-| ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE 	|result; file_path;file_id  		|{"file_id":"","filepath":"","result":0}|
-| ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE	|result; file_path;file_id  		|{"file_id":"","filepath":"","result":0}|
-| ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
-| ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|result; file_path;file_id		|{"file_id":"","filepath":"","result":0}|
-| ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE	|result; text; file_path;file_id		|{"file_id":"","filepath":","text":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE 	|result; file_path  			|{"file_path":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE 	|result; file_path;file_id  		|{"file_id":"","file_path":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_DOWNLOAD_COMPLETE	|result; file_path;file_id  		|{"file_id":"","file_path":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE 	|result; file_path  			|{"file_path":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|result; text;file_id		|{"file_id":"","text":"","result":0}|
+| ITMG_MAIN_EVNET_TYPE_PTT_STREAMINGRECOGNITION_COMPLETE	|result; file_path; text;file_id		|{"file_id":"","file_path":","text":"","result":0}|

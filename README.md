@@ -12,7 +12,7 @@
 #### [接入指引文档](./GME%20Introduction.md)
 #### [控制台用量统计文档](./GME%20Introduction.md#%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%94%A8%E9%87%8F%E7%BB%9F%E8%AE%A1%E4%BD%BF%E7%94%A8)
 #### [密钥技术文档](./GME%20Developer%20Manual/GME%20Key%20Manual.md)
-#### [小队语音文档](./GME%20Developer%20Manual/GME%20TeamAudio%20Manual.md)
+#### [范围文档](./GME%20Developer%20Manual/GME%20TeamAudio%20Manual.md)
 #### [3D音效文档](./GME%20Developer%20Manual/GME%20Spatializer%20Manual.md)
 #### [错误码文档](./GME%20Developer%20Manual/GME%20Error%20Code.md)
 
@@ -62,7 +62,29 @@
 
 - [Android 开发接入技术文档](./GME%20Developer%20Manual/Android%20Developer%20Manual/Android%20SDK%20Developer%20Manual.md)
 
+#### H5 接入
+- [H5 工程配置文档](./GME%20Developer%20Manual/H5%20Developer%20Manual/H5%20SDK%20Project%20Configuration.md)
+
+- [H5 开发接入文档](./GME%20Developer%20Manual/H5%20Developer%20Manual/H5%20SDK%20Developer%20Manual.md)
+
+
 ## SDK更新说明
+###  GME_SDK2.3 2019-01-11
+#### 新增功能
+1、支持实时语音过程中使用离线语音；
+
+2、支持实时语音过滤，可识别暴恐、涉黄、涉政等信息；
+
+3、支持 H5 实时语音，实现全平台实时语音互通；
+
+#### 优化能力
+1、优化SDK的范围语音功能接口，降低接入门槛；
+
+2、语音降噪效果优化；
+
+3、大幅降低SDK内存消耗；
+
+
 ### GME_SDK2.2 2018-10-30
 #### 新增功能：
 1、支持多种K歌音效；

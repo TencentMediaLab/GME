@@ -38,13 +38,13 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 
 ### 1、初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+ 参数获取请查看[接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 
 > 函数原型
 ```
-ITMGContext Init(string sdkAppID, string openID)
+IQAVContext Init(string sdkAppID, string openID)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -53,7 +53,7 @@ ITMGContext Init(string sdkAppID, string openID)
 
 > 示例代码  
 ```
-int ret = ITMGContext.GetInstance().Init(str_appId, str_userId);
+int ret = IQAVContext.GetInstance().Init(str_appId, str_userId);
 	if (ret != QAVError.OK) {
 		return;
 	}
@@ -150,7 +150,7 @@ ITMGContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
 ## 关于鉴权
 ### 鉴权信息
 
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。    
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。    
 离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 Byte[] 类型。
 > 函数原型

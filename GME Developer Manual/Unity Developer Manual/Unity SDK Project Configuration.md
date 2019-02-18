@@ -9,10 +9,11 @@
 
 ### 2. 在界面中找到 Unity 版本的 SDK 资源。
 
-### 3. 点击【下载】按钮。
-下载完的SDK资源解压后有以下几个部分：
+单击【下载】按钮。下载完的 SDK 资源解压后有以下几个部分：
 
-![image](Image/u3.png)
+![](https://main.qcloudimg.com/raw/55494d9bb9145938f0594416f73b29f7.png)
+
+文件说明：
 
 |文件名       | 说明           
 | ------------- |:-------------:|
@@ -35,4 +36,13 @@
 ![image](Image/u12.png)
 如果设置为下图这种模式，Unity 播放音效会因为在iOS上设置硬件缓存区受影响，表现为音效被打断。
 
-![image](Image/u13.png)
+
+## 导出不同平台
+
+从 Unity 引擎导出不同平台，需要做相应的工程配置：
+
+|平台       | 工程配置           
+| ------------- |:-------------:|
+| Android |[Android 工程配置文档](https://cloud.tencent.com/document/product/607/15203)|
+| iOS     	|[iOS 工程配置文档](https://cloud.tencent.com/document/product/607/15219)|
+| Mac     	|[Mac 工程配置文档](https://cloud.tencent.com/document/product/607/18617)|

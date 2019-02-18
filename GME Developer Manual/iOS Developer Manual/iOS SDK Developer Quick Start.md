@@ -56,7 +56,7 @@ _context.TMGDelegate =self;
 
 
 ### 2、初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+参数获取请查看 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 > 函数原型
@@ -171,20 +171,20 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 
 ## 关于鉴权
 ### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
 > 函数原型
 ```
 @interface QAVAuthBuffer : NSObject
-+ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId identifier:(NSString*)identifier key:(NSString*)key;
++ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId openID:(NSString*)openID key:(NSString*)key;
 + @end
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|NSString  	|房间号，最大支持127字符（离线语音房间号参数必须填null）	|
-| identifier  		|NSString    	|用户标识								|
-| key    			|NSString    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
+| roomId    		|NSString  	|房间号，最大支持127字符（离线语音房间号参数必须填 null）	|
+| openID  		|NSString    	|用户标识								|
+| key    			|NSString    	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥					|
 
 
 
@@ -193,5 +193,3 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:_roomId openID:_openId key:AUTHKEY];
 ```
-
-

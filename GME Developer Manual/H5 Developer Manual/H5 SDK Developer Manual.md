@@ -51,8 +51,8 @@ gmeAPI.Init(document, cSdkAppId(), cOpenID());
 ```
 
 ### 设置回调
-接口类采用 Delegate 方法用于向应用程序发送回调通知。将回调函数注册给 SDK，用于接受回调的信息。
-将回调函数注册给 SDK，要在进房之前设置。
+接口类采用 Delegate 方法用于向应用程序发送回调通知。将回调函数注册给 SDK，用于接受回调的信息。将回调函数注册给 SDK，要在进房之前设置。
+
 
 > 函数原型
 ```
@@ -73,11 +73,11 @@ gmeAPI.SetTMGDelegate(onEvent);
 
 ## 实时语音相关接口
 初始化之后，SDK 调用进房后进去了房间，才可以进行实时语音通话。
-鉴权的获取参考[准备工作文档](./H5%20SDK%20Project%20Configuration.md)。
+
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
-鉴权参考工程配置。
+
 
 > 函数原型
 ```
@@ -87,21 +87,11 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 | ------------- |-------------|
 | roomId 	|房间号，最大支持127字符|
 | roomType 	|房间音频类型|
-| authBuffer	|鉴权码|
+| authBuffer	|鉴权码，获取方式请参考 [工程配置](https://cloud.tencent.com/document/product/607/32156)。|
 
 
 
-|音频类型|含义|参数|控制台推荐采样率设置|适用场景|
-|-------|---|----|----------------|------|
-| ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|如对音质无特殊需求，16K采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于 FPS、MOBA 等类型的游戏；	|					
-| ITMG_ROOM_TYPE_STANDARD			|标准音质	|2|根据对音质的需求，可以选择 16k/48k 采样率				|音质较好，延时适中，适用于狼人杀、棋牌等休闲游戏的实时通话场景；	|						
-| ITMG_ROOM_TYPE_HIGHQUALITY		|高清音质	|3|为了保证最佳效果，建议控制台设置 48k 采样率的高音质配置	|超高音质，延时相对大一些，适用于音乐舞蹈类游戏以及语音社交类 APP；适用于播放音乐、线上K歌等有高音质要求的场景；	|
-
-- 如对音量类型或场景有特殊需求，请联系一线客服反馈；
-- 控制台采样率设置会直接影响游戏语音效果，请在 [控制台](https://console.cloud.tencent.com/gamegme) 上再次确认采样率设置是否符合项目使用场景。
-
-
-> 示例代码  
+#### 示例代码  
 ```
  function bindButtonEvents() {
         $("#start_btn").click(function () {
@@ -138,7 +128,7 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 ### 事件回调
 加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
 
-> 示例代码  
+#### 示例代码  
 ```
  onEvent = function (eventType, result) {
          if (eventType === gmeAPI.event.ITMG_MAIN_EVENT_TYPE_ENTER_ROOM)
@@ -174,8 +164,8 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个异步接口，退房之后有回调，返回值为AV_OK的时候代表异步投递成功。
-> 函数原型  
+通过调用此接口可以退出所在房间。这是一个异步接口，退房之后有回调，返回值为 AV_OK 的时候代表异步投递成功。
+#### 函数原型  
 ```
 WebGMEAPI.fn.ExitRoom = function (){...}
 ```

@@ -14,39 +14,43 @@
 | TMGCocosDemo  	|游戏音视频 SDK 示例工程			|
 
 ## 系统要求
+
 SDK 支持在 Mac 系统上编译。
 
 ## iOS Xcode 预备工作
 
-### 1. 导入 SDK 相关的 framework 文件 
+### 1. 导入 SDK 相关的 framework 文件
+
 需要将 framework 添加到 Xcode 工程中并设置头文件引用位置。
 
 TMG_SDK 文件夹里面有 GMESDK.framework 游戏音视频 SDK framework 文件，必须添加到工程中。
 
+### 2. 添加依赖库
 
-### 2. 添加依赖库  
 参考下图：  
 
 ![image](Image/cocos2.png)
   
 ## Android 预备工作
-### 1.将 tmgsdk.jar 加入到 libs 库中。
-![image](Image/cocos3.png)
 
-### 2.Activity 中导入 so 文件
+### 1. 将 tmgsdk.jar 加入到 libs 库中。
+
+![](https://main.qcloudimg.com/raw/fe1bde45a15f273aa9b9707420bb2696.png)
+
+### 2. Activity 中导入 so 文件
+
 ```
 public class AppActivity extends Cocos2dxActivity {
     static final String TAG = "AppActivity";
     static OpensdkGameWrapper gameWrapper ;
     static {
-        //加载SDK so
         OpensdkGameWrapper.loadSdkLibrary();
     }
-
 }
 ```
 
-### 3.初始化
+### 3. 初始化
+
 在 oncreate 函数中进行初始化，顺序不能出错。
 ```
 protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,7 @@ protected void onCreate(Bundle savedInstanceState) {
         gameWrapper = new OpensdkGameWrapper(this);
         runOnGLThread(new Runnable() {
             @Override
-            public void run() {          
+            public void run() {
                 gameWrapper.initOpensdk();
             }
         });

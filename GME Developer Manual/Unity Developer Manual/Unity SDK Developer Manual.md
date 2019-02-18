@@ -69,7 +69,7 @@
 请使用 ITMGContext 的方法获取 Context 实例，不要直接使用 QAVContext.GetInstance() 去获取实例。
 
 ### 初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+参数获取请参考 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 
@@ -146,7 +146,7 @@ ITMGContext public abstract int Uninit()
 
 
 ### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。    
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见 [鉴权密钥](../GME%20Key%20Manual.md)。    
 离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 Byte[] 类型。
 > 函数原型
@@ -173,7 +173,7 @@ byte[] GetAuthBuffer(string appId, string userId, string roomId)
 ### 加入房间
 用生成的鉴权信息进房。加入房间默认不打开麦克风及扬声器。进房超时是 30 秒会有回调。
 
-范围语音详细接入细节请查阅[GME 范围语音](../GME%20TeamAudio%20Manual.md)。
+范围语音接入流程请查看 [范围语音](../GME%20TeamAudio%20Manual.md)。
 
 
 > 函数原型
@@ -400,8 +400,6 @@ void OnEndpointsUpdateInfo(int eventID, int count, string[] openIdList)
 
 ## 实时语音音频接口
 初始化 SDK 之后进房，在房间中，才可以调用实时音频语音相关接口。
-**调用场景**
-
 当用户界面点击打开/关闭麦克风/扬声器按钮时，建议如下方式：
 - 对于大部分的游戏类 App，推荐调用 EnableMic 及 EnbaleSpeaker 接口，相当于总是应该同时调用 EnableAudioCaptureDevice/EnableAudioSend 和 EnableAudioPlayDevice/EnableAudioRecv 接口；
 - 其他类型的移动端 App 例如社交类型 App，打开或者关闭采集设备，会伴随整个设备（采集及播放）重启，如果此时 App 正在播放背景音乐，那么背景音乐的播放也会被中断。利用控制上下行的方式来实现开关麦克风效果，不会中断播放设备。具体调用方式为：在进房的时候调用 EnableAudioCaptureDevice(true) && EnabledAudioPlayDevice(true) 一次，点击开关麦克风时只调用 EnableAudioSend/Recv 来控制音频流是否发送/接收。
@@ -778,6 +776,7 @@ IQAVAudioEffectCtrl int StartAccompany(string filePath, bool loopBack, int loopC
 | filePath    |string            |播放伴奏的路径|
 | loopBack    |bool          |是否混音发送，一般都设置为 true ，即其他人也能听到伴奏|
 | loopCount    |int          |循环次数，数值为 -1 表示无限循环|
+| duckerTimeMs    |int          |淡出时间，一般填0|
 
 > 示例代码
 ```
@@ -1572,18 +1571,18 @@ ITMGContext.GetInstance().GetSDKVersion();
 
 
 ### 设置打印日志等级
-用于设置打印日志等级。
+用于设置打印日志等级。建议保持默认等级。
 > 函数原型
 ```
-ITMGContext  SetLogLevel(int logLevel, bool enableWrite, bool enablePrint)
+ITMGContext  SetLogLevel(ITMG_LOG_LEVEL levelWrite, ITMG_LOG_LEVEL levelPrint)
 ```
 
+#### 参数含义
 
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| logLevel    		|int   		|打印日志级别			|
-| enableWrite    	|bool   		|是否写文件，默认为是	|
-| enablePrint    	|bool   		|是否写控制台，默认为是	|
+|参数|类型|意义|
+|---|---|---|
+|levelWrite|ITMG_LOG_LEVEL|设置写入日志的等级，TMG_LOG_LEVEL_NONE 表示不写入，默认为 TMG_LOG_LEVEL_INFO|
+|levelPrint|ITMG_LOG_LEVEL|设置打印日志的等级，TMG_LOG_LEVEL_NONE 表示不打印，默认为 TMG_LOG_LEVEL_ERROR|
 
 
 
@@ -1636,7 +1635,7 @@ string tips = ITMGContext.GetInstance().GetRoom().GetQualityTips();
 ```
 
 ### 加入音频数据黑名单
-将某个 id 加入音频数据黑名单。返回值为 0 表示调用失败。
+将某个 ID 加入音频数据黑名单。返回值为 0 表示调用成功。
 > 函数原型  
 
 ```
@@ -1653,7 +1652,7 @@ ITMGContext.GetInstance().GetAudioCtrl ().AddAudioBlackList (id);
 ```
 
 ### 移除音频数据黑名单
-将某个 id 移除音频数据黑名单。返回值为 0 表示调用失败。
+将某个 ID 移除音频数据黑名单。返回值为 0 表示调用成功。
 > 函数原型  
 
 ```
@@ -1668,5 +1667,4 @@ ITMGContext ITMGAudioCtrl RemoveAudioBlackList(string openId)
 ```
 ITMGContext.GetInstance().GetAudioCtrl ().RemoveAudioBlackList (id);
 ```
-
 

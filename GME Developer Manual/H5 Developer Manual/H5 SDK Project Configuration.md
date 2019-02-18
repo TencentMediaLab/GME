@@ -14,15 +14,12 @@
 
 
 ## SDK 准备
-可以通过以下方式获取 SDK。
+您可以通过以下方式获取 SDK。
+1. 请参考 [下载指引](https://cloud.tencent.com/document/product/607/18521) 下载相关 Sample Code 及 SDK。
 
-### 1. 请在[下载指引](https://cloud.tencent.com/document/product/607/18521)下载相关 Sample Code 及 SDK。
+2. 在界面中找到 H5 版本的 SDK 资源。
 
-
-### 2. 在界面中找到找到 H5 版本的 SDK 资源。
-
-
-### 3. 点击【下载】按钮。
+3. 在页面中单击【下载】按钮。
 
 
 ## 预备工作
@@ -36,25 +33,19 @@
 | TCP  | 8687              |
 | UDP  | 8000 、 8800 、 443 |
 
-使用 CDN 引入SDK。
-### 2. 在页面中引入 WebRTCAPI.min.js
+使用 CDN 引入 SDK。
+
+### 2. 引入 WebRTCAPI.min.js
 
 ```html
 <script src="https://sqimg.qq.com/expert_qq/webrtc/3.0/WebRTCAPI.min.js"></script>
 ```
 
-### 3. 进行 H5 鉴权设置
+###  3. 进行 H5 鉴权设置
+#### 下载程序
+请 [下载](https://main.qcloudimg.com/raw/b1d8e4d8e7321fd67250069d07bf2016.zip) 我们为您准备的 authBuffer 示例程序，该程序可以完成对指定的 sdkappid 的鉴权信息签名。
 
-
-## 鉴权设置
-
-### 签名步骤
-使用 GME 游戏多媒体引擎，需要对鉴权信息进行签名，以下是鉴权的步骤：
-
-### 下载程序
-点击此链接可以下载我们准备的 authBuffer 示例程序，该程序可以完成对指定的 sdkappid 的鉴权信息签名。
-
-### 相应修改
+#### 相应修改
 进入到 signdemo 目录，修改 config.js 文件：打开 config.js 文件，先删除默认的配置，在删除代码的地方调用 appidMap 函数，参数为在腾讯云后台申请的 SDKAppid 以及对应的鉴权 key。
 
 ```
@@ -65,27 +56,28 @@ const AuthBufferConfig = function () {
 //将1400089356替换为在腾讯云后台申请的 sdkAppid，1cfbfd2a1a03a53e 替换为对应 sdkAppid 的鉴权 key
 ```
 
-> 注意：AuthKey 必须与你的sdkAppid相对应
+>!AuthKey 必须与您的 sdkAppid 相对应。
 
-### 安装npm包并运行
+#### 安装 npm 包并运行
 进入到 authBuffer 示例程序目录，执行以下语句以安装相关依赖：
+
 ```
 npm i
 ```
+
 然后执行脚本 node index.js，运行签名服务。
 
-> 注意：由于使用到 async 语法，请确保你的node版本在8以上。命令行中执行 node -v 以查看版本。
+>!由于使用到 async 语法，请确保您的 node 版本在 8 以上。命令行中执行 node -v 以查看版本。
 
 
-### 测试
-可在命令行用以下命令测试（确保系统中有curl指令）：
+#### 测试
+可在命令行用以下命令测试（确保系统中有 curl 指令）：
 ```
 //生成userSig:
-curl "http://127.0.0.1:10005/" --data "sdkappid=1400089356&roomid=1234123&openid=1234567
-（验证生成的userSig同样可以访问网站，但验证同样需要有支持验证的SDKappID；默认支持1400089356）
+curl "http://127.0.0.1:10005/" --data "sdkappid=1400089356&roomid=1234123&openid=1234567"
 ```
 
-返回参考：
+#### 返回参考
 
 ```
 {"userSig":"AqhHE7QHLFYPfV/zfyrdRYHfuUn6eOA8g/J6GMjVy//Shr5ByJPTi8hzR2KyXMvn","errorCode":0}

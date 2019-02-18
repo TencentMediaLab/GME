@@ -57,7 +57,7 @@ TMGContext.getInstance(this);
 ```
 
 ### 2、初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+参数获取请查看 [游戏多媒体引擎接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 > 函数原型
@@ -170,7 +170,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableSpeaker(true);
 
 ## 关于鉴权
 ### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。    
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。    
 该接口返回值为 Byte[] 类型。离线语音获取鉴权时，房间号参数必须填null。
 
 > 函数原型
@@ -180,10 +180,10 @@ AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, Strin
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码|
-| roomId    		|String   	|房间号，最大支持127字符（离线语音房间号参数必须填null）|
+| roomId    		|String   	|房间号最大支持127字符（离线语音房间号参数必须填 null）|
 | openID    	|String 	|用户标识|
-| key    		|string 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥|
-
+| key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥|
+ 
 
 > 示例代码  
 ```
