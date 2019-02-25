@@ -35,7 +35,6 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **此文档对应GME sdk version：2.3。**
 ## 快速接入步骤
-
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
 
@@ -115,8 +114,9 @@ context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen
 
 ### 5、加入房间事件的回调
 加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
+
 > 示例代码
-  
+
 ```
 //实现代码
 void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
@@ -140,10 +140,12 @@ ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | bEnabled    |bool     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false		|
+
 > 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
+
 
 ### 7、开启关闭扬声器
 此接口用于开启关闭扬声器。
@@ -154,7 +156,8 @@ ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| enable   		|bool       	|如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true	|
+| enable   		|bool       	|如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true	|
+
 > 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
@@ -164,14 +167,12 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ## 关于鉴权
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请参考 [鉴权密钥](../GME%20Key%20Manual.md)。  
-离线语音获取鉴权时，房间号参数必须填null。
+离线语音获取鉴权时，房间号参数必须填 null。
 
 > 函数原型
-
 ```
 QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
-
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
@@ -181,10 +182,10 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 | strAuthBuffer		|char*	    	|返回的 authbuff							|
 | buffLenght   		|int    		|传入的 authbuff 长度，建议为 500					|
 
+
 > 示例代码  
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
 QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
-

@@ -139,7 +139,7 @@ ITMGContext public int Init(String sdkAppId, String openID)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码				|
-| openID    		|String  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户|
+| openID    		|String  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于10000，用于标识用户|
 
 > 示例代码 
 
@@ -213,7 +213,7 @@ AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, Strin
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|String   		|房间号，最大支持127字符（离线语音房间号参数必须填null）|
+| roomId    		|String   		|房间号，最大支持127字符（离线语音房间号参数必须填 null）|
 | openID    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥				|
 
@@ -227,7 +227,7 @@ byte[] authBuffer=AuthBuffer.getInstance().genAuthBuffer(Integer.parseInt(sdkApp
 
 
 ### 加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为 AV_OK 的时候代表成功。
 
 
 > 函数原型
@@ -240,7 +240,7 @@ ITMGContext public abstract int EnterRoom(String roomId, int roomType, byte[] au
 | roomType 	|int		|房间音频类型|
 | authBuffer	|byte[]	|鉴权码|
 
-- 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
+房间音频类型请参考 [音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
 
 > 示例代码  
@@ -275,6 +275,9 @@ ITMGContext.GetInstance(this).IsRoomEntered();
 
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，返回值为AV_OK的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 ```
 ITMGContext public int ExitRoom()
@@ -394,7 +397,7 @@ public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
 
 |参数     | 含义         |
 | ------------- |-------------|
-|weight    				|范围是 1 到 50，数值为 50 是音质评分极好，数值为 1 是音质评分很差，几乎不能使用，数值为 0 代表初始值，无意义|
+|weight    				|范围是1到50，数值为50是音质评分极好，数值为1是音质评分很差，几乎不能使用，数值为0代表初始值，无意义|
 |floss    				|丢包率|
 |delay    		|音频触达延迟时间（ms）|
 
@@ -469,7 +472,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableMic(true);
 ```
 
 ### 麦克风状态获取
-此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
+此接口用于获取麦克风状态，返回值0为关闭麦克风状态，返回值1 为打开麦克风状态。
 > 函数原型  
 ```
 ITMGContext TMGAudioCtrl int GetMicState() 
@@ -553,7 +556,7 @@ int micLevel = ITMGContext.GetInstance(this).GetAudioCtrl().GetMicLevel();
 ```
 
 ### 设置麦克风的音量
-此接口用于设置麦克风的音量。参数 volume 用于设置麦克风的音量，当数值为 0 的时候表示静音，当数值为 100 的时候表示音量不增不减，默认数值为 100。
+此接口用于设置麦克风的音量。参数 volume 用于设置麦克风的音量，当数值为0的时候表示静音，当数值为100 的时候表示音量不增不减，默认数值为100。
 
 > 函数原型  
 ```
@@ -561,7 +564,7 @@ ITMGContext TMGAudioCtrl int SetMicVolume(int volume)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| volume    |int      |设置音量，范围 0 到 200|
+| volume    |int      |设置音量，范围0到200|
 
 > 示例代码  
 ```
@@ -596,7 +599,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableSpeaker(true);
 ```
 
 ### 扬声器状态获取
-此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
+此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值1 为打开扬声器状态，返回值2 为扬声器设备正在操作中。
 > 函数原型  
 ```
 ITMGContext TMGAudioCtrl public int GetSpeakerState() 
@@ -639,7 +642,7 @@ bool IsAudioPlayDevice = ITMGContext.GetInstance(this).GetAudioCtrl().IsAudioPla
 ```
 
 ### 打开关闭音频下行
-此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见EnableAudioPlayDevice。
+此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见 EnableAudioPlayDevice。
 
 > 函数原型  
 
@@ -692,7 +695,7 @@ ITMGContext TMGAudioCtrl public int SetSpeakerVolume(int volume)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| volume    |int        |设置音量，范围 0 到 200|
+| volume    |int        |设置音量，范围0到200|
 
 > 示例代码  
 ```
@@ -826,7 +829,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().ResumeAccompany();
 
 
 ### 设置伴奏音量
-设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 到 200。
+设置伴奏音量，默认值为100，数值大于100音量增益，数值小于100音量减益，值域为0到200。
 > 函数原型  
 ```
 ITMGContext TMGAudioEffectCtrl public int SetAccompanyVolume(int vol)
@@ -892,7 +895,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().SetAccompanyFileCurrentPlayed
 |StopEffect 		|停止播放音效|
 |StopAllEffects		|停止播放所有音效|
 |SetVoiceType 		|变声特效|
-|SetKaraokeType 		|K歌音效特效|
+|SetKaraokeType 		|K 歌音效特效|
 |GetEffectsVolume	|获取播放音效的音量|
 |SetEffectsVolume 	|设置播放音效的音量|
 
@@ -923,7 +926,7 @@ ITMGContext TMGAudioEffectCtrl public int PauseEffect(int soundId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 ```
@@ -949,7 +952,7 @@ ITMGContext TMGAudioEffectCtrl public int ResumeEffect(int soundId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 ```
@@ -977,7 +980,7 @@ ITMGContext TMGAudioEffectCtrl public int StopEffect(int soundId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 ```
@@ -1055,7 +1058,7 @@ ITMGContext.GetInstance(this).GetAudioEffectCtrl().SetKaraokeType(0);
 ```
 
 ### 获取播放音效的音量
-获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
+获取播放音效的音量，为线性音量，默认值为100，数值大于100为增益效果，数值小于100为减益效果。
 > 函数原型  
 ```
 ITMGContext TMGAudioEffectCtrl public int GetEffectsVolume()
@@ -1121,14 +1124,16 @@ ITMGContext.GetInstance(this).GetPTT().ApplyPTTAuthbuffer(authBuffer);
 ```
 
 ### 限制最大语音信息时长
-限制最大语音消息的长度，最大支持 60 秒。
+限制最大语音消息的长度，最大支持60秒。
+
 > 函数原型  
+
 ```
 ITMGContext TMGPTT public void SetMaxMessageLength(int msTime)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长，单位ms|
+| msTime    |int                    |语音时长，单位 ms|
 
 > 示例代码  
 ```
@@ -1271,7 +1276,7 @@ ITMGContext TMGPTT public void DownloadRecordedFile(String fileID, String downlo
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| fileID    			|String                      |文件的url路径	|
+| fileID    			|String                      |文件的 url 路径	|
 | downloadFilePath 	|String                      |文件的本地保存路径	|
 
 > 示例代码  
@@ -1499,7 +1504,7 @@ ITMGContext ITMGAudioCtrl AddAudioBlackList(String openId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| openId    |String      |需添加黑名单的id|
+| openId    |String      |需添加黑名单的 ID|
 
 > 示例代码  
 
@@ -1516,7 +1521,7 @@ ITMGContext ITMGAudioCtrl RemoveAudioBlackList(String openId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| openId    |String      |需移除黑名单的id|
+| openId    |String      |需移除黑名单的 ID|
 
 > 示例代码  
 

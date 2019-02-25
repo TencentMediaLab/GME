@@ -232,11 +232,11 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
-QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strAuthBuffer,&bufferLen);
+QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
 
 ### 加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为 AV_OK 的时候代表成功。
 如果普通语音进房，业务方面无涉及范围语音需求，则使用普通进房接口。详细信息请参考 [范围语音](../GME%20TeamAudio%20Manual.md)。
 
 > 函数原型
@@ -293,7 +293,10 @@ context->IsRoomEntered();
 ```
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个异步接口，返回值为AV_OK的时候代表异步投递成功。
+通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 
 ```
@@ -449,7 +452,6 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 | ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE    		|result; error_info; new_room_type	|{"error_info":"","new_room_type":0,"result":0}|
 
 
-
 ## 实时语音音频接口
 初始化 SDK 之后进房，在房间中，才可以调用实时音频语音相关接口。
 当用户界面点击打开/关闭麦克风/扬声器按钮时，建议如下方式：
@@ -475,8 +477,8 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 |GetMicLevel    						|获取实时麦克风音量	|
 |SetMicVolume    					|设置麦克风音量		|
 |GetMicVolume    					|获取麦克风音量		|
-|EnableSpeaker    					|开关扬声器|
-|GetSpeakerState    					|获取扬声器状态|
+|EnableSpeaker    					|开关扬声器 |
+|GetSpeakerState    				|获取扬声器状态|
 |EnableAudioPlayDevice    			|开关播放设备		|
 |IsAudioPlayDeviceEnabled    		|获取播放设备状态	|
 |EnableAudioRecv    					|打开关闭音频下行	|
@@ -1004,6 +1006,7 @@ ITMGContextGetInstance()->GetAudioEffectCtrl()->EnableAccompanyPlay(false);
 ```
 ITMGAudioEffectCtrl virtual int EnableAccompanyLoopBack(bool enable)
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|--------------|
 | enable    |bool             |是否能听到|
@@ -1322,7 +1325,7 @@ ITMGContextGetInstance()->GetPTT()->ApplyPTTAuthbuffer(authBuffer,authBufferLen)
 ```
 
 ### 限制最大语音信息时长
-限制最大语音消息的长度，最大支持 60 秒。
+限制最大语音消息的长度，最大支持60秒。
 > 函数原型  
 
 ```
@@ -1332,7 +1335,7 @@ ITMGPTT virtual void SetMaxMessageLength(int msTime)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | msTime    |int                    |语音时长，单位ms|
-
+ 
 > 示例代码  
 ```
 int msTime = 10;
@@ -1771,7 +1774,7 @@ ITMGContext ITMGAudioCtrl int AddAudioBlackList(const char* openId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| openId    |char*       |需添加黑名单的ID|
+| openId    |char*       |需添加黑名单的 ID|
 
 > 示例代码  
 

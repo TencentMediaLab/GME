@@ -80,7 +80,7 @@ ITMGContext Init(string sdkAppID, string openID)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码						|
-| openID    	|String  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 	|
+| openID    	|String  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于10000，用于标识用户 	|
 
 > 示例代码  
 ```
@@ -156,9 +156,9 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|string   		|房间号，最大支持 127 字符	（离线语音房间号参数必须填 null）|
+| roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填 null）|
 | openId    	|String 	|用户标识					|
-| key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
+| key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥				|
 
 
 
@@ -171,7 +171,7 @@ byte[] GetAuthBuffer(string appId, string userId, string roomId)
 ```
 
 ### 加入房间
-用生成的鉴权信息进房。加入房间默认不打开麦克风及扬声器。进房超时是 30 秒会有回调。
+用生成的鉴权信息进房。加入房间默认不打开麦克风及扬声器。进房超时是30秒会有回调。
 
 范围语音接入流程请查看 [范围语音](../GME%20TeamAudio%20Manual.md)。
 
@@ -180,6 +180,7 @@ byte[] GetAuthBuffer(string appId, string userId, string roomId)
 ```
 ITMGContext EnterRoom(string roomId, int roomType, byte[] authBuffer)
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | roomId		|string    	|房间号，最大支持127字符					|
@@ -189,6 +190,7 @@ ITMGContext EnterRoom(string roomId, int roomType, byte[] authBuffer)
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
 > 示例代码  
+
 ```
 ITMGContext.GetInstance().EnterRoom(roomId, ITMG_ROOM_TYPE_FLUENCY, authBuffer);
 ```
@@ -233,6 +235,8 @@ ITMGContext.GetInstance().IsRoomEntered();
 
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
 
 > 函数原型  
 ```
@@ -673,7 +677,6 @@ ITMGContext.GetInstance().GetAudioCtrl().GetSpeakerLevel();
 参数 volume 用于设置扬声器的音量，当数值为0的时候表示静音，当数值为100的时候表示音量不增不减，默认数值为 100。
 
 > 函数原型  
-
 ```
 ITMGAudioCtrl SetSpeakerVolume(int volume)
 ```
@@ -1120,7 +1123,7 @@ ITMGContext.GetInstance().GetAudioEffectCtrl().SetKaraokeType(0);
 
 
 ### 获取播放音效的音量
-获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
+获取播放音效的音量，为线性音量，默认值为100，数值大于100为增益效果，数值小于100为减益效果。
 > 函数原型  
 ```
 IQAAudioEffectCtrl  int GetEffectsVolume()

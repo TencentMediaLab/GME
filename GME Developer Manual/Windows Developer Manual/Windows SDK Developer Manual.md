@@ -66,7 +66,7 @@
 
 
 ### 获取单例
-GMESDK 以单例的形式提供，所有调用都从 ITMGContext 开始，通过 ITMGDelegate 回调回传给应用，必须首先设置。    
+GME SDK 以单例的形式提供，所有调用都从 ITMGContext 开始，通过 ITMGDelegate 回调回传给应用，必须首先设置。    
 > 函数原型 
 
 ```
@@ -176,7 +176,6 @@ ITMGContext  int Resume()
 ### 反初始化 SDK
 反初始化 SDK，进入未初始化状态。切换账号需要反初始化。
 > 函数原型
-
 ```
 ITMGContext int Uninit()
 
@@ -203,7 +202,7 @@ context->Uninit();
 
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。  
-离线语音获取鉴权时，房间号参数必须填null。
+离线语音获取鉴权时，房间号参数必须填 null。
 
 > 函数原型
 ```
@@ -224,8 +223,10 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
-QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strAuthBuffer,&bufferLen);
+QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
+
+
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
@@ -285,7 +286,10 @@ context->IsRoomEntered();
 ```
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个异步接口，返回值为AV_OK的时候代表异步投递成功。
+通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 
 ```

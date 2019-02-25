@@ -37,10 +37,11 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **此文档对应GME sdk version：2.3。**
 
-## 快速接入步骤
 
+## 快速接入步骤
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
+
 > 函数原型
 
 ```
@@ -68,7 +69,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
-| openID    		|NSString  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 |
+| openID    		|NSString  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 |
 
 > 示例代码 
 ```
@@ -112,6 +113,7 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 ### 5、加入房间事件的回调
 加入房间完成后会有回调，消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM。
 设置回调相关参考代码。
+
 ```
 - (void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary*)data
 ```
@@ -136,19 +138,17 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
 > 函数原型  
-
 ```
 ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
+| isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
 > 示例代码  
 
 ```
-[[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
+[[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
 ```
-
 
 
 ### 7、开启关闭扬声器
@@ -160,19 +160,19 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
+| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
 > 示例代码  
 
 ```
-[[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
+[[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
 ```
-
 
 
 ## 关于鉴权
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
+
 > 函数原型
 ```
 @interface QAVAuthBuffer : NSObject
@@ -189,7 +189,6 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 
 
 > 示例代码  
-
 ```
 NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:_roomId openID:_openId key:AUTHKEY];
 ```

@@ -71,7 +71,6 @@
 ### 准备工作
 接入 GME 首先需要引入头文件 tmg_sdk.h，头文件类继承 ITMGDelegate 以进行消息的传递及回调。
 > 示例代码  
-
 ```
 #include "tmg_sdk.h"
 
@@ -98,7 +97,6 @@ context->SetTMGDelegate(this);
 接口类采用 Delegate 方法用于向应用程序发送回调通知，消息类型参考 ITMG_MAIN_EVENT_TYPE，data 在 Windows 平台下是 json 字符串格式， 具体 key-value 参见说明文档。
 
 > 示例代码 
-
 ```
 //函数实现：
 //TMGTestScene.h:
@@ -223,7 +221,7 @@ context->Uninit();
 
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请参考 [鉴权密钥](../GME%20Key%20Manual.md)。  
-离线语音获取鉴权时，房间号参数必须填null。
+离线语音获取鉴权时，房间号参数必须填 null。
 
 > 函数原型
 ```
@@ -247,8 +245,9 @@ unsigned char retAuthBuff[512] = {0};
 QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
 
+
 ### 加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为 AV_OK 的时候代表成功。
 如果普通语音进房，业务方面无涉及范围语音需求，则使用普通进房接口。详细信息请查看 [范围语音](../GME%20TeamAudio%20Manual.md)。
 
 > 函数原型
@@ -306,7 +305,10 @@ context->IsRoomEntered();
 ```
 
 ### 退出房间
-通过调用此接口可以退出所在房间。这是一个异步接口，返回值为AV_OK的时候代表异步投递成功。
+通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 
 ```
@@ -1264,7 +1266,7 @@ TMGAudioEffectCtrl int setVoiceType(int type)
 ITMGContextGetInstance()->GetAudioEffectCtrl()->setVoiceType(0);
 ```
 
-### K歌音效特效
+### K 歌音效特效
 调用此接口设置K歌音效特效。
 >  函数原型  
 ```
@@ -1353,7 +1355,7 @@ ITMGContextGetInstance()->GetPTT()->ApplyPTTAuthbuffer(authBuffer,authBufferLen)
 ```
 
 ### 限制最大语音信息时长
-限制最大语音消息的长度，最大支持 60 秒。
+限制最大语音消息的长度，最大支持60秒。
 > 函数原型  
 ```
 ITMGPTT virtual void SetMaxMessageLength(int msTime)
@@ -1361,7 +1363,7 @@ ITMGPTT virtual void SetMaxMessageLength(int msTime)
 
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长，单位ms|
+| msTime    |int                    |语音时长，单位 ms|
 
 > 示例代码  
 ```
@@ -1778,7 +1780,7 @@ context->SetLogPath(logDir);
 ```
 
 ### 加入音频数据黑名单
-将某个 id 加入音频数据黑名单。返回值为 0 表示调用成功。
+将某个 ID 加入音频数据黑名单。返回值为 0 表示调用成功。
 > 函数原型  
 
 ```
@@ -1795,7 +1797,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->AddAudioBlackList(openId);
 ```
 
 ### 移除音频数据黑名单
-将某个 id 移除音频数据黑名单。返回值为 0 表示调用成功。
+将某个 ID 移除音频数据黑名单。返回值为 0 表示调用成功。
 > 函数原型  
 
 ```

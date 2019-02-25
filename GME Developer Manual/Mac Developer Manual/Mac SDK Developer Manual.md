@@ -100,6 +100,7 @@ _context.TMGDelegate =self;
 参数获取请查看 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
+
 > 函数原型
 
 ```
@@ -261,6 +262,9 @@ ITMGContext -(BOOL)IsRoomEntered
 
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 
 ```
@@ -492,6 +496,7 @@ ITMGContext GetAudioCtrl -(int)GetMicState
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableAudioCaptureDevice:(BOOL)enabled
 ```
+
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | enabled    |BOOL     |如果需要打开采集设备，则传入的参数为 YES，如果关闭采集设备，则参数为 NO|
@@ -578,7 +583,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
 ```
 
 ###  获取麦克风的音量
-此接口用于获取麦克风的音量。返回值为一个int类型数值，返回值为101代表没调用过接口 SetMicVolume。
+此接口用于获取麦克风的音量。返回值为一个 int 类型数值，返回值为 101 代表没调用过接口 SetMicVolume。
 
 > 函数原型  
 
@@ -656,7 +661,7 @@ BOOL IsAudioPlayDevice =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioPlayD
 ```
 
 ### 打开关闭音频下行
-此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见EnableAudioPlayDevice。
+此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见 EnableAudioPlayDevice。
 
 > 函数原型  
 
@@ -969,7 +974,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PauseEffect:(int)soundId
 
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 
@@ -1000,7 +1005,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
 
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 
@@ -1031,7 +1036,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
 
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| soundId    |int                    |音效 id|
+| soundId    |int                    |音效 ID|
 
 > 示例代码  
 
@@ -1119,7 +1124,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 ```
 
 ### 获取播放音效的音量
-获取播放音效的音量，为线性音量，默认值为 100，数值大于 100 为增益效果，数值小于 100 为减益效果。
+获取播放音效的音量，为线性音量，默认值为100，数值大于100为增益效果，数值小于100为减益效果。
 > 函数原型  
 
 ```
@@ -1619,7 +1624,7 @@ ITMGContext GetAudioCtrl -(QAVResult)AddAudioBlackList:(NSString*)openID
 > 函数原型  
 
 ```
-ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)identifier
+ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)openID
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|

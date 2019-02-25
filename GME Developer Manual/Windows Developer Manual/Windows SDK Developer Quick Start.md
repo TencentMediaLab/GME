@@ -13,12 +13,12 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 
 |重要接口     | 接口含义|
-| ------------- |:-------------:|
-|Init    		|初始化 GME 	|
-|Poll    		|触发事件回调	|
-|EnterRoom	 	|进房  		|
-|EnableMic	 		|开麦克风 	|
-|EnableSpeaker			|开扬声器 	|
+| ------------- |-------------|
+|Init   				|初始化 GME 	|
+|Poll    				|触发事件回调	|
+|EnterRoom	 		|进房  			|
+|EnableMic	 		|开麦克风 		|
+|EnableSpeaker		|开扬声器 		|
 
 **说明**
 
@@ -171,7 +171,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ## 关于鉴权
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署详情请查看 [鉴权密钥](../GME%20Key%20Manual.md)。  
-离线语音获取鉴权时，房间号参数必须填null。
+离线语音获取鉴权时，房间号参数必须填 null。
 
 > 函数原型
 ```
@@ -193,4 +193,5 @@ unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
 QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
+
 

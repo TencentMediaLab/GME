@@ -110,7 +110,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
-| openID    		|NSString  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 |
+| openID    		|NSString  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 |
 
 > 示例代码  
 
@@ -231,7 +231,7 @@ NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:
 ```
 
 ### 加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为AV_OK的时候代表成功。
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为 AV_OK 的时候代表成功。
 
 
 > 函数原型
@@ -287,6 +287,9 @@ ITMGContext -(BOOL)IsRoomEntered
 
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
+
+> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+
 > 函数原型  
 
 ```
