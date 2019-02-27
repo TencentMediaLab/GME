@@ -425,6 +425,8 @@ ITMGContext GetRoom -(int)GetRoomType
 
 ## 实时语音音频接口
 初始化 SDK 之后进房，在房间中，才可以调用实时音频语音相关接口。
+调用场景举例：
+
 当用户界面点击打开/关闭麦克风/扬声器按钮时，建议如下方式：
 - 对于大部分的游戏类 App，推荐调用 EnableMic 及 EnbaleSpeaker 接口，相当于总是应该同时调用 EnableAudioCaptureDevice/EnableAudioSend 和 EnableAudioPlayDevice/EnableAudioRecv 接口；
 - 其他类型的移动端 App 例如社交类型 App，打开或者关闭采集设备，会伴随整个设备（采集及播放）重启，如果此时 App 正在播放背景音乐，那么背景音乐的播放也会被中断。利用控制上下行的方式来实现开关麦克风效果，不会中断播放设备。具体调用方式为：在进房的时候调用 EnableAudioCaptureDevice(true) && EnabledAudioPlayDevice(true) 一次，点击开关麦克风时只调用 EnableAudioSend/Recv 来控制音频流是否发送/接收。
@@ -606,7 +608,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
+| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
 
 > 示例代码  
 
@@ -1166,6 +1168,8 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 |StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
+|GetMicLevel|获取离线语音实时麦克风音量|
+|GetSpeakerLevel|获取离线语音实时扬声器音量  |
 |UploadRecordedFile 	|上传语音文件		|
 |DownloadRecordedFile	|下载语音文件		|
 |PlayRecordedFile 	|播放语音		|
@@ -1323,6 +1327,35 @@ ITMGContext GetPTT -(QAVResult)CancelRecording
 ```
 [[[ITMGContext GetInstance]GetPTT]CancelRecording];
 ```
+
+### 获取离线语音麦克风实时音量
+此接口用于获取麦克风实时音量，返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+ITMGContext GetPTT -(QAVResult)GetMicLevel
+```
+> 示例代码  
+```
+[[[ITMGContext GetInstance]GetPTT]GetMicLevel];
+```
+
+
+### 获取扬声器实时音量
+此接口用于获取扬声器实时音量。返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+ITMGContext GetPTT -(QAVResult)GetSpeakerLevel
+```
+
+> 示例代码  
+```
+[[[ITMGContext GetInstance]GetPTT]GetSpeakerLevel];
+```
+
+
+
 
 ### 上传语音文件
 此接口用于上传语音文件。
@@ -1511,6 +1544,29 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
 ```
 [[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID language:"cmn-Hans-CN"];
 ```
+
+
+
+
+### 将指定的语音文件翻译成文字（指定语言）
+此接口用于将指定的语音文件翻译成指定语言的文字。
+
+> 函数原型  
+```
+ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language (NSString*)translateLanguage
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| fileID    |NSString*                     |语音文件 url|
+| language    |NSString*                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| translatelanguage    |NSString*                    |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)（此参数暂时无效）|
+
+> 示例代码  
+```
+[[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID language:"cmn-Hans-CN" translateLanguage:"en-US"];
+```
+
+
 
 
 ### 识别回调

@@ -113,7 +113,7 @@ void AUEDemoLevelScriptActor::OnEvent(ITMG_MAIN_EVENT_TYPE eventType, const char
 
 ### 初始化 SDK
 参数获取请参考 [接入指引](/GME%20Introduction.md)。
-此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
+此接口需要来自腾讯云控制台的 sdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 > 函数原型 
 
@@ -122,7 +122,7 @@ ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|char*   	|来自腾讯云控制台的 SdkAppId 号码					|
+| sdkAppId    	|char*   	|来自腾讯云控制台的 sdkAppId 号码					|
 | openID    	|char*   	|OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 	|
 
 > 示例代码  
@@ -215,12 +215,12 @@ context->Uninit();
 
 > 函数原型
 ```
-QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, unsigned QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
+QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int dwSdkAppID, const char* strRoomID, const char* strOpenID,const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| dwRoomID    		|char*     |房间号，最大支持 127 字符（离线语音房间号参数必须填 null）|
+| dwSdkAppID    			|int   		|来自腾讯云控制台的 sdkAppId 号码		|
+| strRoomID    		|char*     |房间号，最大支持 127 字符（离线语音房间号参数必须填 null）|
 | strOpenID  		|char*    		|用户标识								|
 | strKey    			|char*	    	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|
@@ -1299,6 +1299,8 @@ ITMGContextGetInstance()->GetAudioEffectCtrl()->SetEffectsVolume(volume);
 |StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
+|GetMicLevel|获取离线语音实时麦克风音量|
+|GetSpeakerLevel|获取离线语音实时扬声器音量  |
 |UploadRecordedFile 	|上传语音文件		|
 |DownloadRecordedFile	|下载语音文件		|
 |PlayRecordedFile 	|播放语音		|
@@ -1461,6 +1463,36 @@ ITMGPTT virtual int CancelRecording()
 ```
 ITMGContextGetInstance()->GetPTT()->CancelRecording();
 ```
+
+### 获取离线语音麦克风实时音量
+此接口用于获取麦克风实时音量，返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+ITMGPTT virtual int GetMicLevel()
+```
+> 示例代码  
+```
+ITMGContextGetInstance()->GetPTT()->GetMicLevel();
+```
+
+
+### 获取扬声器实时音量
+此接口用于获取扬声器实时音量。返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+ITMGPTT virtual int GetSpeakerLevel()
+```
+
+> 示例代码  
+```
+ITMGContextGetInstance()->GetPTT()->GetSpeakerLevel();
+```
+
+
+
+
 
 ### 上传语音文件
 此接口用于上传语音文件。
@@ -1658,6 +1690,27 @@ ITMGPTT virtual void SpeechToText(const char* fileID, const char* language)
 ```
 ITMGContextGetInstance()->GetPTT()->SpeechToText(filePath,"cmn-Hans-CN");
 ```
+
+
+### 将指定的语音文件翻译成文字（指定语言）
+此接口用于将指定的语音文件翻译成指定语言的文字。
+
+> 函数原型  
+```
+ITMGPTT virtual void SpeechToText(const char* fileID,const char* language,const char* translateLanguage)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| fileID    |char*                     |语音文件 url|
+| language    |char*                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| translatelanguage    |char*                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)（此参数暂时无效）|
+
+> 示例代码  
+```
+ITMGContextGetInstance()->GetPTT()->SpeechToText(filePath,"cmn-Hans-CN","en-US");
+```
+
+
 
 ### 识别回调
 将指定的语音文件识别成文字的回调，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。

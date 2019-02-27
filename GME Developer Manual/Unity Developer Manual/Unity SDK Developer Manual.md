@@ -70,7 +70,7 @@
 
 ### 初始化 SDK
 参数获取请参考 [接入指引](/GME%20Introduction.md)。
-此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
+此接口需要来自腾讯云控制台的 sdkAppID 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 
 > 函数原型
@@ -79,7 +79,7 @@ ITMGContext Init(string sdkAppID, string openID)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码						|
+| sdkAppId    	|String  |来自腾讯云控制台的 sdkAppID 号码						|
 | openID    	|String  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于10000，用于标识用户 	|
 
 > 示例代码  
@@ -155,7 +155,7 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
+| appId    		|int   		|来自腾讯云控制台的 sdkAppID 号码		|
 | roomId    		|string   		|房间号，最大支持127字符	（离线语音房间号参数必须填 null）|
 | openId    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥				|
@@ -1166,6 +1166,8 @@ ITMGContext.GetInstance().GetAudioEffectCtrl().SetEffectsVolume(volume);
 |StartRecordingWithStreamingRecognition		|启动流式录音		|
 |StopRecording    	|停止录音		|
 |CancelRecording	|取消录音		|
+|GetMicLevel|获取离线语音实时麦克风音量|
+|GetSpeakerLevel|获取离线语音实时扬声器音量  |
 |UploadRecordedFile 	|上传语音文件		|
 |DownloadRecordedFile	|下载语音文件		|
 |PlayRecordedFile 	|播放语音		|
@@ -1319,6 +1321,35 @@ IQAVPTT int CancelRecording()
 ```
 ITMGContext.GetInstance().GetPttCtrl().CancelRecording();
 ```
+
+### 获取离线语音麦克风实时音量
+此接口用于获取麦克风实时音量，返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+IQAVPTT int GetMicLevel()
+```
+> 示例代码  
+```
+ITMGContext.GetInstance().GetPttCtrl().GetMicLevel();
+```
+
+
+### 获取扬声器实时音量
+此接口用于获取扬声器实时音量。返回值为 int 类型，值域为 0 到 100。
+
+> 函数原型  
+```
+IQAVPTT int GetSpeakerLevel()
+```
+
+> 示例代码  
+```
+ITMGContext.GetInstance().GetPttCtrl().GetSpeakerLevel();
+```
+
+
+
 
 ### 上传语音文件
 此接口用于上传语音文件。
@@ -1530,6 +1561,25 @@ IQAVPTT int SpeechToText(String fileID,String language)
 >  示例代码  
 ```
 ITMGContext.GetInstance().GetPttCtrl().SpeechToText(fileID,"cmn-Hans-CN");
+```
+
+
+### 将指定的语音文件翻译成文字（指定语言）
+此接口用于将指定的语音文件翻译成指定语言的文字。
+
+> 函数原型  
+```
+IQAVPTT int SpeechToText(String fileID,String language,String translateLanguage)
+```
+|参数     | 类型         |意义|
+| ------------- |:-------------:|-------------|
+| fileID    |String                   |语音文件 url|
+| language    |String                   |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
+| translatelanguage    |String                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)（此参数暂时无效）|
+
+> 示例代码  
+```
+ITMGContext.GetInstance().GetPttCtrl().SpeechToText(filePath,"cmn-Hans-CN","en-US");
 ```
 
 
