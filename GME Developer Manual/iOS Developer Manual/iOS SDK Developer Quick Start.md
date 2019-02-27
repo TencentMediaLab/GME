@@ -35,12 +35,13 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 
 **设备的操作要在进房成功之后。**
 
-**此文档对应GME sdk version：2.2。**
+**此文档对应GME sdk version：2.3。**
+
 
 ## 快速接入步骤
-
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
+
 > 函数原型
 
 ```
@@ -56,7 +57,7 @@ _context.TMGDelegate =self;
 
 
 ### 2、初始化 SDK
-参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
+参数获取请查看 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 > 函数原型
@@ -68,7 +69,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
-| openID    		|NSString  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 |
+| openID    		|NSString  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 |
 
 > 示例代码 
 ```
@@ -94,7 +95,7 @@ ITMGContext -(void)Poll
 
 > 函数原型
 ```
-ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
+ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
@@ -102,14 +103,8 @@ ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBu
 | roomType 	|int		|房间音频类型		|
 | authBuffer	|NSData	|鉴权码				|
 
-|音频类型     	|含义|参数|音量类型|控制台推荐采样率设置|适用场景|
-| ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|流畅音质	|1|扬声器：通话音量；耳机：媒体音量	|如对音质无特殊需求，16K采样率即可；					|流畅优先、超低延迟实时语音，应用在游戏内开黑场景，适用于FPS、MOBA等类型的游戏；	|							
-| ITMG_ROOM_TYPE_STANDARD			|标准音质	|2|扬声器：通话音量；耳机：媒体音量	|根据对音质的需求，可以选择16k/48k采样率				|音质较好，延时适中，适用于狼人杀、棋牌等休闲游戏的实时通话场景；	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|高清音质	|3|扬声器：媒体音量；耳机：媒体音量	|为了保证最佳效果，建议控制台设置48k采样率的高音质配置	|超高音质，延时相对大一些，适用于音乐舞蹈类游戏以及语音社交类APP；适用于播放音乐、线上K歌等有高音质要求的场景；	|
+- 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
-- 如对音量类型或场景有特殊需求，请联系一线客服反馈；
-- 控制台采样率设置会直接影响游戏语音效果，请在[控制台](https://console.cloud.tencent.com/gamegme)上再次确认采样率设置是否符合项目使用场景。
 > 示例代码  
 ```
 [[ITMGContext GetInstance] EnterRoom:_roomId roomType:_roomType authBuffer:authBuffer];
@@ -118,6 +113,7 @@ ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBu
 ### 5、加入房间事件的回调
 加入房间完成后会有回调，消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM。
 设置回调相关参考代码。
+
 ```
 - (void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary*)data
 ```
@@ -142,19 +138,17 @@ ITMGContext   -(void)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBu
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
 > 函数原型  
-
 ```
 ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
+| isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
 > 示例代码  
 
 ```
-[[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
+[[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
 ```
-
 
 
 ### 7、开启关闭扬声器
@@ -166,38 +160,35 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
+| isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
 > 示例代码  
 
 ```
-[[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
+[[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
 ```
-
 
 
 ## 关于鉴权
 ### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署见[GME密钥文档](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
+生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
+
 > 函数原型
 ```
 @interface QAVAuthBuffer : NSObject
-+ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId identifier:(NSString*)identifier key:(NSString*)key;
++ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId openID:(NSString*)openID key:(NSString*)key;
 + @end
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | appId    		|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| roomId    		|NSString  	|房间号，最大支持127字符（离线语音房间号参数必须填null）	|
-| identifier  		|NSString    	|用户标识								|
-| key    			|NSString    	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥					|
+| roomId    		|NSString  	|房间号，最大支持127字符（离线语音房间号参数必须填 null）	|
+| openID  		|NSString    	|用户标识								|
+| key    			|NSString    	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥					|
 
 
 
 > 示例代码  
-
 ```
 NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:_roomId openID:_openId key:AUTHKEY];
 ```
-
-
