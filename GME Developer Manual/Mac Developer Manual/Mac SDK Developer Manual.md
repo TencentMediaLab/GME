@@ -65,12 +65,12 @@
 
 ### 获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext ITMGDelegate <NSObject>
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 ITMGContext* _context = [ITMGContext GetInstance];
@@ -79,12 +79,12 @@ _context.TMGDelegate =self;
 
 ### 消息传递
 接口类采用 Delegate 方法用于向应用程序发送回调通知，消息类型参考 ITMG_MAIN_EVENT_TYPE，消息内容为一个字典，不同的事件类型，消息内容也会不一样。
-> 函数原型
+#### 函数原型
 
 ```
 - (void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary*)data
 ```
-> 示例代码
+#### 示例代码
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -101,7 +101,7 @@ _context.TMGDelegate =self;
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
@@ -112,7 +112,7 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
 | openID    		|NSString  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 |
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[ITMGContext GetInstance] InitEngine:SDKAPPID3RD openID:_openId];
@@ -121,12 +121,12 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 
 ### 触发事件回调
 通过在 update 里面周期的调用 Poll 可以触发事件回调。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(void)Poll
 ```
-> 示例代码
+#### 示例代码
 ```
 [[ITMGContext GetInstance] Poll];
 ```
@@ -135,7 +135,7 @@ ITMGContext -(void)Poll
 
 ### 系统暂停
 当系统发生 Pause 事件时，需要同时通知引擎进行 Pause。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(QAVResult)Pause
@@ -143,7 +143,7 @@ ITMGContext -(QAVResult)Pause
 
 ### 系统恢复
 当系统发生 Resume 事件时，需要同时通知引擎进行 Resume。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(QAVResult)Resume
@@ -152,13 +152,13 @@ ITMGContext -(QAVResult)Resume
 
 ### 反初始化 SDK
 反初始化 SDK，进入未初始化状态。切换账号需要反初始化。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(void)Uninit
 ```
 
-> 示例代码
+#### 示例代码
 
 ```
 [[ITMGContext GetInstance] Uninit];
@@ -182,11 +182,11 @@ ITMGContext -(void)Uninit
 ### 鉴权信息
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
-> 函数原型
+#### 函数原型
 
 ```
 @interface QAVAuthBuffer : NSObject
-+ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId identifier:(NSString*)identifier key:(NSString*)key;
++ (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId openID:(NSString*)openID key:(NSString*)key;
 + @end
 ```
 
@@ -199,7 +199,7 @@ ITMGContext -(void)Uninit
 
 
 
-> 示例代码  
+#### 示例代码  
 
 ```
 NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:_roomId openID:_openId key:AUTHKEY];
@@ -209,7 +209,7 @@ NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。进房超时是30秒会有回调。
 
 
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
@@ -222,7 +222,7 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
   
-> 示例代码  
+#### 示例代码  
 
 ```
 [[ITMGContext GetInstance] EnterRoom:_roomId roomType:_roomType authBuffer:authBuffer];
@@ -230,7 +230,7 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 
 ### 加入房间事件的回调
 加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
-> 示例代码 
+#### 示例代码 
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -249,12 +249,12 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 
 ### 判断是否已经进入房间
 通过调用此接口可以判断是否已经进入房间，返回值为 BOOL 类型。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext -(BOOL)IsRoomEntered
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[ITMGContext GetInstance] IsRoomEntered];
@@ -263,14 +263,14 @@ ITMGContext -(BOOL)IsRoomEntered
 ### 退出房间
 通过调用此接口可以退出所在房间。这是一个异步接口，返回值为 AV_OK 的时候代表异步投递成功。
 
-> 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
+#### 如果应用中有退房后立即进房的场景，在接口调用流程上，开发者无需要等待 ExitRoom 的回调 RoomExitComplete 通知，只需直接调用接口。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext -(int)ExitRoom
 ```
-> 示例代码
+#### 示例代码
 
 ```
 [[ITMGContext GetInstance] ExitRoom];
@@ -279,7 +279,7 @@ ITMGContext -(int)ExitRoom
 ### 退出房间回调
 退出房间完成后会有回调，消息为 ITMG_MAIN_EVENT_TYPE_EXIT_ROOM。
 
-> 示例代码  
+#### 示例代码  
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -299,7 +299,7 @@ ITMGContext -(int)ExitRoom
 ### 修改用户房间音频类型
 此接口用于修改用户房间音频类型，结果参见回调事件，事件类型为 ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetRoom -(void)ChangeRoomType:(int)nRoomType
 ```
@@ -307,7 +307,7 @@ ITMGContext GetRoom -(void)ChangeRoomType:(int)nRoomType
 | ------------- |:-------------:|-------------|
 | nRoomType    |int    |希望房间切换成的类型，房间音频类型参考 EnterRoom 接口|
 
-> 示例代码
+#### 示例代码
 
 ```
 [[[ITMGContext GetInstance]GetRoom ]ChangeRoomType:_roomType];
@@ -316,13 +316,13 @@ ITMGContext GetRoom -(void)ChangeRoomType:(int)nRoomType
 ### 获取用户房间音频类型
 此接口用于获取用户房间音频类型，返回值为房间音频类型，返回值为 0 时代表获取用户房间音频类型发生错误，房间音频类型参考 EnterRoom 接口。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetRoom -(int)GetRoomType
 ```
 
 
-> 示例代码
+#### 示例代码
 
 ```
 [[[ITMGContext GetInstance]GetRoom ]GetRoomType];
@@ -339,7 +339,7 @@ ITMGContext GetRoom -(int)GetRoomType
 | ITMG_ROOM_CHANGE_EVENT_REQUEST			|4	|表示房间成员调用 ChangeRoomType 接口，请求切换房间音频类型|	
 
 
-> 示例代码  
+#### 示例代码  
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data {
 	NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
@@ -363,7 +363,7 @@ ITMGContext GetRoom -(int)GetRoomType
 |ITMG_EVENT_ID_USER_HAS_AUDIO    		|有成员发送音频包		|应用侧维护通话成员列表	|
 |ITMG_EVENT_ID_USER_NO_AUDIO    			|有成员停止发送音频包	|应用侧维护通话成员列表	|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -460,7 +460,7 @@ ITMGContext GetRoom -(int)GetRoomType
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
@@ -469,7 +469,7 @@ ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
@@ -477,12 +477,12 @@ ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 
 ### 麦克风状态获取
 此接口用于获取麦克风状态，返回值 0 为关闭麦克风状态，返回值 1 为打开麦克风状态。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int)GetMicState
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetMicState];
@@ -493,7 +493,7 @@ ITMGContext GetAudioCtrl -(int)GetMicState
 - 只能在进房后调用此接口，退房会自动关闭设备。
 - 在移动端，打开采集设备通常会伴随权限申请，音量类型调整等操作。
 
-> 函数原型
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableAudioCaptureDevice:(BOOL)enabled
@@ -503,7 +503,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioCaptureDevice:(BOOL)enabled
 | ------------- |:-------------:|-------------|
 | enabled    |BOOL     |如果需要打开采集设备，则传入的参数为 YES，如果关闭采集设备，则参数为 NO|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 打开采集设备
@@ -512,12 +512,12 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioCaptureDevice:(BOOL)enabled
 
 ### 采集设备状态获取
 此接口用于采集设备状态获取。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext GetAudioCtrl -(BOOL)IsAudioCaptureDeviceEnabled
 ```
-> 示例代码
+#### 示例代码
 
 ```
 BOOL IsAudioCaptureDevice = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioCaptureDeviceEnabled];
@@ -526,7 +526,7 @@ BOOL IsAudioCaptureDevice = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioCap
 ### 打开关闭音频上行
 此接口用于打开/关闭音频上行。如果采集设备已经打开，那么会发送采集到的音频数据。如果采集设备没有打开，那么仍旧无声。采集设备的打开关闭参见接口 EnableAudioCaptureDevice。
 
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableAudioSend:(BOOL)enable
@@ -535,7 +535,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioSend:(BOOL)enable
 | ------------- |:-------------:|-------------|
 | enable    |BOOL     |如果需要打开音频上行，则传入的参数为 YES，如果关闭音频上行，则参数为 NO|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetAudioCtrl ]EnableAudioSend:enabled];
@@ -543,12 +543,12 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioSend:(BOOL)enable
 
 ### 音频上行状态获取
 此接口用于音频上行状态获取。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(BOOL)IsAudioSendEnabled
 ```
-> 示例代码
+#### 示例代码  
 
 ```
 BOOL IsAudioSend =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioSendEnabled];
@@ -556,12 +556,12 @@ BOOL IsAudioSend =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioSendEnabled
 
 ### 获取麦克风实时音量
 此接口用于获取麦克风实时音量，返回值为 int 类型。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int)GetMicLevel
 ```
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetMicLevel];
 ```
@@ -569,7 +569,7 @@ ITMGContext GetAudioCtrl -(int)GetMicLevel
 ### 设置麦克风的音量
 此接口用于设置麦克风的音量。参数 volume 用于设置麦克风的音量，当数值为 0 的时候表示静音，当数值为 100 的时候表示音量不增不减，默认数值为 100。
 
-> 函数原型 
+#### 函数原型 
  
 ```
 ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
@@ -578,7 +578,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
 | ------------- |:-------------:|-------------|
 | volume    |int      |设置音量，范围 0 到 200|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] SetMicVolume:100];
@@ -587,12 +587,12 @@ ITMGContext GetAudioCtrl -(QAVResult)SetMicVolume:(int) volume
 ###  获取麦克风的音量
 此接口用于获取麦克风的音量。返回值为一个 int 类型数值，返回值为 101 代表没调用过接口 SetMicVolume。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int) GetMicVolume
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetMicVolume];
@@ -601,7 +601,7 @@ ITMGContext GetAudioCtrl -(int) GetMicVolume
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
 EnableSpeaker = EnableAudioPlayDevice +  EnableAudioRecv.
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
@@ -610,7 +610,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
@@ -618,13 +618,13 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 
 ### 扬声器状态获取
 此接口用于扬声器状态获取。返回值 0 为关闭扬声器状态，返回值 1 为打开扬声器状态，返回值 2 为扬声器设备正在操作中。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int)GetSpeakerState
 ```
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetSpeakerState];
@@ -632,7 +632,7 @@ ITMGContext GetAudioCtrl -(int)GetSpeakerState
 
 ### 开启关闭播放设备
 此接口用于开启关闭播放设备。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableAudioPlayDevice:(BOOL)enabled
@@ -641,7 +641,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioPlayDevice:(BOOL)enabled
 | ------------- |:-------------:|-------------|
 | enabled    |BOOL        |如果需要关闭播放设备，则传入的参数为 NO，如果打开播放设备，则参数为 YES|
 
-> 示例代码
+#### 示例代码
 
 ```
 打开播放设备
@@ -651,12 +651,12 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioPlayDevice:(BOOL)enabled
 
 ### 播放设备状态获取
 此接口用于播放设备状态获取。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext GetAudioCtrl -(BOOL)IsAudioPlayDeviceEnabled
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 BOOL IsAudioPlayDevice =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioPlayDeviceEnabled];
@@ -665,7 +665,7 @@ BOOL IsAudioPlayDevice =  [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioPlayD
 ### 打开关闭音频下行
 此接口用于打开/关闭音频下行。如果播放设备已经打开，那么会播放房间里其他人的音频数据。如果播放设备没有打开，那么仍旧无声。播放设备的打开关闭参见接口 参见 EnableAudioPlayDevice。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableAudioRecv:(BOOL)enabled
@@ -674,7 +674,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioRecv:(BOOL)enabled
 | ------------- |:-------------:|-------------|
 | enabled    |BOOL     |如果需要打开音频下行，则传入的参数为 YES，如果关闭音频下行，则参数为 NO|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetAudioCtrl ]EnableAudioRecv:enabled];
@@ -682,13 +682,13 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableAudioRecv:(BOOL)enabled
 
 ### 音频下行状态获取
 此接口用于音频下行状态获取。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGAudioCtrl bool IsAudioRecvEnabled()
 ```
 
-> 示例代码  
+#### 示例代码  
 
 ```
 BOOL IsAudioRecv = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioRecvEnabled];
@@ -696,13 +696,13 @@ BOOL IsAudioRecv = [[[ITMGContext GetInstance] GetAudioCtrl] IsAudioRecvEnabled]
 
 ### 获取扬声器实时音量
 此接口用于获取扬声器实时音量。返回值为 int 类型数值，表示扬声器实时音量。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int)GetSpeakerLevel
 ```
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetSpeakerLevel];
@@ -712,7 +712,7 @@ ITMGContext GetAudioCtrl -(int)GetSpeakerLevel
 此接口用于设置扬声器的音量。
 参数 volume 用于设置扬声器的音量，当数值为 0 的时候表示静音，当数值为 100 的时候表示音量不增不减，默认数值为 100。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)SetSpeakerVolume:(int)vol
@@ -721,7 +721,7 @@ ITMGContext GetAudioCtrl -(QAVResult)SetSpeakerVolume:(int)vol
 | ------------- |:-------------:|-------------|
 | vol    |int        |设置音量，范围 0 到 200|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] SetSpeakerVolume:100];
@@ -731,12 +731,12 @@ ITMGContext GetAudioCtrl -(QAVResult)SetSpeakerVolume:(int)vol
 此接口用于获取扬声器的音量。返回值为 int 类型数值，代表扬声器的音量，返回值为101代表没调用过接口 SetSpeakerVolume。
 Level 是实时音量，Volume 是扬声器的音量，最终声音音量相当于 Level*Volume%。举个例子：实时音量是数值是 100 的话，此时Volume的数值是 60，那么最终发出来的声音数值也是 60。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(int)GetSpeakerVolume
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] GetSpeakerVolume];
@@ -745,7 +745,7 @@ ITMGContext GetAudioCtrl -(int)GetSpeakerVolume
 
 ### 启动耳返
 此接口用于启动耳返。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
@@ -754,7 +754,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
 | ------------- |:-------------:|-------------|
 | enable    |boolean         |设置是否启动|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableLoopBack:YES];
@@ -777,7 +777,7 @@ ITMGContext GetAudioCtrl -(QAVResult)EnableLoopBack:(BOOL)enable
 
 ### 开始播放伴奏
 调用此接口开始播放伴奏。支持 m4a、wav、mp3 一共三种格式。调用此 API，音量会重置。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVAccResult)StartAccompany:(NSString*)filePath loopBack:(BOOL)loopBack loopCount:(int)loopCount
@@ -788,7 +788,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StartAccompany:(NSString*)filePath
 | loopBack  	|boolean         	|是否混音发送，一般都设置为 YES，即其他人也能听到伴奏	|
 | loopCount	|int          		|循环次数，数值为 -1 表示无限循环							|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] StartAccompany:path loopBack:isLoopBack loopCount:loopCount];
@@ -796,7 +796,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StartAccompany:(NSString*)filePath
 
 ### 播放伴奏的回调
 开始播放伴奏完成后，回调函数调用 OnEvent，事件消息为 ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH，在 OnEvent 函数中对事件消息进行判断。
-> 示例代码  
+#### 示例代码  
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -813,7 +813,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StartAccompany:(NSString*)filePath
 
 ### 停止播放伴奏
 调用此接口停止播放伴奏。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVAccResult)StopAccompany:(int)duckerTime
@@ -822,7 +822,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StopAccompany:(int)duckerTime
 | ------------- |:-------------:|-------------|
 | duckerTimeMs    |int             |淡出时间|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] StopAccompany:duckerTime];
@@ -830,12 +830,12 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)StopAccompany:(int)duckerTime
 
 ### 伴奏是否播放完毕
 如果播放完毕，返回值为 YES，如果没播放完，返回值为 NO。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(bool)IsAccompanyPlayEnd
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] IsAccompanyPlayEnd];
@@ -843,12 +843,12 @@ ITMGContext GetAudioEffectCtrl -(bool)IsAccompanyPlayEnd
 
 ### 暂停播放伴奏
 调用此接口暂停播放伴奏。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVAccResult)PauseAccompany
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] PauseAccompany];
@@ -856,12 +856,12 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)PauseAccompany
 
 ### 重新播放伴奏
 此接口用于重新播放伴奏。
-> 函数原型  
+#### 函数原型  
 
 ```
 GetAudioEffectCtrl -(QAVAccResult)ResumeAccompany
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] ResumeAccompany];
@@ -869,7 +869,7 @@ GetAudioEffectCtrl -(QAVAccResult)ResumeAccompany
 
 ### 设置伴奏音量
 设置伴奏音量，默认值为 100，数值大于 100 音量增益，数值小于 100 音量减益，值域为 0 到 200。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyVolume:(int)vol
@@ -878,7 +878,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyVolume:(int)vol
 | ------------- |:-------------:|-------------|
 | vol    |int             |音量数值|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetAccompanyVolume:volume];
@@ -886,12 +886,12 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyVolume:(int)vol
 
 ### 获取播放伴奏的音量
 此接口用于获取伴奏的音量。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(int)GetAccompanyVolume
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] GetAccompanyVolume];
@@ -899,13 +899,13 @@ ITMGContext GetAudioEffectCtrl -(int)GetAccompanyVolume
 
 ### 获得伴奏播放进度
 以下两个接口用于获得伴奏播放进度。需要注意：Current / Total = 当前循环次数，Current % Total = 当前循环播放位置。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(int)GetAccompanyFileTotalTimeByMs
 ITMGContext GetAudioEffectCtrl -(int)GetAccompanyFileCurrentPlayedTimeByMs
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] GetAccompanyFileTotalTimeByMs];
@@ -914,7 +914,7 @@ ITMGContext GetAudioEffectCtrl -(int)GetAccompanyFileCurrentPlayedTimeByMs
 
 ### 设置播放进度
 此接口用于设置播放进度。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeByMs:(uint) time
@@ -923,7 +923,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeB
 | ------------- |:-------------:|-------------|
 | time    |uint                |播放进度，以毫秒为单位|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetAccompanyFileCurrentPlayedTimeByMs:time];
@@ -948,7 +948,7 @@ ITMGContext GetAudioEffectCtrl -(QAVAccResult)SetAccompanyFileCurrentPlayedTimeB
 
 ### 播放音效
 此接口用于播放音效。参数中音效 ID 需要 App 侧进行管理，ID 代表一次独立的播放事件。后续可以根据此 ID 控制此次播放。文件支持 m4a、wav、mp3 一共三种格式。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSString*)filePath loop:(BOOL)loop
@@ -960,7 +960,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSS
 | filePath    	|NSString    	|音效路径		|
 | loop    		|boolean  	|是否重复播放	|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] PlayEffect:soundId filePath:path loop:isLoop];
@@ -968,7 +968,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PlayEffect:(int)soundId filePath:(NSS
 
 ### 暂停播放音效
 此接口用于暂停播放音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)PauseEffect:(int)soundId
@@ -978,7 +978,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PauseEffect:(int)soundId
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 ID|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] PauseEffect:soundId];
@@ -986,12 +986,12 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PauseEffect:(int)soundId
 
 ### 暂停所有音效
 调用此接口暂停所有音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)PauseAllEffects
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] PauseAllEffects];
@@ -999,7 +999,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)PauseAllEffects
 
 ### 重新播放音效
 此接口用于重新播放音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
@@ -1009,7 +1009,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 ID|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] ResumeEffect:soundId];
@@ -1017,12 +1017,12 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeEffect:(int)soundId
 
 ### 重新播放所有音效
 调用此接口重新播放所有音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeAllEffects
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] ResumeAllEffects];
@@ -1030,7 +1030,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)ResumeAllEffects
 
 ### 停止播放音效
 此接口用于停止播放音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
@@ -1040,7 +1040,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
 | ------------- |:-------------:|-------------|
 | soundId    |int                    |音效 ID|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] StopEffect:soundId];
@@ -1048,12 +1048,12 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopEffect:(int)soundId
 
 ### 停止播放所有音效
 调用此接口停止播放所有音效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)StopAllEffects
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] StopAllEffects];
@@ -1061,7 +1061,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)StopAllEffects
 
 ### 变声特效
 调用此接口设置变声特效。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
@@ -1091,7 +1091,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 | ITMG_VOICE_TYPE_HUANG 					|12	|小黄人			|
 
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetVoiceType:0];
@@ -1099,7 +1099,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetVoiceType:(ITMG_VOICE_TYPE) type
 
 ### K歌音效特效
 调用此接口设置K歌音效特效。
->  函数原型  
+####  函数原型  
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) type
 ```
@@ -1119,7 +1119,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 |ITMG_KARAOKE_TYPE_HEAVEN 			|5	|空灵			|
 |ITMG_KARAOKE_TYPE_TTS 				|6	|语音合成		|
 
-> 示例代码  
+#### 示例代码
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetKaraokeType:0];
@@ -1127,13 +1127,13 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetKaraokeType:(ITMG_KARAOKE_TYPE) ty
 
 ### 获取播放音效的音量
 获取播放音效的音量，为线性音量，默认值为100，数值大于100为增益效果，数值小于100为减益效果。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(int)GetEffectsVolume
 ```
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] GetEffectsVolume];
@@ -1141,7 +1141,7 @@ ITMGContext GetAudioEffectCtrl -(int)GetEffectsVolume
 
 ### 设置播放音效的音量
 调用此接口设置播放音效的音量。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
@@ -1151,7 +1151,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 | ------------- |:-------------:|-------------|
 | volume    |int                    |音量数值|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance] GetAudioEffectCtrl] SetEffectsVolume:(int)Volume];
@@ -1182,7 +1182,7 @@ ITMGContext GetAudioEffectCtrl -(QAVResult)SetEffectsVolume:(int)volume
 
 ### 鉴权初始化
 在初始化 SDK 之后调用鉴权初始化，authBuffer 的获取参见上文实时语音鉴权信息接口。
-> 函数原型  
+#### 函数原型
 
 ```
 ITMGContext GetPTT -(QAVResult)ApplyPTTAuthbuffer:(NSData *)authBuffer
@@ -1192,7 +1192,7 @@ ITMGContext GetPTT -(QAVResult)ApplyPTTAuthbuffer:(NSData *)authBuffer
 | ------------- |:-------------:|-------------|
 | authBuffer    |NSData*                    |鉴权|
 
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance]GetPTT]ApplyPTTAuthbuffer:(NSData *)authBuffer];
 ```
@@ -1200,7 +1200,7 @@ ITMGContext GetPTT -(QAVResult)ApplyPTTAuthbuffer:(NSData *)authBuffer
 ### 限制最大语音信息时长
 限制最大语音消息的长度，最大支持 60 秒。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
@@ -1210,7 +1210,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 | ------------- |:-------------:|-------------|
 | msTime    |int                    |语音时长，单位 ms|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]SetMaxMessageLength:(int)msTime];
@@ -1218,7 +1218,7 @@ ITMGContext GetPTT -(void)SetMaxMessageLength:(int)msTime
 
 ### 启动录音
 此接口用于启动录音。需要将录音文件上传后才可以进行语音转文字等操作。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
@@ -1228,7 +1228,7 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 | ------------- |:-------------:|-------------|
 | fileDir    |NSString                     |存放的语音路径|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]StartRecording:path];
@@ -1237,7 +1237,7 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 ### 启动录音的回调
 启动录音完成后的回调调用函数 OnEvent，事件消息为 ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE， 在 OnEvent 函数中对事件消息进行判断。
 
-> 示例代码  
+#### 示例代码  
 
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
@@ -1255,7 +1255,7 @@ ITMGContext GetPTT -(void)StartRecording:(NSString*)fileDir
 ### 启动流式语音识别
 此接口用于启动流式语音识别，同时在回调中会有实时的语音转文字返回。流式识别只支持中文和英文。
 
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* filePath,const NSString*translateLanguage)
@@ -1266,7 +1266,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 | filePath    	|NSString* 	|存放的语音路径	|
 | language 	|NSString*	|参数请查看 [语音转文字的语言参数参考列表](/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance] GetPTT] StartRecordingWithStreamingRecognition:recordfilePath language:@"cmn-Hans-CN"];
 ```
@@ -1286,7 +1286,7 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 |32775	|流式语音转文本失败，但是录音成功	|调用 UploadRecordedFile 接口上传录音，再调用 SpeechToText 接口进行语音转文字操作
 |32777	|流式语音转文本失败，但是录音成功，上传成功	|返回的信息中有上传成功的后台 url 地址，调用 SpeechToText 接口进行语音转文字操作
 
-> 示例代码  
+#### 示例代码  
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
     NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
@@ -1303,12 +1303,12 @@ ITMGContext GetPTT int StartRecordingWithStreamingRecognition(const NSString* fi
 
 ### 停止录音
 此接口用于停止录音。此接口为异步接口，停止录音后会有录音完成回调，成功之后录音文件才可用。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(QAVResult)StopRecording
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]StopRecording];
@@ -1316,13 +1316,13 @@ ITMGContext GetPTT -(QAVResult)StopRecording
 
 ### 取消录音
 调用此接口取消录音。取消之后没有回调。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(QAVResult)CancelRecording
 ```
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]CancelRecording];
@@ -1331,11 +1331,11 @@ ITMGContext GetPTT -(QAVResult)CancelRecording
 ### 获取离线语音麦克风实时音量
 此接口用于获取麦克风实时音量，返回值为 int 类型，值域为 0 到 100。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetPTT -(QAVResult)GetMicLevel
 ```
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance]GetPTT]GetMicLevel];
 ```
@@ -1344,12 +1344,12 @@ ITMGContext GetPTT -(QAVResult)GetMicLevel
 ### 获取扬声器实时音量
 此接口用于获取扬声器实时音量。返回值为 int 类型，值域为 0 到 100。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetPTT -(QAVResult)GetSpeakerLevel
 ```
 
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance]GetPTT]GetSpeakerLevel];
 ```
@@ -1359,7 +1359,7 @@ ITMGContext GetPTT -(QAVResult)GetSpeakerLevel
 
 ### 上传语音文件
 此接口用于上传语音文件。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath 
@@ -1369,7 +1369,7 @@ ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                      |上传的语音路径|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]UploadRecordedFile:path];
@@ -1393,7 +1393,7 @@ ITMGContext GetPTT -(void)UploadRecordedFile:(NSString*)filePath
 
 ### 下载语音文件
 此接口用于下载语音文件。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePath:(NSString*)downloadFilePath 
@@ -1404,7 +1404,7 @@ ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePat
 | fileID    			|NSString                      |文件的 url 路径		|
 | downloadFilePath 	|NSString                      |文件的本地保存路径	|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]DownloadRecordedFile:fileIdpath downloadFilePath:path];
@@ -1428,7 +1428,7 @@ ITMGContext GetPTT -(void)DownloadRecordedFile:(NSString*)fileId downloadFilePat
 
 ### 播放语音
 此接口用于播放语音。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)PlayRecordedFile:(NSString*)downloadFilePath
@@ -1438,7 +1438,7 @@ ITMGContext GetPTT -(void)PlayRecordedFile:(NSString*)downloadFilePath
 | ------------- |:-------------:|-------------|
 | downloadFilePath    |NSString                      |文件的路径|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]PlayRecordedFile:path];
@@ -1462,12 +1462,12 @@ ITMGContext GetPTT -(void)PlayRecordedFile:(NSString*)downloadFilePath
 
 ### 停止播放语音
 此接口用于停止播放语音。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(int)StopPlayFile
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]StopPlayFile];
@@ -1475,7 +1475,7 @@ ITMGContext GetPTT -(int)StopPlayFile
 
 ### 获取语音文件的大小
 通过此接口，获取语音文件的大小。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
@@ -1485,7 +1485,7 @@ ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]GetFileSize:path];
@@ -1493,7 +1493,7 @@ ITMGContext GetPTT -(int)GetFileSize:(NSString*)filePath
 
 ### 获取语音文件的时长
 此接口用于获取语音文件的时长，单位毫秒。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
@@ -1503,7 +1503,7 @@ ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
 | ------------- |:-------------:|-------------|
 | filePath    |NSString                     |语音文件的路径|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]GetVoiceFileDuration:path];
@@ -1511,7 +1511,7 @@ ITMGContext GetPTT -(int)GetVoiceFileDuration:(NSString*)filePath
 
 ### 将指定的语音文件识别成文字
 此接口用于将指定的语音文件识别成文字。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
@@ -1521,7 +1521,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 | ------------- |:-------------:|-------------|
 | fileID    |NSString                     |语音文件 url|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID];
@@ -1530,7 +1530,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID
 ### 将指定的语音文件识别成文字（指定语言）
 此接口用于将指定的语音文件识别成指定语言的文字。
 
->  函数原型  
+####  函数原型  
 ```
 ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
 ```
@@ -1540,7 +1540,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
 | fileID    |NSString*                     |语音文件 url|
 | language    |NSString*                     |参数请查看 [语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 
->  示例代码  
+####  示例代码  
 ```
 [[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID language:"cmn-Hans-CN"];
 ```
@@ -1551,7 +1551,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language
 ### 将指定的语音文件翻译成文字（指定语言）
 此接口用于将指定的语音文件翻译成指定语言的文字。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language (NSString*)translateLanguage
 ```
@@ -1561,7 +1561,7 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language (NS
 | language    |NSString*                     |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)|
 | translatelanguage    |NSString*                    |参数参考[语音转文字的语言参数参考列表](https://github.com/TencentMediaLab/GME/blob/master/GME%20Developer%20Manual/GME%20SpeechToText.md)（此参数暂时无效）|
 
-> 示例代码  
+#### 示例代码  
 ```
 [[[ITMGContext GetInstance]GetPTT]SpeechToText:fileID language:"cmn-Hans-CN" translateLanguage:"en-US"];
 ```
@@ -1587,12 +1587,12 @@ ITMGContext GetPTT -(void)SpeechToText:(NSString*)fileID (NSString*)language (NS
 
 ### 获取版本号
 获取 SDK 版本号，用于分析。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext  -(NSString*)GetSDKVersion
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[ITMGContext GetInstance] GetSDKVersion];
@@ -1600,7 +1600,7 @@ ITMGContext  -(NSString*)GetSDKVersion
 
 ### 设置打印日志等级
 用于设置打印日志等级。建议保持默认等级。
-> 函数原型
+#### 函数原型
 ```
 ITMGContext -(void)SetLogLevel:(ITMG_LOG_LEVEL)levelWrite (ITMG_LOG_LEVEL)levelPrint
 ```
@@ -1623,14 +1623,14 @@ ITMGContext -(void)SetLogLevel:(ITMG_LOG_LEVEL)levelWrite (ITMG_LOG_LEVEL)levelP
 |TMG_LOG_LEVEL_DEBUG=3		|打印开发调试日志	|
 |TMG_LOG_LEVEL_VERBOSE=4		|打印高频日志		|
 
-> 示例代码  
+#### 示例代码  
 ```
 [[ITMGContext GetInstance] SetLogLevel:TMG_LOG_LEVEL_NONE YES YES];
 ```
 
 ### 设置打印日志路径
 用于设置打印日志路径。默认路径为： /Users/username/Library/Containers/xxx.xxx.xxx/Data/Documents。
-> 函数原型
+#### 函数原型
 ```
 ITMGContext -(void)SetLogPath:(NSString*)logDir
 ```
@@ -1639,7 +1639,7 @@ ITMGContext -(void)SetLogPath:(NSString*)logDir
 | ------------- |:-------------:|-------------|
 | logDir    		|NSString   		|路径|
 
-> 示例代码  
+#### 示例代码  
 ```
 [[ITMGContext GetInstance] SetLogPath:Path];
 ```
@@ -1647,12 +1647,12 @@ ITMGContext -(void)SetLogPath:(NSString*)logDir
 
 ### 获取诊断信息
 获取音视频通话的实时通话质量的相关信息。该接口主要用来查看实时通话质量、排查问题等，业务侧可以忽略。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetRoom -(NSString*)GetQualityTips
 ```
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetRoom ] GetQualityTips];
@@ -1660,7 +1660,7 @@ ITMGContext GetRoom -(NSString*)GetQualityTips
 
 ### 加入音频数据黑名单
 将某个 id 加入音频数据黑名单。返回值为 0 表示调用成功。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)AddAudioBlackList:(NSString*)openID
@@ -1669,7 +1669,7 @@ ITMGContext GetAudioCtrl -(QAVResult)AddAudioBlackList:(NSString*)openID
 | ------------- |:-------------:|-------------|
 | openID    |NSString      |需添加黑名单的 ID|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetAudioCtrl ] AddAudioBlackList[id]];
@@ -1677,7 +1677,7 @@ ITMGContext GetAudioCtrl -(QAVResult)AddAudioBlackList:(NSString*)openID
 
 ### 移除音频数据黑名单
 将某个 id 移除音频数据黑名单。返回值为 0 表示调用成功。
-> 函数原型  
+#### 函数原型  
 
 ```
 ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)openID
@@ -1686,14 +1686,14 @@ ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)openID
 | ------------- |:-------------:|-------------|
 | openID    |NSString      |需移除黑名单的 ID|
 
-> 示例代码  
+#### 示例代码  
 
 ```
 [[[ITMGContext GetInstance]GetAudioCtrl ] RemoveAudioBlackList[openId]];
 ```
 ## 回调消息
 
-> 消息列表：
+#### 消息列表：
 
 |消息     | 消息代表的意义   
 | ------------- |:-------------:|
@@ -1709,7 +1709,7 @@ ITMGContext GetAudioCtrl -(QAVResult)RemoveAudioBlackList:(NSString*)openID
 |ITMG_MAIN_EVNET_TYPE_PTT_PLAY_COMPLETE		|播放 PTT 完成			|
 |ITMG_MAIN_EVNET_TYPE_PTT_SPEECH2TEXT_COMPLETE	|语音转文字完成			|
 
-> Data 列表：
+#### Data 列表：
 
 |消息     | Data         |例子|
 | ------------- |:-------------:|------------- |

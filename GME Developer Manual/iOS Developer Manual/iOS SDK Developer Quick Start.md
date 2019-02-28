@@ -42,12 +42,12 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
 
-> 函数原型
+####  函数原型 
 
 ```
 ITMGContext ITMGDelegate <NSObject>
 ```
-> 示例代码  
+####  示例代码  
 
 ```
 ITMGContext* _context = [ITMGContext GetInstance];
@@ -60,7 +60,7 @@ _context.TMGDelegate =self;
 参数获取请查看 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
@@ -71,19 +71,19 @@ ITMGContext -(void)InitEngine:(NSString*)sdkAppID openID:(NSString*)openID
 | sdkAppId    	|NSString  |来自腾讯云控制台的 SdkAppId 号码				|
 | openID    		|NSString  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 |
 
-> 示例代码 
+####  示例代码 
 ```
 [[ITMGContext GetInstance] InitEngine:SDKAPPID3RD openID:_openId];
 ```
 
 ### 3、触发事件回调
 通过在 update 里面周期的调用 Poll 可以触发事件回调。
-> 函数原型
+####  函数原型
 
 ```
 ITMGContext -(void)Poll
 ```
-> 示例代码
+####  示例代码
 ```
 [[ITMGContext GetInstance] Poll];
 ```
@@ -93,7 +93,7 @@ ITMGContext -(void)Poll
 - 加入房间默认不打开麦克风及扬声器。
 - 在 EnterRoom 接口调用之前要先调用 InitEngine 接口。
 
-> 函数原型
+####  函数原型
 ```
 ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuffer:(NSData*)authBuffer
 ```
@@ -105,7 +105,7 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
-> 示例代码  
+####  示例代码  
 ```
 [[ITMGContext GetInstance] EnterRoom:_roomId roomType:_roomType authBuffer:authBuffer];
 ```
@@ -118,7 +118,7 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 - (void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary*)data
 ```
 回调处理相关参考代码。
-> 示例代码  
+####  示例代码  
 ```
 -(void)OnEvent:(ITMG_MAIN_EVENT_TYPE)eventType data:(NSDictionary *)data{
     NSLog(@"OnEvent:%lu,data:%@",(unsigned long)eventType,data);
@@ -137,15 +137,15 @@ ITMGContext   -(int)EnterRoom:(NSString*) roomId roomType:(int*)roomType authBuf
 ### 6、开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 YES，如果关闭麦克风，则参数为 NO|
-> 示例代码  
 
+####  示例代码   
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableMic:YES];
 ```
@@ -153,16 +153,16 @@ ITMGContext GetAudioCtrl -(void)EnableMic:(BOOL)enable
 
 ### 7、开启关闭扬声器
 此接口用于开启关闭扬声器。
-> 函数原型  
 
+####  函数原型 
 ```
 ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean       |如果需要关闭扬声器，则传入的参数为 NO，如果打开扬声器，则参数为 YES|
-> 示例代码  
 
+####  示例代码
 ```
 [[[ITMGContext GetInstance] GetAudioCtrl] EnableSpeaker:YES];
 ```
@@ -173,7 +173,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 NSData 类型。
 
-> 函数原型
+#### 函数原型
 ```
 @interface QAVAuthBuffer : NSObject
 + (NSData*) GenAuthBuffer:(unsigned int)appId roomId:(NSString*)roomId openID:(NSString*)openID key:(NSString*)key;
@@ -188,7 +188,7 @@ ITMGContext GetAudioCtrl -(void)EnableSpeaker:(BOOL)enable
 
 
 
-> 示例代码  
+#### 示例代码  
 ```
 NSData* authBuffer =   [QAVAuthBuffer GenAuthBuffer:SDKAPPID3RD.intValue roomId:_roomId openID:_openId key:AUTHKEY];
 ```

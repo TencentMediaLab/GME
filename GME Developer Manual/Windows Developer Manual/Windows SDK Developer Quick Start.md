@@ -40,7 +40,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
 
-> 示例代码  
+#### 示例代码  
 
 ```
 ITMGContext* context = ITMGContextGetInstance();
@@ -53,7 +53,7 @@ context->SetTMGDelegate(this);
 参数获取请查看 [接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
@@ -64,7 +64,7 @@ ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
 | sdkAppId    	|char*  	|来自腾讯云控制台的 SdkAppId 号码					|
 | openID    		|char*   	|OpenID 只支持 Int64 类型（转为 string 传入），必须大于 10000，用于标识用户 	|
 
-> 示例代码 
+#### 示例代码 
 ```
 #define SDKAPPID3RD "1400035750"
 cosnt char* openId="10001";
@@ -74,7 +74,7 @@ context->Init(SDKAPPID3RD, openId);
 
 ### 3、触发事件回调
 通过在 update 里面周期的调用 Poll 可以触发事件回调。
-> 函数原型
+#### 函数原型
 
 ```
 class ITMGContext {
@@ -85,7 +85,7 @@ public:
 	virtual void Poll()= 0;
 }
 ```
-> 示例代码
+#### 示例代码
 ```
 ITMGContextGetInstance()->Poll();
 ```
@@ -95,7 +95,7 @@ ITMGContextGetInstance()->Poll();
 - 加入房间默认不打开麦克风及扬声器。
 - 在 EnterRoom 接口调用之前要先调用 Init 接口。
 
-> 函数原型
+#### 函数原型
 ```
 ITMGContext virtual int EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, const char* authBuff, int buffLen)//普通进房接口
 ```
@@ -108,7 +108,7 @@ ITMGContext virtual int EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, 
 
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
-> 示例代码  
+#### 示例代码  
 ```
 ITMGContext* context = ITMGContextGetInstance();
 context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);
@@ -116,7 +116,7 @@ context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen
 
 ### 5、加入房间事件的回调
 加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
-> 示例代码  
+#### 示例代码  
 ```
 
 
@@ -135,7 +135,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 ### 6、开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 ```
@@ -144,7 +144,7 @@ ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
 | ------------- |:-------------:|-------------|
 | bEnabled    |bool     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false		|
 
-> 示例代码  
+#### 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ```
@@ -153,7 +153,7 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableMic(true);
 ### 7、开启关闭扬声器
 此接口用于开启关闭扬声器。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 ```
@@ -162,7 +162,7 @@ ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
 | ------------- |:-------------:|-------------|
 | enable   		|bool       	|如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true	|
 
-> 示例代码  
+#### 示例代码  
 ```
 ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 ```
@@ -173,25 +173,27 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableSpeaker(true);
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署详情请查看 [鉴权密钥](../GME%20Key%20Manual.md)。  
 离线语音获取鉴权时，房间号参数必须填 null。
 
-> 函数原型
+#### 函数原型
 ```
-QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
+QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int dwSdkAppID, const char* strRoomID, const char* strOpenID,const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| nAppId    			|int   		|来自腾讯云控制台的 SdkAppId 号码		|
-| dwRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填 null）|
+| dwSdkAppID    			|int   		|来自腾讯云控制台的 sdkAppId 号码		|
+| strRoomID    		|char*     |房间号，最大支持127字符（离线语音房间号参数必须填 null）|
 | strOpenID  		|char*    		|用户标识								|
 | strKey    			|char*	    	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥					|
 |strAuthBuffer		|char*	    	|返回的 authbuff							|
 | buffLenght   		|int    		|传入的 authbuff 长度，建议为 500					|
 
 
-> 示例代码  
+
+#### 示例代码  
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
 QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retAuthBuff,bufferLen);
 ```
+
 
 

@@ -31,22 +31,22 @@
 参数获取见文档：[游戏多媒体引擎接入指引](/GME%20Introduction.md)。
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
-> 函数原型
+### 函数原型
 
 ```
-WebGMEAPI.fn.Init = function (document, sdkAppId, openId) {...}
+WebGMEAPI.fn.Init = function (document, SdkAppId, openId) {...}
 ```
 
 |参数     |意义|
 | ------------- |-------------|
 | document    	  |		HTML DOM Document 对象	|
-| sdkAppId    		  |来自腾讯云控制台的 SdkAppId 号码	|
+| SdkAppId    		  |来自腾讯云控制台的 SdkAppId 号码	|
 | openId    		  |用户的帐号，由开发者定义，必须大于 10000，用于标识用户|
 
-> 示例代码 
+### 示例代码 
 ```
-const cSdkAppId = () => document.getElementById("input-sdkappid").value;
-const cOpenID = () => document.getElementById("input-openid").value;
+const cSdkAppId = () => document.getElementById("input-SdkAppId").value;
+const cOpenID = () => document.getElementById("input-OpenID").value;
 gmeAPI.Init(document, cSdkAppId(), cOpenID());
 ```
 
@@ -54,7 +54,7 @@ gmeAPI.Init(document, cSdkAppId(), cOpenID());
 接口类采用 Delegate 方法用于向应用程序发送回调通知。将回调函数注册给 SDK，用于接受回调的信息。将回调函数注册给 SDK，要在进房之前设置。
 
 
-> 函数原型
+#### 函数原型
 ```
 WebGMEAPI.fn.SetTMGDelegate = function (delegate){...}
 ```
@@ -62,7 +62,7 @@ WebGMEAPI.fn.SetTMGDelegate = function (delegate){...}
 | ------------- |-------------|
 | onEvent     |SDK 回调事件|
 
-> 示例代码  
+#### 示例代码  
 ```
 gmeAPI.SetTMGDelegate(onEvent);
 ```
@@ -79,7 +79,7 @@ gmeAPI.SetTMGDelegate(onEvent);
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
 
 
-> 函数原型
+#### 函数原型
 ```
 WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 ```
@@ -169,7 +169,7 @@ WebGMEAPI.fn.EnterRoom = function (roomId, roomType, authBuffer) {...}
 ```
 WebGMEAPI.fn.ExitRoom = function (){...}
 ```
-> 示例代码  
+#### 示例代码  
 ```
 gmeAPI.ExitRoom();
 ```
@@ -177,7 +177,7 @@ gmeAPI.ExitRoom();
 ### 开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
-> 函数原型  
+#### 函数原型  
 ```
 WebGMEAPI.fn.EnableMic = function (bEnable) {...}
 ```
@@ -185,7 +185,7 @@ WebGMEAPI.fn.EnableMic = function (bEnable) {...}
 | ------------- |------------|
 | isEnabled      |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false|
 
-> 示例代码  
+#### 示例代码  
 ```
 gmeAPI.EnableMic(false);
 ```
@@ -193,17 +193,17 @@ gmeAPI.EnableMic(false);
 
 
 ### 设置麦克风的音量
-此接口用于设置麦克风的音量。参数 volume 用于设置麦克风的音量，当数值为 0 的时候表示静音，当数值为 100 的时候表示音量不增不减，默认数值为 100。
+此接口用于设置麦克风的音量。参数 volume 用于设置麦克风的音量，当数值为0的时候表示静音，当数值为100 的时候表示音量不增不减，默认数值为100。
 
-> 函数原型  
+#### 函数原型  
 ```
 WebGMEAPI.fn.SetMicVolume = function (volume){...}
 ```
 |参数     |意义|
 | -------------|-------------|
-| volume    |设置音量，范围 0 到 100|
+| volume    |设置音量，范围0到100|
 
-> 示例代码  
+#### 示例代码  
 ```
 gmeAPI.SetMicVolume(100);
 ```
@@ -211,7 +211,7 @@ gmeAPI.SetMicVolume(100);
 
 ### 开启关闭扬声器
 此接口用于开启关闭扬声器。
-> 函数原型  
+#### 函数原型  
 ```
 WebGMEAPI.fn.EnableSpeaker = function (bEnable){...}
 ```
@@ -219,7 +219,7 @@ WebGMEAPI.fn.EnableSpeaker = function (bEnable){...}
 | ------------- |------------|
 | isEnabled           |如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true|
 
-> 示例代码  
+#### 示例代码  
 ```
 gmeAPI.EnableSpeaker(true);
 ```
