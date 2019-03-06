@@ -1,10 +1,38 @@
 为方便小程序开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于小程序开发的快速接入文档。
 
 
-## 开启小程序功能
+## 申请游戏多媒体引擎服务
 
-在腾讯云后台中申请 GME 相关服务。
+在腾讯云后台中申请 GME 相关服务，参考[接入指引](https://cloud.tencent.com/document/product/607/10782)。
 
+## 申请小程序直播服务
+### 1、进入云直播服务
+登录腾讯云控制台之后，搜索【云直播】服务，进入[云直播服务申请界面](https://console.cloud.tencent.com/live)。
+
+### 2、申请云直播服务
+点击【同意】按钮，并点击【申请开通】按钮进行云直播服务开通。
+
+![](https://main.qcloudimg.com/raw/3cc2238c29b077c8c9b50a5f62ce0df6.png)
+
+> 申请云直播服务之前需要进行实名验证。在【账号信息】中申请实名认证。
+
+### 3、成功申请服务
+如出现下图，即为申请云直播服务成功。
+
+![](https://main.qcloudimg.com/raw/53d626f2dea1eaecf459636db1481e4b.png)
+
+### 4、申请播放域名
+服务申请成功后，点击界面左边导航栏中的【域名管理】，进入域名管理界面。
+云直播服务会自动生成一个推流域名，点击【添加域名】按钮，申请播放域名。
+
+![](https://main.qcloudimg.com/raw/d24740621f990a6101ee031de1a78cc4.png)
+> 请添加自有已备案域名进行直播推流和播放。域名管理使用方法参见[域名管理](https://cloud.tencent.com/document/product/267/30559)和[CNAME配置](https://cloud.tencent.com/document/product/267/30010)。
+
+
+### 5、成功申请播放域名
+申请播放地址成功后，界面会有两个域名，一个是推流域名，一个是播放域名。
+
+![](https://main.qcloudimg.com/raw/df0850145ad53d12285e8e1b8f29cec5.png)
 
 
 ## rtmp流地址生成
@@ -18,8 +46,8 @@ rtmp流地址生成需要以下几个信息：
 |RoomID|此用户需要收听的房间号 ID |开发者在应用中生成|
 |UserID|此用户需要收听的另一用户的 ID |开发者在应用中生成|
 |BizID|与 AppID 对应个一个标识码 |获取方式见下文步骤1|
-|StreamKey|与 AppID 对应个一个密钥 |获取方式见下文步骤2|
-|StreamID|rtmp 流的一个唯一标识|获取方式见下文步骤1|
+|StreamKey|与 AppID 对应个一个密钥 |获取方式见下文步骤1|
+|StreamID|rtmp 流的一个唯一标识|获取方式见下文步骤2|
 |Timestamp|时间戳，单位为秒 |开发者生成并填入|
 
 
