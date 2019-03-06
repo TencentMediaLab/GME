@@ -54,7 +54,15 @@ rtmp流地址生成需要以下几个信息：
 rtmp流地址生成有以下几个步骤：
 ### 1、获取 BizID 和 StreamKey
 
-（空）
+- 进入域名管理界面，在播放域名一栏点击【管理】按钮，进入播放域名管理界面。
+  
+  ![](https://main.qcloudimg.com/raw/df0850145ad53d12285e8e1b8f29cec5.png)
+
+- 界面如图所示，CNAME 一栏中，在“.liveplay.myqcloud.com”后缀前面的播放域名为 BizID 参数。例如下图中的 BizID 即为 38251。
+
+- 界面中的 API Key 为 StreamKey 参数。
+  
+  ![](https://main.qcloudimg.com/raw/6a0a8c119acd2d49b575a40aa7ededcc.png)
 
 
 ### 2、生成 StreamID
