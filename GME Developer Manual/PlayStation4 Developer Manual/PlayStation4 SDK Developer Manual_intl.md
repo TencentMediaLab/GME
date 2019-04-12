@@ -211,25 +211,17 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | roomId			|char*   		| Room ID. maximum to 127 characters.	|
-| roomType 			|ITMG_ROOM_TYPE	|Audio type of the room		|
+| roomType 			|ITMG_ROOM_TYPE	|Audio type of the room,must be set to "ITMG_ROOM_TYPE_FLUENCY"	|
 | authBuffer    		|char*     	| Authentication key			|
 | buffLen   			|int   		| Length of the authentication key		|
 
-| Audio Type | Meaning | Parameter | Volume Type | Recommended Sampling Rate on the Console | Application Scenarios |
-| ------------- |------------ | ---- |---- |---- |---- |
-| ITMG_ROOM_TYPE_FLUENCY			|Fluent	|1|Speaker: chat volume; headset: media volume 	| 16k sampling rate is recommended if there is no special requirement for sound quality					| Fluent sound quality and ultra-low delay which is suitable for team speak scenarios in games like FPS and MOBA.	|							
-| ITMG_ROOM_TYPE_STANDARD			|Standard	|2|Speaker: chat volume; headset: media volume	| Choose 16k or 48k sampling rate depending on different requirements for sound quality				| Good sound quality and medium delay which is suitable for voice chat scenarios in casual games like Werewolf and board games.	|												
-| ITMG_ROOM_TYPE_HIGHQUALITY		|High-quality	|3|Speaker: media volume; headset: media volume	| To ensure optimum effect, it is recommended to enable HQ configuration with 48k sampling rate	| Super-high sound quality and relative high delay which is suitable for scenarios demanding high sound quality, such as music playback and online karaoke.	|
-
-- If you have special requirements on the sound quality for certain scenario, contact the customer service.
-- The sound quality in a game depends directly on the sampling rate set on the console. Please confirm whether the sampling rate you set on the [console](https://console.cloud.tencent.com/gamegme) is suitable for the project's application scenario.
 
 
 #### Sample code  
 
 ```
 ITMGContext* context = ITMGContextGetInstance();
-context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);
+context->EnterRoom(roomId, ITMG_ROOM_TYPE_FLUENCY, (char*)retAuthBuff,bufferLen);
 ```
 
 
@@ -289,39 +281,6 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 		}
 	}
 }
-```
-
-### Modify the audio type of the user's room
-This API is used to modify the audio type of the user's room. A ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE callback event will be sent.
-#### Function prototype  
-```
-IITMGContext TMGRoom public void ChangeRoomType((ITMG_ROOM_TYPE roomType)
-```
-
-
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| roomType    |ITMG_ROOM_TYPE    |The room type to be switched to. See the API EnterRoom for the audio type definition. |
-
-#### Sample code  
-```
-ITMGContext* context = ITMGContextGetInstance();
-ITMGContextGetInstance()->GetRoom()->ChangeRoomType(ITMG_ROOM_TYPE_FLUENCY);
-```
-
-
-### Obtain the audio type of the user's room
-This API is used to obtain the audio type of the user's room. The returned value is the audio type of the room. Returned value of 0 means error happens. The audio type definition can be found in the API EnterRoom.
-
-#### Function prototype  
-```
-IITMGContext TMGRoom public  int GetRoomType()
-```
-
-#### Sample code  
-```
-ITMGContext* context = ITMGContextGetInstance();
-ITMGContextGetInstance()->GetRoom()->GetRoomType();
 ```
 
 
@@ -428,29 +387,13 @@ When a user click the UI button to enable or disable the microphone or speaker:
 
 | API | Description |
 | ------------- |:-------------:|
-|PauseAudio    				       	|Pauses audio engine |
-|ResumeAudio    				      	|Resumes audio engine |
-|GetMicListCount    				       	|Obtains the number of microphones |
-|GetMicList    				      	|Enumerates microphones |
-|GetSpeakerListCount    				      	|Obtains the number of speakers |
-|GetSpeakerList    				      	|Enumerates speakers |
-|SelectMic    				      	|Selectes microphones |
-|SelectSpeaker    				|Selectes speakers |
 |EnableMic    						|Enables/disables the microphone |
 |GetMicState    						|Obtains the microphone status |
-|EnableAudioCaptureDevice    		|Enables audio capture device		|
-|IsAudioCaptureDeviceEnabled    	|Indicates if audio capture device is enabled or not	|
-|EnableAudioSend    				|Enables the audio sending 	|
-|IsAudioSendEnabled    				|Indicates if audio is being sent or not	|
 |GetMicLevel    						|Obtains real-time microphone volume |
 |SetMicVolume    					|Sets microphone volume |
 |GetMicVolume    					|Obtains microphone volume |
 |EnableSpeaker    					|Enables/disables the speaker |
 |GetSpeakerState    					|Obtains the speaker status |
-|EnableAudioPlayDevice    			|Enables audio playback device		|
-|IsAudioPlayDeviceEnabled    		|Indicates if audio playback devices is enabled or not	|
-|EnableAudioRecv    					|Enables the audio receving	|
-|IsAudioRecvEnabled    				|Indicates if audio is being received or not	|
 |GetSpeakerLevel    					|Obtains real-time speaker volume |
 |SetSpeakerVolume    				|Sets speaker volume |
 |GetSpeakerVolume    				|Obtains speaker volume |
@@ -458,64 +401,11 @@ When a user click the UI button to enable or disable the microphone or speaker:
 
 
 
-### Obtain the number of microphones
-This API is used to obtain the number of microphones.
 
-#### Function prototype  
-```
-ITMGAudioCtrl virtual int GetMicListCount()
-```
-#### Sample code  
-```
-ITMGContextGetInstance()->GetAudioCtrl()->GetMicListCount();
-```
-
-### Enumerate microphones
-This API is used together with the GetMicListCount API to enumerate microphones.
-
-#### Function prototype 
-```
-ITMGAudioCtrl virtual int GetMicList(TMGAudioDeviceInfo* ppDeviceInfoList, int nCount)
-
-class TMGAudioDeviceInfo
-{
-public:
-	const char* pDeviceID;
-	const char* pDeviceName;
-};
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| ppDeviceInfoList    	|TMGAudioDeviceInfo   	| Device list		|
-| nCount    		|int     		|The number of microphones obtained	|
-
-#### Sample code  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->GetMicList(ppDeviceInfoList,nCount);
-```
-
-
-
-### Select the microphone
-This API is used to select the microphone. If this API is not called or an "DEVICEID_DEFAULT" is passed in, the default microphone is selected.The device ID comes from the GetMicList API return list.
-#### Function prototype  
-```
-ITMGAudioCtrl virtual int SelectMic(const char* pMicID)
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| pMicID    |char*      |Microphone ID |
-
-#### Sample code  
-```
-const char* pMicID ="{0.0.1.00000000}.{7b0b712d-3b46-4f7a-bb83-bf9be4047f0d}";
-ITMGContextGetInstance()->GetAudioCtrl()->SelectMic(pMicID);
-```
 
 ### Enable/disable the microphone
 This API is used to enable/disable the microphone. Microphone and speaker are not enabled by default after a user enters a room.
-EnableMic = EnableAudioCaptureDevice + EnableAudioSend.
+
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableMic(bool bEnabled)
@@ -540,68 +430,7 @@ ITMGAudioCtrl virtual int GetMicState()
 ITMGContextGetInstance()->GetAudioCtrl()->GetMicState();
 ```
 
-### Enable/disable audio capture device
-This API is used to enable/disable the audio capture device. The audio capture device is not enabled by default. 
-- API can only be called after the room is entered.The device will disabled automatically after exiting the room.
-- For mobile use case, permission is normally asked when enabling the capture device.
 
-#### Function prototype   
-
-```
-ITMGContext virtual int EnableAudioCaptureDevice(bool enable)
-```
-|Parameter     | Type         |Description|
-| ------------- |:-------------:|-------------|
-| enable    |bool     | true means enable，false means disable|
-
-#### Sample code 
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioCaptureDevice(true);
-```
-
-### Obtain the audio capture device status
-This API is used to obtain the audio capture device status.
-#### Function prototype
-
-```
-ITMGContext virtual bool IsAudioCaptureDeviceEnabled()
-```
-#### Sample code 
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->IsAudioCaptureDeviceEnabled();
-```
-
-### Enable/disable the audio sending
-
-This API is used to enable/disable the audio sending. Enable means sending the captured voice. 
-
-#### Function prototype
-
-```
-ITMGContext  virtual int EnableAudioSend(bool bEnable)
-```
-|Parameter     | Type         |Description|
-| ------------- |:-------------:|-------------|
-| bEnable    |bool     |true means enable audio sending，false means not|
-
-#### Sample code
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioSend(true);
-```
-
-### Obtain status on if captured audio is being sent 
-This API is called to obtain the status if captured audio is being sent.
-#### Function prototype
-```
-ITMGContext virtual bool IsAudioSendEnabled()
-```
-#### Sample code
-```
-ITMGContextGetInstance()->GetAudioCtrl()->IsAudioSendEnabled();
-```
 
 ### Obtain real-time microphone volume
 This API is used to obtain real time microphone volume. An int value is returned.
@@ -641,63 +470,11 @@ ITMGAudioCtrl virtual int GetMicVolume()
 ITMGContextGetInstance()->GetAudioCtrl()->GetMicVolume();
 ```
 
-### Obtain the number of speakers
-This API is used to obtain the number of speakers.
 
-#### Function prototype  
-
-```
-ITMGAudioCtrl virtual int GetSpeakerListCount()
-```
-#### Sample code  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerListCount();
-```
-
-### Enumerate speakers
-This API is used together with the GetSpeakerListCount API to enumerate speakers.
-
-#### Function prototype  
-```
-ITMGAudioCtrl virtual int GetSpeakerList(TMGAudioDeviceInfo* ppDeviceInfoList, int nCount)
-
-class TMGAudioDeviceInfo
-{
-public:
-	const char* pDeviceID;
-	const char* pDeviceName;
-};
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| ppDeviceInfoList    	|TMGAudioDeviceInfo    	| Device list		|
-| nCount   		|int     		| The number of speakers obtained	|
-
-#### Sample code  
-```
-ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerList(ppDeviceInfoList,nCount);
-```
-
-### Select speakers
-This API is used to select the playback device.If this API is not called or an "DEVICEID_DEFAULT" is passed in, the default device is selected.The device ID comes from the GetSpeakerList API return list.
-#### Function prototype  
-```
-ITMGAudioCtrl virtual int SelectSpeaker(const char* pSpeakerID)
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| pSpeakerID    |char*      |Speaker ID |
-
-#### Sample code  
-```
-const char* pSpeakerID ="{0.0.1.00000000}.{7b0b712d-3b46-4f7a-bb83-bf9be4047f0d}";
-ITMGContextGetInstance()->GetAudioCtrl()->SelectSpeaker(pSpeakerID);
-```
 
 ### Enable/disable the speaker
 This API is used to enable/disable the speaker.
-EnableSpeaker = EnableAudioPlayDevice + EnableAudioRecv.
+
 #### Function prototype  
 ```
 ITMGAudioCtrl virtual void EnableSpeaker(bool enabled)
@@ -723,65 +500,9 @@ ITMGAudioCtrl virtual int GetSpeakerState()
 ITMGContextGetInstance()->GetAudioCtrl()->GetSpeakerState();
 ```
 
-### Enable/disable audio playback device
-This API is used to enable/disable audio playback device.
-
-#### Function prototype
-```
-ITMGContext virtual int EnableAudioPlayDevice(bool enable) 
-```
-|Parameter     | Type         |Description|
-| ------------- |:-------------:|-------------|
-| enable    |bool        |true means enable, false means disable|
-
-#### Sample code 
-```
-ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioPlayDevice(true);
-```
-
-### Obtain audio playback device status
-This API is used to obtain the status of audio playback device.
-#### Function prototype
-
-```
-ITMGContext virtual bool IsAudioPlayDeviceEnabled()
-```
-#### Sample code 
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->IsAudioPlayDeviceEnabled();
-```
-
-### Enable/disable the audio receiving
-This API is used to enable/disable the audio receving. Enable means playing the received voice. 
-
-#### Function prototype
-
-```
-ITMGContext virtual int EnableAudioRecv(bool enable)
-```
-|Parameter     | Type         |Description|
-| ------------- |:-------------:|-------------|
-| enable    |bool     |true means enabling the audio receing. false means not|
 
 
-#### Sample code
 
-```
-ITMGContextGetInstance()->GetAudioCtrl()->EnableAudioRecv(true);
-```
-
-
-### Obtain status on if received audio is being played 
-This API is called to obtain the status if received audio is being played.
-#### Function prototype
-```
-ITMGContext virtual bool IsAudioRecvEnabled() 
-```
-#### Sample code  
-```
-ITMGContextGetInstance()->GetAudioCtrl()->IsAudioRecvEnabled();
-```
 
 ### Obtain real-time speaker volume
 This API is used to obtain real time speaker volume. An int value is returned to indicate the real-time speaker volume.
