@@ -50,9 +50,9 @@
 - [Android API Documentation](./GME%20Developer%20Manual/Android%20Developer%20Manual/Android%20SDK%20Developer%20Manual_intl.md)
 
 #### Video Game Console
-- [PlayStation 4 Configuration]()
+- [PlayStation 4 Configuration](./GME%20Developer%20Manual/PlayStation4%20Developer%20Manual/PlayStation4%20SDK%20SDK%20Project%20Configuration_intl.md)
 
-- [PlayStation 4 API Documentation]()
+- [PlayStation 4 API Documentation](./GME%20Developer%20Manual/PlayStation4%20Developer%20Manual/PlayStation4%20SDK%20Developer%20Manual_intl.md)
 
 - [Xbox One Configuration]()
 
