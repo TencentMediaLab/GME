@@ -79,7 +79,7 @@ m_pTmgContext->TMGDelegate(p);
 
 ### Initialize the SDK
 
-For more information on how to obtain parameters, please see [GME Integration Guide](https://intl.cloud.tencent.com/document/product/607/10782).
+For more information on how to obtain parameters, please see [GME Integration Guide](../../GME%20Introduction_intl.md).
 This API call needs SdkAppId and openId. The SdkAppId is obtained from Tencent Cloud console, and the openId is used to uniquely identify a user. The setting rule for openId can be customized by App developers, and this ID must be unique in an App (only INT64 is supported).
 SDK must be initialized before a user can enter a room.
 #### Function prototype 
@@ -169,13 +169,12 @@ After the initialization, API for entering a room should be called before Voice 
 |EnterRoom   		|Enters a room |
 |IsRoomEntered   	|Indicates whether the room is entered successfully |
 |ExitRoom 		|Exits the room |
-|ChangeRoomType 	|Modifies the audio type of the user's room |
-|GetRoomType 		|Obtains the audio type of the user's room |
+
+
 
 
 ### Authentication information
 AuthBuffer is generated for the purpose of encryption and authentication. For more information about the authentication data, refer to  [GME Key](https://intl.cloud.tencent.com/document/product/607/12218).    
-The room ID parameter for voice message must be set to "null".
 
 #### Function prototype
 ```
@@ -184,11 +183,11 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
 | nAppId | int | The SdkAppId obtained from the Tencent Cloud console |
-| dwRoomID |char* | Room ID, maximum to 127 characters (The room ID parameter for voice message must be set to "null") |
+| dwRoomID |char* | Room ID, maximum to 127 characters |
 | strOpenID | char*   | User ID |
 | strKey | char* | The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) |
 | strAuthBuffer | char* | Returned authbuff |
-| buffLenght | int | Length of returned authbuff |
+| bufferLength | int | Length of returned authbuff |
 
 
 
@@ -196,7 +195,7 @@ QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer
 ```
 unsigned int bufferLen = 512;
 unsigned char retAuthBuff[512] = {0};
-QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strAuthBuffer,&bufferLen);
+QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strAuthBuffer,&bufferLength);
 ```
 
 ### Join a room
@@ -368,7 +367,7 @@ The message for quality monitoring event is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUA
 
 ### Details of Data corresponding to the message
 | Message | Data         | Example |
-| ------------- |:-------------:|------------- |
+| ------------- |:-------------:| ------------- |
 | ITMG_MAIN_EVENT_TYPE_ENTER_ROOM    				|result; error_info					|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    				|result; error_info  					|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    		|result; error_info  					|{"error_info":"waiting timeout, please check your network","result":0}|
