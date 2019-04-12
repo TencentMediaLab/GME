@@ -30,7 +30,7 @@
 
 
 ## 初始化相关接口
-未初始化前，SDK 处于未初始化阶段，需要初始化鉴权后，通过初始化 SDK，才可以进房。
+未初始化前，SDK 处于未初始化阶段，需要初始化 SDK 才可以进房。
 
 |接口     | 接口含义   |
 | ------------- |:-------------:|
@@ -206,7 +206,7 @@ QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,retA
 
 ### 加入房间
 用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。
-如果普通语音进房，业务方面无涉及范围语音需求，则使用普通进房接口。详细信息请查看 [范围语音](../GME%20TeamAudio%20Manual.md)。
+
 
 #### 函数原型
 
@@ -227,7 +227,7 @@ ITMGContext virtual int EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType, 
 
 ```
 ITMGContext* context = ITMGContextGetInstance();
-context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);//普通语音进房示例代码
+context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);
 ```
 
 
@@ -397,7 +397,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 |参数     | 含义         |
 | ------------- |-------------|
-|weight    				|范围是 1 到 50，数值为 50 是音质评分极好，数值为 1 是音质评分很差，几乎不能使用，数值为 0 代表初始值，无意义|
+|weight    				|范围是 1 到 5，数值为 5 是音质评分极好，数值为 1 是音质评分很差，几乎不能使用，数值为 0 代表初始值，无意义|
 |floss    				|丢包率|
 |delay    		|音频触达延迟时间（ms）|
 
@@ -940,39 +940,7 @@ ITMGContext* context = ITMGContextGetInstance();
 context->SetLogPath(logDir);
 ```
 
-### 加入音频数据黑名单
-将某个 id 加入音频数据黑名单。返回值为 0 表示调用成功。
-#### 函数原型  
 
-```
-ITMGContext ITMGAudioCtrl int AddAudioBlackList(const char* openId)
-```
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| openId    |char*       |需添加黑名单的id|
-
-#### 示例代码  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->AddAudioBlackList(openId);
-```
-
-### 移除音频数据黑名单
-将某个 id 移除音频数据黑名单。返回值为 0 表示调用成功。
-#### 函数原型  
-
-```
-ITMGContext ITMGAudioCtrl int RemoveAudioBlackList(const char* openId)
-```
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| openId    |char*       |需移除黑名单的id|
-
-#### 示例代码  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->RemoveAudioBlackList(openId);
-```
 
 
 ## 回调消息

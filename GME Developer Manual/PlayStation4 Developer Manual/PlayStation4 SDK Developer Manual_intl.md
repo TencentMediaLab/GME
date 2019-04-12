@@ -201,7 +201,7 @@ QAVSDK_AuthBuffer_GenAuthBuffer(atoi(SDKAPPID3RD), roomId, "10001", AUTHKEY,strA
 
 ### Join a room
 This API is used to enter a room with the generated authentication data, and the ITMG_MAIN_EVENT_TYPE_ENTER_ROOM message is received as a callback. Microphone and speaker are not enabled by default after a user enters the room.
-For entering a common voice chat room that does not involve team voice chat, use the common API for entering a room. For more information, please see the [GME team voice chat documentation](https://intl.cloud.tencent.com/document/product/607/17972).
+
 
 #### Function prototype
 
@@ -229,7 +229,7 @@ ITMGContext virtual void EnterRoom(const char*  roomId, ITMG_ROOM_TYPE roomType,
 
 ```
 ITMGContext* context = ITMGContextGetInstance();
-context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);//Sample code for entering a common voice chat room
+context->EnterRoom(roomId, ITMG_ROOM_TYPE_STANDARD, (char*)retAuthBuff,bufferLen);
 ```
 
 
@@ -394,7 +394,7 @@ The message for quality monitoring event is ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUA
 
 | Parameter | Description |
 | ------------- |-------------|
-|weight    				| Its value ranges from 1 to 50. The value of 50 indicates excellent quality of audio packets, and the value of 1 indicates poor quality of audio packets, which can barely be used; and "0" represents an initial value and is meaningless. |
+|weight    				| Its value ranges from 1 to 5. The value of 5 indicates excellent quality of audio packets, and the value of 1 indicates poor quality of audio packets, which can barely be used; and "0" represents an initial value and is meaningless. |
 |floss    				| Packet loss |
 |delay    		| Voice chat delay (ms) |
 
@@ -926,39 +926,6 @@ ITMGContext* context = ITMGContextGetInstance();
 context->SetLogPath(logDir);
 ```
 
-### Add an ID to the audio data blacklist
-This API is used to add an ID to the audio data blacklist. A return value of 0 indicates that the call is failed.
-#### Function prototype  
-
-```
-ITMGContext ITMGAudioCtrl int AddAudioBlackList(const char* openId)
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| openId    |char* | ID that needs to be added to the blacklist |
-
-#### Sample code  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->AddAudioBlackList(openId);
-```
-
-### Remove an ID from the audio data blacklist
-This API is used to remove an ID from the audio data blacklist. A return value of 0 indicates that the call failed.
-#### Function prototype  
-
-```
-ITMGContext ITMGAudioCtrl int RemoveAudioBlackList(const char* openId)
-```
-| Parameter | Type | Description |
-| ------------- |:-------------:|-------------|
-| openId    |char*       | ID that needs to be removed from the blacklist |
-
-#### Sample code  
-
-```
-ITMGContextGetInstance()->GetAudioCtrl()->RemoveAudioBlackList(openId);
-```
 
 
 ## Callback Messages
