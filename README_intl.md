@@ -6,7 +6,7 @@
 
 
 ##  User Guide
-#### [Access Guide](https://github.com/TencentMediaLab/GME/blob/master/GME%20Introduction_intl.md)
+#### [Access Guide](./GME%20Introduction_intl.md)
 #### [GME Key](./GME%20Developer%20Manual/GME%20Key%20Manual_intl.md)
 #### [Range Voice](./GME%20Developer%20Manual/GME%20TeamAudio%20Manual_intl.md)
 #### [3D Sound Effect](./GME%20Developer%20Manual/GME%20Spatializer%20Manual_intl.md)
@@ -60,7 +60,7 @@
 
 ## Change History
 
-- [Change History]()
+- [Change History](./GME%20Developer%20Manual/GME%20Change%20History_intl.md)
 
 ## Contact Us
 
