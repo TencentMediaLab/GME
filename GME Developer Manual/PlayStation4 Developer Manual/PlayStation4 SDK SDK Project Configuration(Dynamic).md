@@ -1,7 +1,7 @@
 ## 简介
 欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便 PlayStation4 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 PlayStation4 开发的工程配置。
 
-## SDK 静态库导入
+## SDK 动态库导入
 
 ### 1. PlayStation4 版本
 首先确定使用的 PlayStation4 SDK 版本，GME PlayStation4 SampleCode 使用的版本为5000。
@@ -17,12 +17,10 @@
 ```
 
 ### 4. 引入库文件
-在工程中引入 GME 相关库文件：TRAE.a、UDT.a 以及 GME.a。
+在工程中引入 GME 相关库文件：GME_stub.a、GME_stub_weak.a 以及 GME.prx。
 
 ```
-#pragma comment(lib,"TRAE.a")
-#pragma comment(lib,"UDT.a")
-#pragma comment(lib,"GME.a")
+#pragma comment(lib,"GME_stub_weak.a")
 ```
 
 ### 5. 指定堆大小
