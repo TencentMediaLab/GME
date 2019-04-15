@@ -70,7 +70,7 @@
 
 ## SDK更新说明
 
-参见[更新历史]()
+参见[更新历史](./GME%20Developer%20Manual/GME%20Change%20History.md)
 
 
 ## 联系我们
