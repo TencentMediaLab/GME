@@ -9,9 +9,11 @@ Copy the "include" folder to the project folder.
 
 ### 2. Import SDK related files 
 Copy "gmesdk.lib" to the project folder.
+
 Copy "gmesdk.dll" to the exe output directory.
 
 ### 3. Add to the project
 Add the "gmesdk.lib" file on the attribute page of the project:Linker -> Input -> Additional Dependencies.
-Add the "gmesdk.lib" directory on the attribute page of the project:Linker -> Generral -> Additional Library Directories.
+
+Add the directory of "gmesdk.lib" on the attribute page of the project:Linker -> Generral -> Additional Library Directories.
 

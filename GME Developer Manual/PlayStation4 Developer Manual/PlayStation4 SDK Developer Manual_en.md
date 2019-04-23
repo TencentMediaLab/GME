@@ -55,7 +55,7 @@ m_pTmgContext = ITMGContextGetInstance();
 
 
 ### Message passing
-With the API class, the Delegate method is used to send callback notifications to your application. ITMG_MAIN_EVENT_TYPE indicates the message type. The data under PlayStation is in json string format. See the relevant documentation for the key-value pairs.
+With the API class, the Delegate method is used to send callback notifications to your application. ITMG_MAIN_EVENT_TYPE indicates the message type. The parameter data is in json string format. See the relevant documentation for the key-value pairs.
 
 #### Sample code 
 
