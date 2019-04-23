@@ -597,13 +597,12 @@ ITMGContextGetInstance()->GetSDKVersion();
 This API is used to set the print log level.
 #### Function prototype
 ```
-ITMGContext virtual void SetLogLevel(int logLevel, bool enableWrite, bool enablePrint)
+ITMGContext virtual void SetLogLevel(ITMG_LOG_LEVEL levelWrite, ITMG_LOG_LEVEL levelPrint)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| logLevel    		|int | Indicates the print log level |
-| enableWrite    	| bool | Indicates whether to write a file. The default is Yes |
-| enablePrint    	|bool | Indicates whether to write a console. The default is Yes |
+| levelWrite    		|ITMG_LOG_LEVEL | Sets the level of logs to be written, TMG_LOG_LEVEL_NONE means not to write|
+| levelPrint    	| ITMG_LOG_LEVEL | Sets the level of logs to be printed, TMG_LOG_LEVEL_NONE means not to print |
 
 
 |ITMG_LOG_LEVEL|Description |
@@ -617,7 +616,7 @@ ITMGContext virtual void SetLogLevel(int logLevel, bool enableWrite, bool enable
 #### Sample code  
 ```
 ITMGContext* context = ITMGContextGetInstance();
-context->SetLogLevel(0,true,true);
+context->SetLogLevel(TMG_LOG_LEVEL_NONE,TMG_LOG_LEVEL_NONE);
 ```
 
 ### Set the print log path
@@ -651,10 +650,6 @@ context->SetLogPath(logDir);
 |ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    		| Exits the audio room |
 |ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT		| Room disconnection due to network or other reasons |
 |ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE		|Room type change event |
-|ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|Adds a microphone |
-|ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|Loses a microphone |
-|ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|Adds a speaker |
-|ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE	|Loses a speaker |
 |ITMG_MAIN_EVENT_TYPE_ACCOMPANY_FINISH		|The accompaniment is over |
 |ITMG_MAIN_EVNET_TYPE_USER_UPDATE		|The room members are updated |
 |ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE	|PTT recording is completed |
@@ -671,10 +666,6 @@ context->SetLogPath(logDir);
 | ITMG_MAIN_EVENT_TYPE_EXIT_ROOM    		|result; error_info  			|{"error_info":"","result":0}|
 | ITMG_MAIN_EVENT_TYPE_ROOM_DISCONNECT    	|result; error_info  			|{"error_info":"waiting timeout, please check your network","result":0}|
 | ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_TYPE    	|result; error_info; new_room_type	|{"error_info":"","new_room_type":0,"result":0}|
-| ITMG_MAIN_EVENT_TYPE_SPEAKER_NEW_DEVICE	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"speaker (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":false,"result":0}|
-| ITMG_MAIN_EVENT_TYPE_SPEAKER_LOST_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.0.00000000}.{a4f1e8be-49fa-43e2-b8cf-dd00542b47ae}","deviceName":"speaker (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":false,"result":0}|
-| ITMG_MAIN_EVENT_TYPE_MIC_NEW_DEVICE    	|result; error_info  			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"microphone (Realtek High Definition Audio)","error_info":"","isNewDevice":true,"isUsedDevice":true,"result":0}|
-| ITMG_MAIN_EVENT_TYPE_MIC_LOST_DEVICE    	|result; error_info 			|{"deviceID":"{0.0.1.00000000}.{5fdf1a5b-f42d-4ab2-890a-7e454093f229}","deviceName":"microphone (Realtek High Definition Audio)","error_info":"","isNewDevice":false,"isUsedDevice":true,"result":0}|
 | ITMG_MAIN_EVNET_TYPE_USER_UPDATE    		|user_list;  event_id			|{"event_id":1,"user_list":["0"]}|
 | ITMG_MAIN_EVNET_TYPE_PTT_RECORD_COMPLETE 	|result; file_path  			|{"filepath":"","result":0}|
 | ITMG_MAIN_EVNET_TYPE_PTT_UPLOAD_COMPLETE 	|result; file_path;file_id  		|{"file_id":"","filepath":"","result":0}|
