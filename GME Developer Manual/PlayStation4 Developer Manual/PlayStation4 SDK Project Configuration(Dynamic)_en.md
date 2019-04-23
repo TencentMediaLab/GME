@@ -16,7 +16,7 @@ Introducing GME header files "tmg_sdk.h" into your project.
 #include "tmg_sdk.h"
 ```
 
-### 4. 引入库文件
+### 4. Import SDK Library Files
 Introducing GME related library files in the project：GME_stub.a、GME_stub_weak.a and GME.prx。
 
 ```
