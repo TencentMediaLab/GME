@@ -601,8 +601,8 @@ ITMGContext virtual void SetLogLevel(ITMG_LOG_LEVEL levelWrite, ITMG_LOG_LEVEL l
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| levelWrite    		|ITMG_LOG_LEVEL | Sets the level of logs to be written, TMG_LOG_LEVEL_NONE means not to write|
-| levelPrint    	| ITMG_LOG_LEVEL | Sets the level of logs to be printed, TMG_LOG_LEVEL_NONE means not to print |
+| levelWrite    		|ITMG_LOG_LEVEL | Sets the level of logs to be written to console, TMG_LOG_LEVEL_NONE means not to write|
+| levelPrint    	| ITMG_LOG_LEVEL | Sets the level of logs to be printed to console, TMG_LOG_LEVEL_NONE means not to print |
 
 
 |ITMG_LOG_LEVEL|Description |
