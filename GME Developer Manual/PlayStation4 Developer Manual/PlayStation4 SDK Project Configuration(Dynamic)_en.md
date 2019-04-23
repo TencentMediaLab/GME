@@ -4,7 +4,7 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 ## SDK Import GME Dynamic Library
 
 ### 1. Confirm PlayStation4 Version
-First determine the version of the PlayStation4 SDK you are using, and the version of the GME PlayStation4 SampleCode is 5000.
+First determine the version of the PlayStation4 SDK you are using and the version of the GME PlayStation4 SampleCode, be sure they are matched.
 
 ### 2. Import SDK Files
 Import the GME header files and library functions into the directory where the project is located.
