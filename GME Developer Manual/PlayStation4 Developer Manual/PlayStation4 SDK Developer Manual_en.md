@@ -13,7 +13,7 @@ Thank you for using Tencent Cloud Game Multimedia Engine SDK. This document prov
 
 **Notes:**
 
-**When a GME API is called successfully, QAVError.OK is returned, and the value is 0.**
+**When a GME API is called successfully, AV_OK is returned, and the value is 0.**
 
 **GME APIs should be called in the same thread.**
 
@@ -44,7 +44,7 @@ Get ITMGContext single instance first and all calls should be done accroding to 
 #### Function prototype 
 
 ```
-ITMGContext virtual void TMGDelegate(ITMGDelegate* delegate)
+QAVSDK_API ITMGContext* QAVSDK_CALL ITMGContextGetInstance();
 ```
 #### Sample code  
 
@@ -73,7 +73,7 @@ class Callback : public SetTMGDelegate
 }
 
 Callback*  p = new Callback ();
-m_pTmgContext->TMGDelegate(p);
+m_pTmgContext->SetTMGDelegate(p);
 
 ```
 
@@ -89,8 +89,8 @@ ITMGContext virtual void Init(const char* sdkAppId, const char* openId)
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|char*   	|The SdkAppId obtained from Tencent Cloud console					|
-| openID    	|char*   	|The OpenID supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. 	|
+| sdkAppId    	|char*   	|The sdkAppId obtained from Tencent Cloud console					|
+| openId    	|char*   	|The openId supports Int64 type (which is passed after being converted to a string) only. It is used to identify users and must be greater than 10000. 	|
 
 #### Sample code  
 
@@ -178,12 +178,13 @@ AuthBuffer is generated for the purpose of encryption and authentication. For mo
 
 #### Function prototype
 ```
-QAVSDK_AUTHBUFFER_API int QAVSDK_AUTHBUFFER_CALL QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int nAppId, const char* dwRoomID, const char* strOpenID, const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
+int  QAVSDK_AuthBuffer_GenAuthBuffer(unsigned int dwSdkAppID, const char* strRoomID, const char* strOpenID,
+	const char* strKey, unsigned char* strAuthBuffer, unsigned int bufferLength);
 ```
 | Parameter | Type | Description |
 | ------------- |:-------------:|-------------|
-| nAppId | int | The SdkAppId obtained from the Tencent Cloud console |
-| dwRoomID |char* | Room ID, maximum to 127 characters |
+| dwSdkAppID | int | The SdkAppId obtained from the Tencent Cloud console |
+| strRoomID |char* | Room ID, maximum to 127 characters |
 | strOpenID | char*   | User ID |
 | strKey | char* | The key obtained from the Tencent Cloud [Console](https://console.cloud.tencent.com/gamegme) |
 | strAuthBuffer | char* | Returned authbuff |
@@ -323,7 +324,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
             case ITMG_MAIN_EVNET_TYPE_USER_UPDATE:
 		{
 		//Process
-		//The developer parses the parameter to obtain vent_id and user_list.
+		//The developer parses the parameter to obtain eventID and user_list.
 		    switch (eventID)
  		    {
  		    case ITMG_EVENT_ID_USER_ENTER:
