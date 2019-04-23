@@ -621,6 +621,7 @@ context->SetLogLevel(TMG_LOG_LEVEL_NONE,TMG_LOG_LEVEL_NONE);
 
 ### Set the print log path
 This API is used to set the print log path.
+The default path is:"G:\Tencent\GME".
 
 #### Function prototype
 ```
