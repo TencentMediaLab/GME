@@ -61,10 +61,10 @@
 
 ## 离线语音错误
 
-|错误码名称 |错误码值 |含义  |原因  |建议方案         |
+|错误码名称 |错误码值 |含义  |原因  |建议方案        |
 |------|-----|-----|------|------|
 |QAVPTTERROR_RECORDER_PARAM_NULL                |4097   |录音错误       |参数为空|检查代码中接口参数是否正确|
-|QAVPTTERROR_RECORDER_INIT_ERROR                |4098   |录音错误       |初始化错误|检查鉴权密钥是否正确|
+|QAVPTTERROR_RECORDER_INIT_ERROR                |4098   |录音错误       |初始化错误|检查设备是否被占用，或者权限是否正常|
 |QAVPTTERROR_RECORDER_RECORDING_ERR             |4099   |录音错误       |正在录制中|确保在正确的时机使用 SDK 录制功能|
 |QAVPTTERROR_RECORDER_NODATA_ERR                |4100   |录音错误       |没有采集到音频数据|检查麦克风设备是否正常|
 |QAVPTTERROR_RECORDER_OPENFILE_ERR              |4101   |录音错误       |录音时，录制文件访问错误|确保文件存在，文件路径的合法性|
@@ -77,7 +77,7 @@
 |QAVPTTERROR_UPLOAD_GET_TOKEN_NETWORK_FAIL		|8196   |上传错误       |获取上传参数过程中网络失败|检查鉴权是否正确，检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_UPLOAD_SYSTEM_INNER_ERROR          |8197   |上传错误       |获取上传参数过程中回包数据为空|检查鉴权是否正确，检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_UPLOAD_RSP_DATA_DECODE_FAIL        |8198   |上传错误       |获取上传参数过程中回包解包失败|检查鉴权是否正确，检查设备网络是否可以正常访问外网环境|
-|QAVPTTERROR_UPLOAD_APPINFO_UNSET               |8200   |上传错误       |没有设置 appinfo|检查是否有对 SDK 进行初始化，是否已经初始化离线语音|
+|QAVPTTERROR_UPLOAD_APPINFO_UNSET               |8200   |上传错误       |没有设置 appinfo|检查 apply 接口是否有调用，或者入参是否为空|
 |QAVPTTERROR_DOWNLOAD_FILE_ACCESSERROR          |12289  |下载错误       |下载文件时，文件访问错误    |检查文件路径是否合法|
 |QAVPTTERROR_DOWNLOAD_SIGN_CHECK_FAIL           |12290  |下载错误       |签名校验失败    |检查鉴权密钥是否正确，检查是否有初始化离线语音|
 |QAVPTTERROR_DOWNLOAD_COS_INTERNAL_FAIL         |12291  |下载错误       |网络错误    |检查设备网络是否可以正常访问外网环境|
