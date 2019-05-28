@@ -98,6 +98,6 @@
 |QAVPTTERROR_STREAMIN_RECORD_SUC_REC_FAIL       |32775  |流式语音转文本错误     |流式语音转文本失败，但是录音成功了|检查网络是否正确连接，检查权限密钥是否正确|
 |QAVPTTERROR_S2T_SIGN_CHECK_FAIL                |32776  |authbuffer校验失败   |authbuffer 校验失败|检查 authbuffer 是否正确|
 |QAVPTTERROR_STREAMIN_UPLOADANDRECORD_SUC_REC_FAIL    |32777  |流式语音转文本错误     |流式语音转文本失败，但是录音成功了，上传也成功了。|检查代码是否有错误|
-|QAVPTTERROR_S2T_PARAM_NULL                     |32784  |语音转文字错误     |流式语音转文本参数错误|检查代码中接口参数 fileid 是否为空|
-|QAVPTTERROR_S2T_AUTO_SPEECH_REC_ERROR          |32785  |语音转文字错误     |流式语音转文本翻译返回错误|离线语音后台错误，请分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决|
+|QAVPTTERROR_S2T_PARAM_NULL                     |32784  |语音转文字错误     |语音转文本参数错误|检查代码中接口参数 fileid 是否为空|
+|QAVPTTERROR_S2T_AUTO_SPEECH_REC_ERROR          |32785  |语音转文字错误     |语音转文本翻译返回错误|离线语音后台错误，请分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决|
 |QAVPTTERROR_ERR_VOICE_STREAMIN_RUNING_ERROR    |32786  |流式语音转文本错误     |流式语音转文本失败|在流式录制状态当中，请等待流式录制接口执行结果返回|
