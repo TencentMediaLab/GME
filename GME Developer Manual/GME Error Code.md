@@ -64,7 +64,7 @@
 |错误码名称 |错误码值 |含义  |原因  |建议方案        |
 |------|-----|-----|------|------|
 |QAVPTTERROR_RECORDER_PARAM_NULL                |4097   |录音错误       |参数为空|检查代码中接口参数是否正确|
-|QAVPTTERROR_RECORDER_INIT_ERROR                |4098   |录音错误       |初始化错误|检查设备是否被占用，或者权限是否正常|
+|QAVPTTERROR_RECORDER_INIT_ERROR                |4098   |录音错误       |初始化错误|检查设备是否被占用，或者权限是否正常，是否初始化正常|
 |QAVPTTERROR_RECORDER_RECORDING_ERR             |4099   |录音错误       |正在录制中|确保在正确的时机使用 SDK 录制功能|
 |QAVPTTERROR_RECORDER_NODATA_ERR                |4100   |录音错误       |没有采集到音频数据|检查麦克风设备是否正常|
 |QAVPTTERROR_RECORDER_OPENFILE_ERR              |4101   |录音错误       |录音时，录制文件访问错误|确保文件存在，文件路径的合法性|
@@ -86,7 +86,7 @@
 |QAVPTTERROR_DOWNLOAD_SYSTEM_INNER_ERROR        |12294  |下载错误       |获取下载参数过程中，回包数据为空 |检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_DOWNLOAD_GET_SIGN_RSP_DATA_DECODE_FAIL    |12295  |下载错误       |获取下载参数过程中，回包解包失败|检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_DOWNLOAD_APPINFO_UNSET				|12297  |下载错误       |没有设置 appinfo|检查鉴权密钥是否正确，检查是否有初始化离线语音|
-|QAVPTTERROR_PLAYER_INIT_ERR                    |20481  |播放错误       |初始化错误|检查鉴权密钥是否正确，检查是否有初始化离线语音|
+|QAVPTTERROR_PLAYER_INIT_ERR                    |20481  |播放错误       |初始化错误|检查设备是否被占用，或者权限是否正常，是否初始化正常|
 |QAVPTTERROR_PLAYER_PLAYING_ERR                 |20482  |播放错误       |正在播放中，试图打断并播放下一个失败了（正常是可以打断的）|检查代码逻辑是否正确|
 |QAVPTTERROR_PLAYER_PARAM_NULL                  |20483  |播放错误       |参数为空|检查代码中接口参数是否正确|
 |QAVPTTERROR_PLAYER_OPENFILE_ERR                |20484  |播放错误       |播放时，文件访问错误|确保文件存在，文件路径的合法性|
