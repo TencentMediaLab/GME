@@ -80,7 +80,7 @@
 |QAVPTTERROR_UPLOAD_APPINFO_UNSET               |8200   |上传错误       |没有设置 appinfo|检查 apply 接口是否有调用，或者入参是否为空|
 |QAVPTTERROR_DOWNLOAD_FILE_ACCESSERROR          |12289  |下载错误       |下载文件时，文件访问错误    |检查文件路径是否合法|
 |QAVPTTERROR_DOWNLOAD_SIGN_CHECK_FAIL           |12290  |下载错误       |签名校验失败    |检查鉴权密钥是否正确，检查是否有初始化离线语音|
-|QAVPTTERROR_DOWNLOAD_COS_INTERNAL_FAIL         |12291  |下载错误       |网络错误    |检查设备网络是否可以正常访问外网环境|
+|QAVPTTERROR_DOWNLOAD_COS_INTERNAL_FAIL         |12291  |下载错误       |网络错误    |服务器获取语音文件失败，检查接口参数 fileid 是否正确，检查网络是否正常|
 |QAVPTTERROR_DOWNLOAD_REMOTEFILE_ACCESSERROR    |12292  |下载错误       |服务器文件系统错误    |检查设备网络是否可以正常访问外网环境，检查服务器上是否有此文件|
 |QAVPTTERROR_DOWNLOAD_GET_SIGN_NETWORK_FAIL     |12293  |下载错误       |获取下载参数过程中，HTTP 网络失败|检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_DOWNLOAD_SYSTEM_INNER_ERROR        |12294  |下载错误       |获取下载参数过程中，回包数据为空 |检查设备网络是否可以正常访问外网环境|
