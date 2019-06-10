@@ -80,7 +80,7 @@
 |QAVPTTERROR_UPLOAD_APPINFO_UNSET               |8200   |上传错误       |没有设置 appinfo|检查 apply 接口是否有调用，或者入参是否为空|
 |QAVPTTERROR_DOWNLOAD_FILE_ACCESSERROR          |12289  |下载错误       |下载文件时，文件访问错误    |检查文件路径是否合法|
 |QAVPTTERROR_DOWNLOAD_SIGN_CHECK_FAIL           |12290  |下载错误       |签名校验失败    |检查鉴权密钥是否正确，检查是否有初始化离线语音|
-|QAVPTTERROR_DOWNLOAD_COS_INTERNAL_FAIL         |12291  |下载错误       |网络错误    |服务器获取语音文件失败，检查接口参数 fileid 是否正确，检查网络是否正常|
+|QAVPTTERROR_DOWNLOAD_COS_INTERNAL_FAIL         |12291  |下载错误       |网络存储系统异常    |服务器获取语音文件失败，检查接口参数 fileid 是否正确，检查网络是否正常，检查 cos 文件存不存在|
 |QAVPTTERROR_DOWNLOAD_REMOTEFILE_ACCESSERROR    |12292  |下载错误       |服务器文件系统错误    |检查设备网络是否可以正常访问外网环境，检查服务器上是否有此文件|
 |QAVPTTERROR_DOWNLOAD_GET_SIGN_NETWORK_FAIL     |12293  |下载错误       |获取下载参数过程中，HTTP 网络失败|检查设备网络是否可以正常访问外网环境|
 |QAVPTTERROR_DOWNLOAD_SYSTEM_INNER_ERROR        |12294  |下载错误       |获取下载参数过程中，回包数据为空 |检查设备网络是否可以正常访问外网环境|
@@ -89,7 +89,7 @@
 |QAVPTTERROR_PLAYER_INIT_ERR                    |20481  |播放错误       |初始化错误|检查设备是否被占用，或者权限是否正常，是否初始化正常|
 |QAVPTTERROR_PLAYER_PLAYING_ERR                 |20482  |播放错误       |正在播放中，试图打断并播放下一个失败了（正常是可以打断的）|检查代码逻辑是否正确|
 |QAVPTTERROR_PLAYER_PARAM_NULL                  |20483  |播放错误       |参数为空|检查代码中接口参数是否正确|
-|QAVPTTERROR_PLAYER_OPENFILE_ERR                |20484  |播放错误       |播放时，文件访问错误|确保文件存在，文件路径的合法性|
+|QAVPTTERROR_PLAYER_OPENFILE_ERR                |20484  |播放错误       |内部错误|初始化播放器错误，解码失败等问题产生此错误码，需要结合日志定位问题|
 |QAVPTTERROR_PLAYER_PLAYER_NOT_START_ERR        |20485  |播放错误       |播放未开始|确保文件存在，文件路径的合法性|
 |QAVPTTERROR_S2T_INTERNAL_ERROR                 |32769  |语音转文字错误 |内部错误|分析日志，获取后台返回给客户端的真正错误码，并联系后台同事协助解决。|
 |QAVPTTERROR_S2T_NETWORK_FAIL                   |32770  |语音转文字错误 |网络失败|检查设备网络是否可以正常访问外网环境|
