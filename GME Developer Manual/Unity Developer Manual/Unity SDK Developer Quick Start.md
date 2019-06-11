@@ -42,7 +42,7 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 初始化 SDK 之后才可以进房。
 
-> 函数原型
+#### 函数原型
 ```
 IQAVContext Init(string sdkAppID, string openID)
 ```
@@ -51,7 +51,7 @@ IQAVContext Init(string sdkAppID, string openID)
 | sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码						|
 | openID    	|String  |OpenID 只支持 Int64 类型（转为string传入），必须大于 10000，用于标识用户 	|
 
-> 示例代码  
+#### 示例代码  
 ```
 int ret = IQAVContext.GetInstance().Init(str_appId, str_userId);
 	if (ret != QAVError.OK) {
@@ -61,7 +61,7 @@ int ret = IQAVContext.GetInstance().Init(str_appId, str_userId);
 
 ### 2、触发事件回调
 通过在 update 里面周期的调用 Poll 可以触发事件回调。
-> 函数原型
+#### 函数原型
 
 ```
 ITMGContext public abstract int Poll();
@@ -71,7 +71,7 @@ ITMGContext public abstract int Poll();
 用生成的鉴权信息进房。加入房间默认不打开麦克风及扬声器。
 
 
-> 函数原型
+#### 函数原型
 ```
 ITMGContext EnterRoom(string roomID, int roomType, byte[] authBuffer)
 ```
@@ -83,14 +83,14 @@ ITMGContext EnterRoom(string roomID, int roomType, byte[] authBuffer)
 
 - 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
   
-> 示例代码  
+#### 示例代码  
 ```
 ITMGContext.GetInstance().EnterRoom(roomId, ITMG_ROOM_TYPE_FLUENCY, authBuffer);
 ```
 
 ### 4、加入房间事件的回调
 加入房间后，需要通过委托函数进行回调。其中包含两个信息：result 及 error_info。
-> 函数原型
+#### 函数原型
 ```
 委托函数：
 public delegate void QAVEnterRoomComplete(int result, string error_info);
@@ -98,7 +98,7 @@ public delegate void QAVEnterRoomComplete(int result, string error_info);
 public abstract event QAVEnterRoomComplete OnEnterRoomCompleteEvent;
 ```
 
-> 示例代码
+#### 示例代码
 ```
 对事件进行监听：
 ITMGContext.GetInstance().OnEnterRoomCompleteEvent += new QAVEnterRoomComplete(OnEnterRoomComplete);
@@ -118,14 +118,14 @@ void OnEnterRoomComplete(int err, string errInfo)
 ### 5、开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
-> 函数原型  
+#### 函数原型  
 ```
 ITMGAudioCtrl EnableMic(bool isEnabled)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false|
-> 示例代码  
+#### 示例代码  
 ```
 打开麦克风
 ITMGContext.GetInstance().GetAudioCtrl().EnableMic(true);
@@ -134,14 +134,14 @@ ITMGContext.GetInstance().GetAudioCtrl().EnableMic(true);
 
 ### 6、开启关闭扬声器
 此接口用于开启关闭扬声器。
-> 函数原型  
+#### 函数原型  
 ```
 ITMGAudioCtrl EnableSpeaker(bool isEnabled)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
 | isEnabled    |bool        |如果需要关闭扬声器，则传入的参数为 false，如果打开扬声器，则参数为 true|
-> 示例代码  
+#### 示例代码  
 ```
 打开扬声器
 ITMGContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
@@ -153,7 +153,7 @@ ITMGContext.GetInstance().GetAudioCtrl().EnableSpeaker(true);
 生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。    
 离线语音获取鉴权时，房间号参数必须填null。
 该接口返回值为 Byte[] 类型。
-> 函数原型
+#### 函数原型
 
 ```
 QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
@@ -165,7 +165,8 @@ QAVAuthBuffer GenAuthBuffer(int appId, string roomId, string openId, string key)
 | roomId    		|string   		|房间号，最大支持127字符|
 | openId    	|String 	|用户标识					|
 | key    		|string 	|来自腾讯云[控制台](https://console.cloud.tencent.com/gamegme)的密钥				|
-> 示例代码  
+
+#### 示例代码  
 
 ```
 byte[] GetAuthBuffer(string appId, string userId, string roomId)
