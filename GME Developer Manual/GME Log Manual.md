@@ -29,7 +29,24 @@
 - 设置日志的路径错了，访问不到；
 - 开发者主动关掉了日志打印。
 
+## 如何提供 GME 日志
 
+### 提供本地日志
+如果需要提供本地日志，各个平台的日志路径请参考：[下载及使用方法](https://cloud.tencent.com/document/product/607/30410#.E5.A6.82.E4.BD.95.E5.8F.96.E5.BE.97.E6.97.A5.E5.BF.97.EF.BC.9F)
+
+
+
+### 提供控制台全量日志
+如果需要提供控制台全量日志的话，以 Android 平台为例，在 Android Studio 中打开 Logcat，手机连上电脑后重新复现问题，并把控制台的日志拷贝到文本文档中提交给 GME 开发人员。
+ - 1、请不要有任何截取，请提供全量的日志
+ - 2、请不要有任何过滤
+ - 3、请提供发生问题的时间点
+
+如下图所示：
+
+![](https://main.qcloudimg.com/raw/0ea7dc4b48eb9a977f1b2809d46725f3.png)
+
+[点击下载 Logcat 日志示例文件](https://main.qcloudimg.com/raw/cbae5759397c1b69832760b3e66c409f.txt)
 
 
 ## 日志相关接口
