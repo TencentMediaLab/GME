@@ -176,7 +176,7 @@
 ## 联系我们
 QQ：1558615124
 
-邮箱：terryzuo@tencent.com;garyzeng@tencent.com;v_caisxcai@tencent.com
+邮箱：GME_Service@tencent.com
 
 ## Documentation
 
