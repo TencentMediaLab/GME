@@ -1,12 +1,18 @@
 为方便 Android 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Android 开发的接入技术文档。
 ## 目录
-[使用 GME 重要事项]()
-[实时语音房间相关接口]()
-[实时语音音频接口]()
-[离线语音]()
-[回调消息]()
+[使用 GME 重要事项](./Android%20SDK%20Developer%20Manual.md#%E4%BD%BF%E7%94%A8-gme-%E9%87%8D%E8%A6%81%E4%BA%8B%E9%A1%B9)
 
->?此文档对应 GME sdk version：2.5。
+[核心接口](./Android%20SDK%20Developer%20Manual.md#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3)
+
+[实时语音房间相关接口](./Android%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
+
+[实时语音音频接口](./Android%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3)
+
+[离线语音](./Android%20SDK%20Developer%20Manual.md#%E7%A6%BB%E7%BA%BF%E8%AF%AD%E9%9F%B3)
+
+[高级API](./Android%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
+
+> 此文档对应 GME sdk version：2.5。
 
 ## 使用 GME 重要事项
 
@@ -18,7 +24,7 @@
 |EnableMic	 	|开麦克风 	|
 |EnableSpeaker		|开扬声器 	|
 
->?
+>
 - GME 使用前请对工程进行配置，否则 SDK 不生效。
 - GME 的接口调用成功后返回值为 QAVError.OK，数值为 0。
 - GME 的接口调用要在同一个线程下。
