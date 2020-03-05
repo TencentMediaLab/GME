@@ -2,40 +2,44 @@
 
 
 ## 新建服务
-### 1.登录成功后，单击【新建应用】
-![](https://main.qcloudimg.com/raw/a4b3dbd8aefd9dd032f8c3ce4154b227.png)
+### 新建应用
+1. 登录 [游戏多媒体引擎控制台](https://console.cloud.tencent.com/gamegme)，单击左侧菜单【服务管理】。
+2. 进入服务管理页面，单击【新建应用】。
 
-### 2.填入相应的信息。  
+
+### 填写信息  
 填写该页面所需信息，按照需要选择所需的服务。 
-- 音质不同计费方式也不同，计费详情请参考 [产品价格](https://cloud.tencent.com/document/product/607/17808) 或者咨询相关腾讯云商务工作人员。设置完成可再修改。
-- 如果是游戏类应用，需选择相应的平台引擎。
+- 计费详情请参考 [产品价格](https://cloud.tencent.com/document/product/607/17808) 或者咨询相关腾讯云商务工作人员。设置完成可再修改。
+- 如果是游戏类应用，需选择相应的平台引擎。【平台/引擎】和【服务区域】中的勾选选项仅作参考，不影响服务效果。
 - 语音消息及转文本服务设置完成可再修改。
 
-![](https://main.qcloudimg.com/raw/bafdd3250004a5d69322beab1d6c25c7.png)
+![](https://main.qcloudimg.com/raw/7e861560d6e0132c1cdafb0c3d63bfdb.png)
 
-
-### 3.创建应用成功后，应用管理列表就有刚刚创建的应用。
+## 设置服务
+### 创建应用成功后，应用管理列表就有刚刚创建的应用。
 列表中的 AppID 在接入 SDK 进行开发过程中会作为参数使用。
-![](https://main.qcloudimg.com/raw/9e78b27c75b9bfcd2ce02ae1d02b7046.png)
+
+![](https://main.qcloudimg.com/raw/973b60c364a7ee43537db2dbdad37494.png)
 
 
-### 4.应用管理列表中，在相应的应用那一行，单击【设置】按钮，进入应用设置。
-![](https://main.qcloudimg.com/raw/ac27c53e9a07fa819344f668978fe019.png)
-应用信息模块，单击【修改】后可对相应信息进行修改。
+### 设置应用
+单击【设置】，进入应用信息模块，单击【修改】后可对相应信息进行修改。
 
-### 5.鉴权信息模块，可获取应用相应的鉴权。
-![](https://main.qcloudimg.com/raw/76b5038763d2aded0be39b0d1bc27efa.png)
+![](https://main.qcloudimg.com/raw/e1cf88f30e5c710c1b275928f709e634.png)
+
+#### 鉴权信息
+
 - 此模块中的权限密钥会作为参数使用到 SDK 接入过程中。 
-- 页面修改密钥后，15分钟 ~ 1小时内生效，不建议频繁更换。
+- 页面修改密钥后，15分钟 - 1小时内生效，不建议频繁更换。
 - 只有创建游戏的账号、主账号、全局协作者可以操作【重置密钥】。
-- 鉴权详细使用请参考 [游戏多媒体引擎密钥说明文档](https://cloud.tencent.com/document/product/607/12218)。
- ![](https://main.qcloudimg.com/raw/df3f92e2eb50aea9d8dde32f252045f6.png)
+- 鉴权详细使用请参考 [鉴权密钥](https://main.qcloudimg.com/raw/973b60c364a7ee43537db2dbdad37494.png)
 
 
-### 6.业务及服务的开启关闭
+
+### 开启关闭业务
 在这里可以对业务及服务进行开启或者关闭。
-![](https://main.qcloudimg.com/raw/a5711820b59c6d4047565562094d1595.png)
-![](https://main.qcloudimg.com/raw/ec0f00f1afc229b6db5676772c53edad.png)
+
+![](https://main.qcloudimg.com/raw/6880323dec5c8d9604bb78853843aac2.png)
 
 
 ## 下载 SDK 
@@ -43,7 +47,7 @@
 请在 [SDK 下载指引](https://cloud.tencent.com/document/product/607/18521) 下载相关 Demo 及 SDK。
 
 ### 2.接入准备
-接入 SDK 需要使用腾讯云提供的 appid 及相关权限密钥。即应用管理列表中的 AppID 及 应用设置中的鉴权信息模块。
+接入 SDK 需要使用腾讯云提供的 AppID 及相关权限密钥。即应用管理列表中的 AppID 及 应用设置中的鉴权信息模块。
 
 更多平台相关配置请参考各平台工程配置文档。
 
