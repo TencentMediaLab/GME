@@ -53,7 +53,7 @@ public abstract bool IsEnableSpatializer()
 | 0 < N < range/10  	|衰减系数：1.0 （音量无衰减）	|
 | N ≥ range/10|衰减系数：range/10/N        			|
 
-![](https://github.com/TencentMediaLab/GME/blob/master/Image/t1.jpg)
+![](https://main.qcloudimg.com/raw/50e745c853ab0e3f9f3bbef9d9cfc401.jpg)
 
 ### 函数原型
 

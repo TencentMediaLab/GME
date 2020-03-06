@@ -1,31 +1,63 @@
-## 简介
-欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便 H5 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 H5 开发的预备工作。
+为方便 H5 开发者调试和接入腾讯云游戏多媒体引擎 API，这里向您介绍适用于 H5 开发的预备工作。
 
-## GME H5 SDK 支持的平台
-| 操作系统平台  | 浏览器/webview  | 版本要求  |  备注|
-| ------------------------- | -------- | ---------------------- |------- |
-| iOS          | Safari ( 只支持Safari ) | 11.1.2 | 由于苹果 Safari 仍有偶现的 bug，产品化方案建议先规避，待苹果解决后再使用|
-| Android      | TBS （微信和手机QQ的默认Webview） | 43600                | 微信和手机QQ默认内置的浏览器内核为TBS。 [TBS 介绍](http://x5.tencent.com/) |
-| Android      | Chrome | 60+               | 需要支持 H264  |
-| Mac          | Chrome | 47+                |      |
-| Mac          | Safari | 11+                |      |
-| Windows(PC)  | Chrome | 52+                |      |
-| Windows(PC)  | [QQ浏览器](https://browser.qq.com/) | 10.2 | &nbsp;     |
+##  H5 SDK 支持的平台
+<table>
+   <tr>
+      <td>操作系统平台</td>
+      <td>浏览器/webview</td>
+      <td>版本要求</td>
+      <td>备注</td>
+   </tr>
+   <tr>
+      <td>iOS</td>
+      <td>Safari</td>
+      <td>11.1.2</td>
+      <td>由于苹果 Safari 仍有偶现的 bug，产品化方案建议先规避，待苹果解决后再使用。</td>
+   </tr>
+   <tr>
+      <td rowspan="2">Android</td>
+      <td>TBS（微信和手机 QQ 的默认 Webview）</td>
+      <td>43600</td>
+      <td>微信和手机 QQ 默认内置的浏览器内核为 <a href="https://x5.tencent.com/">TBS</a></td>
+   </tr>
+   <tr>
+      <td>Chrome</td>
+      <td>60+</td>
+      <td>需要支持 H264</td>
+   </tr>
+   <tr>
+      <td rowspan="2">Mac</td>
+      <td>Chrome</td>
+      <td>47+</td>
+      <td>-</td>
+   </tr>
+   <tr>
+      <td>Safari</td>
+      <td>11+</td>
+      <td>-</td>
+   </tr>
+   <tr>
+      <td rowspan="2">Windows(PC)</td>
+      <td>Chrome</td>
+      <td>52+</td>
+      <td>-</td>
+   </tr>
+   <tr>
+      <td><a href="https://browser.qq.com/">QQ 浏览器</a></td>
+      <td>10.2</td>
+      <td>-</td>
+   </tr>
+</table>
 
-
-## SDK 准备
-您可以通过以下方式获取 SDK。
-1. 请参考 [下载指引](https://cloud.tencent.com/document/product/607/18521) 下载相关 Sample Code 及 SDK。
-
+## 准备工作
+您可以通过以下步骤获取 SDK
+1. 请进入 [下载指引](https://cloud.tencent.com/document/product/607/18521) 页面。
 2. 在界面中找到 H5 版本的 SDK 资源。
+3. 在页面中单击【下载】，完成操作。
 
-3. 在页面中单击【下载】按钮。
 
-
-## 预备工作
-
-### 1. 端口号开放
-
+## 前端工程配置步骤
+#### 1. 端口号开放
 如果所在网络有防火墙，请确定有开放以下端口：
 
 | 协议 | 端口号            |
@@ -35,18 +67,23 @@
 
 使用 CDN 引入 SDK。
 
-### 2. 引入 WebRTCAPI.min.js
-
-```html
+#### 2. 引入前端库文件
+参考以下代码，在工程中引入 WebRTCAPI.min.js。 
+```
+html
 <script src="https://sqimg.qq.com/expert_qq/webrtc/3.0/WebRTCAPI.min.js"></script>
 ```
 
-###  3. 进行 H5 鉴权设置
-#### 下载程序
-请 [下载](https://main.qcloudimg.com/raw/b1d8e4d8e7321fd67250069d07bf2016.zip) 我们为您准备的 authBuffer 示例程序，该程序可以完成对指定的 sdkappid 的鉴权信息签名。
 
-#### 相应修改
-进入到 signdemo 目录，修改 config.js 文件：打开 config.js 文件，先删除默认的配置，在删除代码的地方调用 appidMap 函数，参数为在腾讯云后台申请的 SDKAppid 以及对应的鉴权 key。
+## 服务器端部署步骤
+使用 GME SDK 需要鉴权，鉴权部分涉及密钥，不适合在客户端实现，建议单独业务部署。
+如暂时只需客户端实现，可参考我们提供的 Demo 工程。
+
+#### 1. 下载程序
+请 [下载](https://main.qcloudimg.com/raw/b1d8e4d8e7321fd67250069d07bf2016.zip) 我们为您准备的 authBuffer 示例程序，该程序可以完成对指定的 SDKAppID 的鉴权信息签名。
+
+#### 2. 配置服务端鉴权工程
+进入 signdemo 目录，修改 config.js 文件：打开 config.js 文件，先删除默认的配置，在删除代码处，调用 appidMap 函数（参数为在腾讯云后台申请的 SDKAppid 以及对应的鉴权 key）。
 
 ```
 const AuthBufferConfig = function () {
@@ -56,10 +93,10 @@ const AuthBufferConfig = function () {
 //将1400089356替换为在腾讯云后台申请的 sdkAppid，1cfbfd2a1a03a53e 替换为对应 sdkAppid 的鉴权 key
 ```
 
->!AuthKey 必须与您的 sdkAppid 相对应。
+> AuthKey 必须与您的 SDKAppid 相对应。
 
-#### 安装 npm 包并运行
-进入到 authBuffer 示例程序目录，执行以下语句以安装相关依赖：
+#### 3. 部署服务端鉴权工程
+进入 authBuffer 示例程序目录，执行以下语句，以安装相关依赖：
 
 ```
 npm i
@@ -67,18 +104,17 @@ npm i
 
 然后执行脚本 node index.js，运行签名服务。
 
->!由于使用到 async 语法，请确保您的 node 版本在 8 以上。命令行中执行 node -v 以查看版本。
+>!由于使用到 async 语法，请确保您的 node 版本在8以上。命令行中执行 node -v 以查看版本。
 
 
-#### 测试
+#### 4. 测试部署结果
 可在命令行用以下命令测试（确保系统中有 curl 指令）：
 ```
 //生成userSig:
 curl "http://127.0.0.1:10005/" --data "sdkappid=1400089356&roomid=1234123&openid=1234567"
 ```
 
-#### 返回参考
-
+执行签名程序后，签名程序会返回鉴权信息，返回参考如下：
 ```
 {"userSig":"AqhHE7QHLFYPfV/zfyrdRYHfuUn6eOA8g/J6GMjVy//Shr5ByJPTi8hzR2KyXMvn","errorCode":0}
 ```
