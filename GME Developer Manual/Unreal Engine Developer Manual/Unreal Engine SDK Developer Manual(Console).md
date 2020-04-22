@@ -1,17 +1,17 @@
 为方便 Unreal Engine 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Unreal Engine 主机开发的接入技术文档。
 
 ## 目录
-[使用 GME 重要事项](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E4%BD%BF%E7%94%A8-gme-%E9%87%8D%E8%A6%81%E4%BA%8B%E9%A1%B9)
+[使用 GME 重要事项](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E4%BD%BF%E7%94%A8-gme-%E9%87%8D%E8%A6%81%E4%BA%8B%E9%A1%B9)
 
-[核心接口](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3)
+[核心接口](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3)
 
-[实时语音房间相关接口](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
+[实时语音房间相关接口](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
 
-[实时语音音频接口](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3)
+[实时语音音频接口](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3)
 
-[离线语音](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E7%A6%BB%E7%BA%BF%E8%AF%AD%E9%9F%B3)
+[离线语音](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E7%A6%BB%E7%BA%BF%E8%AF%AD%E9%9F%B3)
 
-[高级API](./Unreal%20Engine%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
+[高级API](./Unreal%20Engine%20SDK%20Developer%20Manual(Console).md#%E9%AB%98%E7%BA%A7-api)
 
 ## 使用 GME 重要事项
 
