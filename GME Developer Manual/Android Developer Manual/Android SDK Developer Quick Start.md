@@ -3,12 +3,6 @@
 欢迎使用腾讯云游戏多媒体引擎 SDK 。为方便 Android 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Android 开发的快速接入文档。
 
 
-## 使用流程图
-### 实时语音流程图
-![image](Image/i0.png)
-
-### 使用GME 重要事项
-
 GME 快速入门文档只提供最主要的接入接口，更多详细接口请参考相关接口文档。
 
 
@@ -21,24 +15,24 @@ GME 快速入门文档只提供最主要的接入接口，更多详细接口请�
 |EnableSpeaker		|开扬声器 		|
 
 **说明**
-**GME 的接口调用成功后返回值为 QAVError.OK，数值为0。**
+- GME 使用前请对工程进行配置，否则 SDK 不生效。
 
-**GME 的接口调用要在同一个线程下。**
+- GME 的接口调用成功后返回值为 QAVError.OK，数值为 0。
 
-**GME 加入房间需要鉴权，请参考文档关于鉴权部分内容。**
+- GME 的接口调用要在同一个线程下。
 
-**GME 需要周期性的调用 Poll 接口触发事件回调。**
+- GME 需要周期性的调用 Poll 接口触发事件回调。
 
-**GME 回调信息参考回调消息列表。**
+- GME 回调信息参考回调消息列表。
 
-**设备的操作要在进房成功之后。**
+- 设备的操作要在进房成功之后。
 
-**此文档对应GME sdk version：2.3。**
+- 错误码详情可参考 [错误码](https://cloud.tencent.com/document/product/607/15173)
+
 ## 快速接入步骤
 
 ### 1、获取单例
 在使用语音功能时，需要首先获取 ITMGContext 对象。
-
 ####  函数原型 
 
 ```
@@ -50,7 +44,7 @@ public static ITMGContext GetInstance(Context context)
 | context    |Context |应用程序上下文对象|
 
 
-#### 示例代码  
+####  示例代码  
 
 ```
 import com.tencent.TMG.ITMGContext; 
@@ -58,27 +52,31 @@ TMGContext.getInstance(this);
 ```
 
 ### 2、初始化 SDK
-参数获取请查看 [游戏多媒体引擎接入指引](/GME%20Introduction.md)。
-此接口需要来自腾讯云控制台的 SdkAppId 号码作为参数，再加上 openId，这个 openId 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
-初始化 SDK 之后才可以进房。
-#### 函数原型
+
+参数获取请查看 [接入指引](https://cloud.tencent.com/document/product/607/10782)。
+此接口需要来自腾讯云控制台的 AppID 号码作为参数，再加上 openID，这个 openID 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
+
+>!初始化 SDK 之后才可以进房。
+####  函数原型
 
 ```
-ITMGContext public int Init(String sdkAppId, String openID)
+ITMGContext public int Init(String sdkAppId, String openId)
 ```
 
-|参数     | 类型         |意义|
+|参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| sdkAppId    	|String  |来自腾讯云控制台的 SdkAppId 号码				|
-| openID    		|String  |OpenID 只支持 Int64 类型（转为 string 传入），必须大于10000，用于标识用户 |
+| sdkAppId    	|String  |来自腾讯云控制台的 AppId 号码。				|
+| openID    		|String  |OpenID 只支持 Int64 类型（转为 string 传入），数值必须大于10000，用于标识用户。|
+
 
 ####  示例代码 
-```
-ITMGContext.GetInstance(this).Init(sdkAppId, openId);
-```
 
+
+```
+ITMGContext.GetInstance(this).Init(sdkAppId, openID);
+```
 ### 3、触发事件回调
-通过在 update 里面周期的调用 Poll 可以触发事件回调。
+通过在 update 里面周期的调用 Poll 可以触发事件回调。GME 需要周期性的调用 Poll 接口触发事件回调。如果没有调用 Poll 的话，会导致整个 SDK 服务运行异常。
 ####  函数原型
 
 ```
@@ -89,31 +87,54 @@ ITMGContext int Poll()
 ITMGContext.GetInstance(this).Poll();
 ```
 
-### 4、加入房间
-用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。
-- 加入房间默认不打开麦克风及扬声器。
-- 在 EnterRoom 接口调用之前要先调用 Init 接口。
+### 4、鉴权信息
+生成 AuthBuffer，用于相关功能的加密和鉴权，如正式发布请使用后台部署密钥，后台部署请参考 [鉴权密钥](https://cloud.tencent.com/document/product/607/12218)。    
+离线语音获取鉴权时，房间号参数必须填 null。
+
+#### 函数原型
+```
+AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, String identifier, String key)
+```
+|参数     | 类型         |含义|
+| ------------- |:-------------:|-------------|
+| appId    		|int   		|来自腾讯云控制台的 AppId 号码。		|
+| roomId    		|string   		|房间号，最大支持127字符（离线语音房间号参数必须填 null）。|
+| openId    	|string 	|用户标识。与 Init 时候的 openID相同。					|
+| key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的权限密钥。				|
+
+
+####  示例代码  
+```
+import com.tencent.av.sig.AuthBuffer;//头文件
+byte[] authBuffer=AuthBuffer.getInstance().genAuthBuffer(Integer.parseInt(sdkAppId), strRoomID,identifier, key);
+```
+
+
+
+### 5、加入房间
+用生成的鉴权信息进房，会收到消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM 的回调。加入房间默认不打开麦克风及扬声器。返回值为 AV_OK 的时候代表成功。
+
 
 ####  函数原型
 ```
-ITMGContext public abstract void  EnterRoom(String roomId, int roomType, byte[] authBuffer)
+ITMGContext public abstract int EnterRoom(String roomId, int roomType, byte[] authBuffer)
 ```
-
-|参数     | 类型         |意义|
+|参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
 | roomId 	|String		|房间号，最大支持127字符|
-| roomType 	|int		|房间音频类型		|
-| authBuffer	|byte[]	|鉴权码				|
+| roomType 	|int		|房间音频类型|
+| authBuffer	|byte[]	|鉴权码|
 
-- 房间音频类型请参考[音质选择](https://cloud.tencent.com/document/product/607/18522)。
+房间音频类型请参考 [音质选择](https://cloud.tencent.com/document/product/607/18522)。
 
-#### 示例代码  
+
+####  示例代码  
 ```
 ITMGContext.GetInstance(this).EnterRoom(roomId,roomType, authBuffer);    
 ```
 
-### 5、加入房间事件的回调
-加入房间完成后会有回调，消息为 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM。
+### 6、加入房间事件的回调
+加入房间完成后会发送信息 ITMG_MAIN_EVENT_TYPE_ENTER_ROOM，在 OnEvent 函数中进行判断。
 设置回调相关参考代码。
 
 ```
@@ -135,7 +156,7 @@ public void OnEvent(ITMGContext.ITMG_MAIN_EVENT_TYPE type, Intent data) {
 	}
 ```
 
-### 6、开启关闭麦克风
+### 7、开启关闭麦克风
 此接口用来开启关闭麦克风。加入房间默认不打开麦克风及扬声器。
 
 ####  函数原型  
@@ -144,7 +165,7 @@ ITMGContext public void EnableMic(boolean isEnabled)
 ```
 |参数     | 类型         |意义|
 | ------------- |:-------------:|-------------|
-| isEnabled    |boolean     |如果需要关闭麦克风，则传入的参数为 false，如果打开麦克风，则参数为 true|
+| isEnabled    |boolean     |如果需要打开麦克风，则传入的参数为 true，如果关闭麦克风，则参数为 false|
 
 ####  示例代码  
 ```
@@ -152,7 +173,7 @@ ITMGContext.GetInstance(this).GetAudioCtrl().EnableMic(true);
 ```
 
 
-### 7、开启关闭扬声器
+### 8、开启关闭扬声器
 此接口用于开启关闭扬声器。
 
 ####  函数原型  
@@ -167,30 +188,4 @@ ITMGContext public void EnableSpeaker(boolean isEnabled)
 ```
 ITMGContext.GetInstance(this).GetAudioCtrl().EnableSpeaker(true);
 ```
-
-
-
-## 关于鉴权
-### 鉴权信息
-生成 AuthBuffer，用于相关功能的加密和鉴权，相关后台部署请查看 [鉴权密钥](../GME%20Key%20Manual.md)。    
-该接口返回值为 Byte[] 类型。离线语音获取鉴权时，房间号参数必须填null。
-
-#### 函数原型
-```
-AuthBuffer public native byte[] genAuthBuffer(int sdkAppId, String roomId, String identifier, String key)
-```
-|参数     | 类型         |意义|
-| ------------- |:-------------:|-------------|
-| appId    		|int   		|来自腾讯云控制台的 sdkAppId 号码|
-| roomId    		|String   	|房间号最大支持127字符（离线语音房间号参数必须填 null）|
-| openID    	|String 	|用户标识|
-| key    		|string 	|来自腾讯云 [控制台](https://console.cloud.tencent.com/gamegme) 的密钥|
- 
-
-####  示例代码  
-```
-import com.tencent.av.sig.AuthBuffer;//头文件
-byte[] authBuffer=AuthBuffer.getInstance().genAuthBuffer(Integer.parseInt(sdkAppId), Integer.parseInt(strRoomID),identifier, key);
-```
-
 
