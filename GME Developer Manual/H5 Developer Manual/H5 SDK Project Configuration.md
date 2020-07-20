@@ -9,11 +9,23 @@
       <td>备注</td>
    </tr>
    <tr>
-      <td>iOS</td>
+      <td rowspan="3">iOS</td>
       <td>Safari</td>
       <td>11.1.2</td>
-      <td>由于苹果 Safari 仍有偶现的 bug，产品化方案建议先规避，待苹果解决后再使用。</td>
+      <td>使用高版本的 Safari。</td>
    </tr>
+     <tr>
+      <td>Chrome</td>
+      <td>-</td>
+      <td>iOS 下暂时不支持 Chrome 浏览器</td>
+   </tr>
+   </tr>
+     <tr>
+      <td>微信浏览器</td>
+      <td>-</td>
+      <td>iOS 下暂时不支持微信浏览器</td>
+   </tr>
+
    <tr>
       <td rowspan="2">Android</td>
       <td>TBS（微信和手机 QQ 的默认 Webview）</td>
@@ -68,12 +80,16 @@
 使用 CDN 引入 SDK。
 
 #### 2. 引入前端库文件
-参考以下代码，在工程中引入 WebRTCAPI.min.js。 
+参考以下代码，在工程中引入 WebRTCService.min.js。 
 ```
-html
-<script src="https://sqimg.qq.com/expert_qq/webrtc/3.0/WebRTCAPI.min.js"></script>
+<head>
+    <script src="../dist/WebRTCService.min.js"></script>
+</head>
 ```
-
+#### 3. 添加 Audio 标签
+```
+<div id="gme-audio-wrap"></div>
+```
 
 ## 服务器端部署步骤
 使用 GME SDK 需要鉴权，鉴权部分涉及密钥，不适合在客户端实现，建议单独业务部署。
@@ -93,7 +109,7 @@ const AuthBufferConfig = function () {
 //将1400089356替换为在腾讯云后台申请的 sdkAppid，1cfbfd2a1a03a53e 替换为对应 sdkAppid 的鉴权 key
 ```
 
-> AuthKey 必须与您的 SDKAppid 相对应。
+>!AuthKey 必须与您的 SDKAppid 相对应。
 
 #### 3. 部署服务端鉴权工程
 进入 authBuffer 示例程序目录，执行以下语句，以安装相关依赖：
@@ -118,3 +134,4 @@ curl "http://127.0.0.1:10005/" --data "sdkappid=1400089356&roomid=1234123&openid
 ```
 {"userSig":"AqhHE7QHLFYPfV/zfyrdRYHfuUn6eOA8g/J6GMjVy//Shr5ByJPTi8hzR2KyXMvn","errorCode":0}
 ```
+

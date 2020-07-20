@@ -1,30 +1,26 @@
 为方便 Unity 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Unity 开发的接入技术文档。
+
 ## 目录
-[使用 GME 重要事项](./Unity%20SDK%20Developer%20Manual.md#%E4%BD%BF%E7%94%A8-gme-%E9%87%8D%E8%A6%81%E4%BA%8B%E9%A1%B9)
 
-[核心接口](./Unity%20SDK%20Developer%20Manual.md#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3)
+[初始化相关接口](./Unity%20SDK%20Developer%20Manual.md#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
 
-[实时语音房间相关接口](./Unity%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
+[实时语音房间事件接口](./Unity%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
 
 [实时语音音频接口](./Unity%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3)
 
+[实时语音伴奏相关接口](./Unity%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E4%BC%B4%E5%A5%8F%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
+
+[实时语音音效相关接口](./Unity%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E6%95%88%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
+
 [离线语音](./Unity%20SDK%20Developer%20Manual.md#%E7%A6%BB%E7%BA%BF%E8%AF%AD%E9%9F%B3)
 
-[高级API](./Unity%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
+[高级接口](./Unity%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
 
-> 此文档对应 GME sdk version：2.5。
+[回调消息列表](./Unity%20SDK%20Developer%20Manual.md#%E5%9B%9E%E8%B0%83%E6%B6%88%E6%81%AF)
 
-## 使用 GME 重要事项
 
-|重要接口     | 接口含义|
-| ------------- |:-------------:|
-|Init    		|初始化 GME 	|
-|Poll    		|触发事件回调	|
-|EnterRoom	 	|进房  		|
-|EnableMic	 	|开麦克风 	|
-|EnableSpeaker		|开扬声器 	|
 
-> 
+**说明**
 - GME 使用前请对工程进行配置，否则 SDK 不生效。
 - GME 的接口调用成功后返回值为 QAVError.OK，数值为 0。
 - GME 的接口调用要在同一个线程下。
@@ -56,7 +52,7 @@
 参数获取请查看 [接入指引](https://cloud.tencent.com/document/product/607/10782)。
 此接口需要来自腾讯云控制台的 AppID 号码作为参数，再加上 openID，这个 openID 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
 
-> 初始化 SDK 之后才可以进房。
+>!初始化 SDK 之后才可以进房。
 
 ####  函数原型
 
@@ -74,6 +70,9 @@ ITMGContext Init(string sdkAppID, string openID)
 |----|----|
 |QAVError.OK= 0|初始化 SDK 成功|
 |AV_ERR_SDK_NOT_FULL_UPDATE= 7015|检查 SDK 文件是否完整，建议删除后重新导入 SDK|
+
+出现返回值 AV_ERR_SDK_NOT_FULL_UPDATE 时，此返回值只有提示作用，并不会造成初始化失败。如果在接入过程中提示此错误，请根据提示检查 SDK 文件是否完整、SDK 文件版本是否一致；如果是在导出可执行文件之后出现此返回值，请忽略此错误，并尽量不在UI中提示。
+
 
 ####  示例代码 
 
@@ -413,13 +412,13 @@ void OnEndpointsUpdateInfo(int eventID, int count, string[] openIdList)
 
 
 ### 房间通话质量监控事件
-质量监控事件，事件消息为 ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY，返回的参数为 weight、floss  及 delay，代表的信息如下，在 OnEvent 函数中对事件消息进行判断。
+质量监控事件，在进房后触发，事件消息为 ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY，返回的参数为 weight、loss 及 delay，代表的信息如下，在 OnEvent 函数中对事件消息进行判断。
 
-|参数     | 含义         |
-| ------------- |-------------|
-|weight    				|范围是 1-5，数值为5是音质评分极好，数值为1是音质评分很差，几乎不能使用，数值为0代表初始值，无含义|
-|floss    				|丢包率|
-|delay    		|音频触达延迟时间（ms）|
+|参数     | 类型        | 含义         |
+| ------------- |-------------|-------------|
+|weight  |int  				|范围是 1 - 50，数值为50是音质评分极好，数值为1是音质评分很差，几乎不能使用，数值为0代表初始值，无含义|
+|loss   |double				|上行丢包率|
+|delay   |int 		|音频触达延迟时间（ms）|
 
 
 ## 实时语音音频接口
@@ -794,13 +793,11 @@ void QAVAudioDeviceStateCallback(int deviceType, string deviceId, bool openOrClo
 ```
 
 ## 离线语音语音转文字流程图
-![](https://main.qcloudimg.com/raw/4c875d05cd2b4eaefba676d2e4fc031d.png)
-
-
+<img src="https://main.qcloudimg.com/raw/4c875d05cd2b4eaefba676d2e4fc031d.png" width="70%">
 
 ## 离线语音
 未初始化前，SDK 处于未初始化阶段，需要通过接口 Init 初始化 SDK，才可以使用实时语音及离线语音。
-使用问题可参考[离线语音相关问题](https://cloud.tencent.com/document/product/607/30412)。
+使用问题可参考 [离线语音相关问题](https://cloud.tencent.com/document/product/607/30412)。
 
 ### 初始化相关接口
 
@@ -854,7 +851,7 @@ ITMGContext.GetInstance().GetPttCtrl().ApplyPTTAuthbuffer(authBuffer);
 ```
 
 ### 限制最大语音信息时长
-限制最大语音消息的长度，最大支持60秒。
+限制最大语音消息的长度，最大支持58秒。
 
 ####  函数原型
 
@@ -863,11 +860,11 @@ ITMGPTT int SetMaxMessageLength(int msTime)
 ```
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长，单位 ms|
+| msTime    |int                    |语音时长，单位 ms，区间为 1000 < msTime <= 58000|
 
 #### 示例代码  
 ```
-ITMGContext.GetInstance().GetPttCtrl().SetMaxMessageLength(60000); 
+ITMGContext.GetInstance().GetPttCtrl().SetMaxMessageLength(10000); 
 ```
 
 
@@ -1242,7 +1239,7 @@ public abstract event QAVPlayFileCompleteCallback OnPlayFileComplete;
 ```
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| code    |int                       |当 code 为0时，录制完成|
+| code    |int                       |当 code 为0时，播放完成|
 | filepath    |string                      |录制的存放地址|
 
 #### 错误码

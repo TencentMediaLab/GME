@@ -19,7 +19,7 @@ AUEDemoLevelScriptActor::AUEDemoLevelScriptActor()
 }
 ```
 
-> 在默认的情况下，tick 为关闭状态，必须手动开启。
+>?在默认的情况下，tick 为关闭状态，必须手动开启。
 
 ## 导出不同平台
 从 Unreal 引擎导出不同平台，需要做相应的工程配置：
@@ -29,3 +29,5 @@ AUEDemoLevelScriptActor::AUEDemoLevelScriptActor()
 | Android |[Android 工程配置文档](https://cloud.tencent.com/document/product/607/15203)|
 | iOS     	|[iOS 工程配置文档](https://cloud.tencent.com/document/product/607/15219)|
 | macOS     	|[macOS 工程配置文档](https://cloud.tencent.com/document/product/607/18617)|
+  
+  

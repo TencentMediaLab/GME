@@ -1,19 +1,24 @@
 为方便 Cocos2d 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Cocos2d 开发的接入技术文档。
 
-## 目录
-[使用 GME 重要事项](./Cocos2d%20SDK%20Developer%20Manual.md#%E4%BD%BF%E7%94%A8-gme-%E9%87%8D%E8%A6%81%E4%BA%8B%E9%A1%B9)
+**GME 使用前请参考[工程配置文档](./Cocos2d%20SDK%20Project%20Configuration.md)对工程进行配置，否则 SDK 不生效。**
 
-[核心接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E6%A0%B8%E5%BF%83%E6%8E%A5%E5%8F%A3)
+## 目录
+[初始化相关接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
 
 [实时语音房间相关接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E6%88%BF%E9%97%B4%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
 
 [实时语音音频接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3)
 
+[实时语音伴奏相关接口](./Cocos2D-X%20Developer%20Manual/Cocos2d%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E4%BC%B4%E5%A5%8F%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3%E5%8F%AA%E6%94%AF%E6%8C%81%E7%A7%BB%E5%8A%A8%E7%AB%AF)
+
+[实时语音音效相关接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E5%AE%9E%E6%97%B6%E8%AF%AD%E9%9F%B3%E9%9F%B3%E6%95%88%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3%E5%8F%AA%E6%94%AF%E6%8C%81%E7%A7%BB%E5%8A%A8%E7%AB%AF)
+
 [离线语音](./Cocos2d%20SDK%20Developer%20Manual.md#%E7%A6%BB%E7%BA%BF%E8%AF%AD%E9%9F%B3)
 
-[高级API](./Cocos2d%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
+[高级接口](./Cocos2d%20SDK%20Developer%20Manual.md#%E9%AB%98%E7%BA%A7-api)
 
-> 此文档对应 GME sdk version：2.5。
+[回调消息列表](./Cocos2d%20SDK%20Developer%20Manual.md#%E5%9B%9E%E8%B0%83%E6%B6%88%E6%81%AF)
+
 
 ## 使用 GME 重要事项
 
@@ -25,13 +30,20 @@
 |EnableMic	 	|开麦克风 	|
 |EnableSpeaker		|开扬声器 	|
 
->
+
+**说明**
 - GME 使用前请对工程进行配置，否则 SDK 不生效。
+
 - GME 的接口调用成功后返回值为 AV_OK，数值为 0。
+
 - GME 的接口调用要在同一个线程下。
+
 - GME 需要周期性的调用 Poll 接口触发事件回调。
+
 - GME 回调信息参考回调消息列表。
+
 - 设备的操作要在进房成功之后。
+
 - 错误码详情可参考 [错误码](https://cloud.tencent.com/document/product/607/15173)
 
 ## 实时语音流程图
@@ -80,7 +92,7 @@ context->SetTMGDelegate(this);
 ### 消息传递
 接口类采用 Delegate 方法用于向应用程序发送回调通知，消息类型参考 ITMG_MAIN_EVENT_TYPE，data 在 Windows 平台下是 json 字符串格式， 具体 key-value 参见说明文档。
 
-####  示例代码  
+#### 示例代码 
 ```
 //函数实现：
 //TMGTestScene.h:
@@ -104,7 +116,7 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 
 参数获取请查看 [接入指引](https://cloud.tencent.com/document/product/607/10782)。
 此接口需要来自腾讯云控制台的 AppID 号码作为参数，再加上 openID，这个 openID 是唯一标识一个用户，规则由 App 开发者自行制定，App 内不重复即可（目前只支持 INT64）。
-> 初始化 SDK 之后才可以进房。
+>!初始化 SDK 之后才可以进房。
 ####  函数原型
 
 ```
@@ -122,8 +134,9 @@ ITMGContext virtual int Init(const char* sdkAppId, const char* openId)
 |AV_OK = 0|初始化 SDK 成功|
 |AV_ERR_SDK_NOT_FULL_UPDATE= 7015|检查 SDK 文件是否完整，建议删除后重新导入 SDK|
 
-####  示例代码 
+出现返回值 AV_ERR_SDK_NOT_FULL_UPDATE 时，此返回值只有提示作用，并不会造成初始化失败。如果在接入过程中提示此错误，请根据提示检查 SDK 文件是否完整、SDK 文件版本是否一致；如果是在导出可执行文件之后出现此返回值，请忽略此错误，并尽量不在UI中提示。
 
+####  示例代码 
 
 ```
 #define SDKAPPID3RD "1400089356"
@@ -453,13 +466,14 @@ void TMGTestScene::OnEvent(ITMG_MAIN_EVENT_TYPE eventType,const char* data){
 ```
 
 ### 房间通话质量监控事件
-质量监控事件，事件消息为 ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY，返回的参数为 weight、floss  及 delay，代表的信息如下，在 OnEvent 函数中对事件消息进行判断。
+质量监控事件，在进房后触发，事件消息为 ITMG_MAIN_EVENT_TYPE_CHANGE_ROOM_QUALITY，返回的参数为 weight、loss 及 delay，代表的信息如下，在 OnEvent 函数中对事件消息进行判断。
 
-|参数     | 含义         |
-| ------------- |-------------|
-|weight    				|范围是 1 - 5，数值为5是音质评分极好，数值为1是音质评分很差，几乎不能使用，数值为0代表初始值，无含义|
-|floss    				|丢包率|
-|delay    		|音频触达延迟时间（ms）|
+|参数     | 类型        | 含义         |
+| ------------- |-------------|-------------|
+|weight  |int  				|范围是 1 - 50，数值为50是音质评分极好，数值为1是音质评分很差，几乎不能使用，数值为0代表初始值，无含义|
+|loss   |double				|上行丢包率|
+|delay   |int 		|音频触达延迟时间（ms）|
+
 
 
 
@@ -708,7 +722,7 @@ ITMGAudioCtrl virtual int SetMicVolume(int vol)
 ITMGContextGetInstance()->GetAudioCtrl()->SetMicVolume(vol);
 ```
 ###  获取麦克风的音量
-此接口用于获取麦克风的音量。返回值为一个int类型数值，返回值为101代表没调用过接口 SetMicVolume。
+此接口用于获取麦克风的音量。返回值为一个 int 类型数值，返回值为101代表没调用过接口 SetMicVolume。
 
 #### 函数原型  
 ```
@@ -888,7 +902,7 @@ ITMGAudioCtrl virtual int GetRecvStreamLevel(const char* openId)
 
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| openId    |char*       |房间其他成员的openId|
+| openId    |char*       |房间其他成员的 openId|
 
 
 ####  示例代码  
@@ -906,7 +920,7 @@ ITMGAudioCtrl virtual int SetSpeakerVolume(int vol)
 ```
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| vol    |int        |设置音量，范围 0 到 200|
+| vol    |int        |设置音量，范围0到200|
 
 #### 示例代码  
 ```
@@ -946,13 +960,14 @@ ITMGContextGetInstance()->GetAudioCtrl()->EnableLoopBack(true);
 
 
 ## 离线语音语音转文字流程图
-![](https://main.qcloudimg.com/raw/4c875d05cd2b4eaefba676d2e4fc031d.png)
+<img src="https://main.qcloudimg.com/raw/4c875d05cd2b4eaefba676d2e4fc031d.png" width="70%">
+
 
 
 
 ## 离线语音
 未初始化前，SDK 处于未初始化阶段，需要通过接口 Init 初始化 SDK，才可以使用实时语音及离线语音。
-使用问题可参考[离线语音相关问题](https://cloud.tencent.com/document/product/607/30412)。
+使用问题可参考 [离线语音相关问题](https://cloud.tencent.com/document/product/607/30412)。
 
 
 ### 初始化相关接口
@@ -1008,7 +1023,7 @@ ITMGContextGetInstance()->GetPTT()->ApplyPTTAuthbuffer(authBuffer,authBufferLen)
 ```
 
 ### 限制最大语音信息时长
-限制最大语音消息的长度，最大支持60秒。
+限制最大语音消息的长度，最大支持58秒。
 
 ####  函数原型
 
@@ -1017,11 +1032,11 @@ ITMGPTT virtual int SetMaxMessageLength(int msTime)
 ```
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| msTime    |int                    |语音时长，单位 ms|
+| msTime    |int                    |语音时长，单位 ms，区间为 1000 < msTime <= 58000|
 
 #### 示例代码  
 ```
-int msTime = 10;
+int msTime = 10000-;
 ITMGContextGetInstance()->GetPTT()->SetMaxMessageLength(msTime);
 ```
 
@@ -1104,7 +1119,7 @@ ITMGContextGetInstance()->GetPTT()->StartRecordingWithStreamingRecognition(fileP
 | result    	|用于判断流式语音识别是否成功的返回码		|
 | text    		|语音转文字识别的文本	|
 | file_path 	|录音存放的本地地址		|
-| file_id 		|录音在后台的 url 地址，录音在服务器存放 90 天	|
+| file_id 		|录音在后台的 url 地址，录音在服务器存放90天	|
 
 #### 错误码
 
@@ -1182,7 +1197,7 @@ ITMGContextGetInstance()->GetPTT()->CancelRecording();
 ```
 
 ### 获取离线语音麦克风实时音量
-此接口用于获取麦克风实时音量，返回值为 int 类型，值域为 0 到 100。
+此接口用于获取麦克风实时音量，返回值为 int 类型，值域为0到100。
 
 #### 函数原型  
 ```
@@ -1321,7 +1336,7 @@ ITMGPTT virtual int DownloadRecordedFile(const char* fileId, const char* filePat
 ```
 |参数     | 类型         |含义|
 | ------------- |:-------------:|-------------|
-| fileId  		|char*   	|文件的 url 路径，录音在服务器存放 90 天	|
+| fileId  		|char*   	|文件的 url 路径，录音在服务器存放90天	|
 | filePath 	|char*  	|文件的本地保存路径	|
 
 ####  示例代码  

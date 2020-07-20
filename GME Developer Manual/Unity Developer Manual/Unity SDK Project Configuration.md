@@ -1,4 +1,3 @@
-## 操作场景
 为方便 Unity 开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 Unity 开发的工程配置。
 
 
@@ -17,7 +16,7 @@
 将开发工具包中 Plugins 文件夹中的文件复制在 Unity 工程中 Assets 下的 Plugins 文件夹中，如图所示：  
 ![](https://main.qcloudimg.com/raw/1221a25f62cedd3831cf2bb27bb1ea45.png)
 
-> 如果不需要导出 win32 架构的可执行文件，请删除 Plugins 文件夹下的 x86 文件夹。
+>?如果不需要导出 win32 架构的可执行文件，请删除 Plugins 文件夹下的 x86 文件夹。
 
 
 #### 导入代码文件
@@ -45,7 +44,7 @@
 $ xattr -d com.apple.quarantine gmesdk.bundle
 ```
 
-> 此操作有风险，建议使用低版本的 MacOS 进行接入
+>?此操作有风险，建议使用低版本的 MacOS 进行接入
 
 ## 工程导出配置
 从 Unity 引擎导出不同平台，需要做相应的工程配置：
@@ -56,7 +55,7 @@ $ xattr -d com.apple.quarantine gmesdk.bundle
 | iOS     |[iOS 工程配置文档](https://cloud.tencent.com/document/product/607/15219)|
 | macOS   |[macOS 工程配置文档](https://cloud.tencent.com/document/product/607/18617)|
 
-> GME Unity SDK 支持 il2cpp 编译。
+>?GME Unity SDK 支持 il2cpp 编译。
 
 #### 导出 iOS 平台
 1. 确保 Xcode 版本在10.0以上，此处示例为 Xcode 11.3 版本。
