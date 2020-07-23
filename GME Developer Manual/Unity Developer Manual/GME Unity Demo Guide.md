@@ -47,7 +47,7 @@ Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 - Distance: Relative distance from yourself.
 
-## 2.Voice Message
+## 3.Voice Message
 
 Click the "Voice Message" button in Figure 2 to enter the voice message interface.
 
