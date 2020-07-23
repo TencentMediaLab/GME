@@ -43,13 +43,17 @@ Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 3D Voice Effect setting:
 
-- Userid: The user id expected to use 3D voice, you can select any speaking members except yourself in the room.
+- x: x position
 
-- Azimuth: The angle in the horizontal direction relative to yourself, which will be 0 at the front, 90 at the right, -90 at the left and 180 or -180 at the back.
+- y: y position
 
-- Elevation: The angle in the vertical direction relative to yourself. On a horizontal plane with yourself, the angle will be 0, directly below will be -90, and directly above will be 90.
+- z: z position
 
-- Distance: Relative distance from yourself.
+- xr: the direction of rotation around the x axis 
+
+- yr: the direction of rotation around the y axis 
+
+- zr: the direction of rotation around the z axis 
 
 ## 3.Voice Message
 
