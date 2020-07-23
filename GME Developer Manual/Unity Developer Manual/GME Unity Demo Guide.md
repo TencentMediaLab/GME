@@ -43,11 +43,11 @@ Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 3D Voice Effect setting:
 
-- x: X position
+- x: Self position x
 
-- y: Y position
+- y: Self position y
 
-- z: Z position
+- z: Self position z
 
 - xr: Radians around the x axis 
 
