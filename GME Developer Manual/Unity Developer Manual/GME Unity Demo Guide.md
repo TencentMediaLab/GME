@@ -13,7 +13,7 @@ Click the “Voice Chat” button to activate the voice chat function. Click the
 ## 2.Voice Chat
 Click the "Voice Chat" button in Figure 2 to enter the following interface : 
 
-![image](Image/u8.png)
+![image](https://main.qcloudimg.com/raw/18e3db8c18f4d92b5ba6eb1f9caec7f7.png)
 > Figure 3 enters the room interface
 
 Room Id: Members with the same room ID will enter the same room.
@@ -28,8 +28,12 @@ RoomType: Select voice quality:
 
 Click the "JoinRoom" button to enter the room.
 
-![image](Image/u9.png)
+![image](https://main.qcloudimg.com/raw/a2ac816eacd95dfa89c8a5cee4f93f40.png)
 > Figure 4 room interface
+
+Mic: Open microphone.
+
+Speaker: Open speaker.
 
 Talking Members：Show the members who are talking in the room.
 
@@ -51,7 +55,7 @@ Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 Click the "Voice Message" button in Figure 2 to enter the voice message interface.
 
-![image](Image/u10.png)
+![image](https://main.qcloudimg.com/raw/a702e12418932f2b4cb701660b9875f1.png)
 > Figure 5 voice message interface
 
 Language: Language being used
