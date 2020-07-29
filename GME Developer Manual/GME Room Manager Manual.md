@@ -157,19 +157,6 @@ EnableSpeaker 相当于同时调用 EnableAudioRecv 及 EnableAudioPlayDevice。
 
 ## 其他接口
 
-### 客户端踢人接口
-调用此接口可以将房间内的某位成员踢出房间。
-
-```
--(QAVResult)KickOut:(NSString *)receiverID;
-```
-|参数|类型|含义|
-|----|---|----|
-|receiverID|NSString*|填入目标用户 OpenId|
-
-#### 回调
-回调参数为 ITMG_ROOM_MANAGEMENT_KICKOUT_OP。
-
 ### 禁止某人操作麦克风及扬声器
 调用此接口可以禁止房间内的某位成员操作麦克风及扬声器，该成员退房后失效。成员进房默认是允许操作麦克风及扬声器。
  
@@ -208,7 +195,6 @@ EnableSpeaker 相当于同时调用 EnableAudioRecv 及 EnableAudioPlayDevice。
 |3|ITMG_ROOM_MANAGEMENT_AUDIO_REC_OP|控制下行回调|
 |4|ITMG_ROOM_MANAGEMENT_MIC_OP|控制麦克风回调|
 |5|ITMG_ROOM_MANAGEMENT_PLAY_OP|控制扬声器回调|
-|6|ITMG_ROOM_MANAGEMENT_KICKOUT_OP|踢人事件|
 |7|ITMG_ROOM_MANAGEMENT_GET_MIC_STATE|获取麦克风状态|
 |8|ITMG_ROOM_MANAGEMENT_GET_SPEAKER_STATE|获取扬声器状态|
 |9|ITMG_ROOM_MANAGERMENT_FOBIN_OP|禁止操作麦克风及扬声器事件|
@@ -229,7 +215,7 @@ EnableSpeaker 相当于同时调用 EnableAudioRecv 及 EnableAudioPlayDevice。
     switch (eventType) {
 		case ITMG_MAIN_EVNET_TYPE_ROOM_MANAGEMENT_OPERATOR:
         {
-            NSArray *operatorArr = @[@"采集",@"播放",@"上行",@"下行",@"采集上行",@"播放下行",@"踢人",@"mic状态",@"spk状态",@"禁止操作mic/speak"];
+            NSArray *operatorArr = @[@"采集",@"播放",@"上行",@"下行",@"采集上行",@"播放下行",@"mic状态",@"spk状态",@"禁止操作mic/speak"];
 			// _openId
             NSString *SenderID = [data objectForKey:@"SenderID"];
             NSString *ReceiverID = [data objectForKey:@"ReceiverID"];
