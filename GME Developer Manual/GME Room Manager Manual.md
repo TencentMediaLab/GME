@@ -22,6 +22,11 @@ GME 房间管理功能在进房后才可调用，且只能修改房间内成员�
 @interface ITMGRoomManager :NSObject
 ```
 
+接口中需要传参数 receiverID，即接收方初始化 SDK 时候使用的 OpenId，如果参数传的是 “ALL”，会对房间内所有人生效。
+
+**注意**
+参数“ALL”对采集管理相关接口无效。
+
 ## 采集管理相关接口
 此部分内容包含**麦克风管理**、**音频上行管理**以及**采集硬件设备管理**，其中麦克风管理相当于音频上行管理加上采集硬件设备管理。区分出音频数据传输上下行与硬件设备的管理是因为打开或者关闭采集设备，会伴随整个设备（采集及播放）重启，如果此时 App 正在播放背景音乐，那么背景音乐的播放也会被中断。利用控制上下行的方式来实现开关麦克风效果，不会中断播放设备。
 
@@ -197,9 +202,9 @@ EnableSpeaker 相当于同时调用 EnableAudioRecv 及 EnableAudioPlayDevice。
 |3|ITMG_ROOM_MANAGEMENT_AUDIO_REC_OP|控制下行回调|
 |4|ITMG_ROOM_MANAGEMENT_MIC_OP|控制麦克风回调|
 |5|ITMG_ROOM_MANAGEMENT_PLAY_OP|控制扬声器回调|
-|7|ITMG_ROOM_MANAGEMENT_GET_MIC_STATE|获取麦克风状态|
-|8|ITMG_ROOM_MANAGEMENT_GET_SPEAKER_STATE|获取扬声器状态|
-|9|ITMG_ROOM_MANAGERMENT_FOBIN_OP|禁止操作麦克风及扬声器事件|
+|6|ITMG_ROOM_MANAGEMENT_GET_MIC_STATE|获取麦克风状态|
+|7|ITMG_ROOM_MANAGEMENT_GET_SPEAKER_STATE|获取扬声器状态|
+|8|ITMG_ROOM_MANAGERMENT_FOBIN_OP|禁止操作麦克风及扬声器事件|
 
 #### OperateValue
 
