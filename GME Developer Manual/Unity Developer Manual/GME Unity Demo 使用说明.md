@@ -31,24 +31,31 @@ RoomType：控制语音质量：
 
 点击“JoinRoom”按钮 进入房间。
 
-![image](Image/u9.png)
+![image](https://main.qcloudimg.com/raw/a2ac816eacd95dfa89c8a5cee4f93f40.png)
 > 图4房间内界面
 
-Talking Members：展示房间内正在说话的成员。
 
-3D Voice Effect:：用于开关3D语音，并且展示和隐藏3D语音设置界面。
+Speaker: 打开扬声器。
 
-Voice Change：选择变声类型，支持10种变声效果。
+Talking Members：房间内正在说话的人
+
+3D Voice Effect: 打开3D音效。
+
+Voice Change：修改实时语音音效。
 
 3D Voice Effect setting:
 
-- Userid：所要设置为3D语音的UserId，可选择房间内除自己外的所有说话成员；
+- x:  自身x轴
 
-- Azimuth：水平方向上相对于自己的夹角，正前方为0，正右方为90，正左方为-90，正后方为180或-180；
+- y:  自身y轴
 
-- Elevation：竖直方向相对于自己的夹角，和自己在一个水平面上为0；正下方为-90，正上方为90；
+- z:  自身z轴
 
-- Distance：相对与自己的距离。
+- xr: 绕x坐标轴旋转的方向
+
+- yr: 绕y坐标轴旋转的方向
+
+- zr: 绕z坐标轴旋转的方向
 
 ## 3.语音消息
 
