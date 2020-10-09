@@ -13,7 +13,7 @@ Click the “Voice Chat” button to activate the voice chat function. Click the
 ## 2.Voice Chat
 Click the "Voice Chat" button in Figure 2 to enter the following interface : 
 
-![image](Image/u8.png)
+![image](https://main.qcloudimg.com/raw/18e3db8c18f4d92b5ba6eb1f9caec7f7.png)
 > Figure 3 enters the room interface
 
 Room Id: Members with the same room ID will enter the same room.
@@ -28,8 +28,12 @@ RoomType: Select voice quality:
 
 Click the "JoinRoom" button to enter the room.
 
-![image](Image/u9.png)
+![image](https://main.qcloudimg.com/raw/a2ac816eacd95dfa89c8a5cee4f93f40.png)
 > Figure 4 room interface
+
+Mic: Open microphone.
+
+Speaker: Open speaker.
 
 Talking Members：Show the members who are talking in the room.
 
@@ -39,19 +43,23 @@ Voice Change：Select voice font type. 10 kinds of voice font are supported.
 
 3D Voice Effect setting:
 
-- Userid: The user id expected to use 3D voice, you can select any speaking members except yourself in the room.
+- x:  self position x
 
-- Azimuth: The angle in the horizontal direction relative to yourself, which will be 0 at the front, 90 at the right, -90 at the left and 180 or -180 at the back.
+- y:  self position y
 
-- Elevation: The angle in the vertical direction relative to yourself. On a horizontal plane with yourself, the angle will be 0, directly below will be -90, and directly above will be 90.
+- z:  self position z
 
-- Distance: Relative distance from yourself.
+- xr: radians around the x axis 
 
-## 2.Voice Message
+- yr: radians around the y axis 
+
+- zr: radians around the z axis 
+
+## 3.Voice Message
 
 Click the "Voice Message" button in Figure 2 to enter the voice message interface.
 
-![image](Image/u10.png)
+![image](https://main.qcloudimg.com/raw/a702e12418932f2b4cb701660b9875f1.png)
 > Figure 5 voice message interface
 
 Language: Language being used
