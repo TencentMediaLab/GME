@@ -12,7 +12,7 @@
 
 ### 类型说明
 
-#### ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE**
+#### ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE
 
 设置发送音频规则，不同的规则填入后，会有不同的发送规则。
 
@@ -31,7 +31,7 @@
 如果类型传入 AUDIO_ROUTE_SEND_WHITE_LIST ，此时参数 OpenIDForSend 为白名单列表。
 
 
-#### ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE**
+#### ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE
 
 设置接收音频规则，不同的规则填入后，会有不同的接收规则。
 
