@@ -23,4 +23,6 @@
 ITMG_MAIN_EVENT_TYPE.ITMG_MAIN_EVENT_TYPE_SWITCH_ROOM
 ```
 
+
+
 更多错误码请参考[错误码文档](https://cloud.tencent.com/document/product/607/15173)。
