@@ -105,7 +105,7 @@ if (ret != QAV_OK) {
 |AUDIO_ROUTE_SEND_TO_ALL        |本端音频上行将转发给所有人|
 |AUDIO_ROUTE_SEND_BLACK_LIST    |本端音频上行将不转发给黑名单的人|
 |AUDIO_ROUTE_SEND_WHITE_LIST    |本端音频上行将只转发给白名单的人|
-|AUDIO_ROUTE_RECV_INQUIRE_ERROR |获取出错，检查是否进入房间，是否已经初始化 SDK｜
+|AUDIO_ROUTE_RECV_INQUIRE_ERROR |获取出错，检查是否进入房间，是否已经初始化 SDK
 
 **ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE**
 
@@ -115,4 +115,6 @@ if (ret != QAV_OK) {
 |AUDIO_ROUTE_RECV_FROM_ALL        |本端接收所有人的音频|
 |AUDIO_ROUTE_RECV_BLACK_LIST    |本端不接收黑名单的人的音频声音|
 |AUDIO_ROUTE_RECV_WHITE_LIST    |本端只接收白名单的人的音频声音|
-|AUDIO_ROUTE_RECV_INQUIRE_ERROR |获取出错，检查是否进入房间，是否已经初始化 SDK｜
+|AUDIO_ROUTE_RECV_INQUIRE_ERROR |获取出错，检查是否进入房间，是否已经初始化 SDK
+
+> 在 SetServerAudioRouteSendOperateType 接口中请勿使用 AUDIO_ROUTE_RECV_INQUIRE_ERROR
