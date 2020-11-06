@@ -85,11 +85,33 @@ if (ret != QAV_OK) {
 
 
 ## 获取音频设置转发规则
-调用此接口获取音频转发规则。调用后传入的参数会返回结果。
+调用此接口获取音频转发规则。调用后接口返回规则，传入的数组参数会返回相应规则的 openId。
 
 ### 接口原型
 
 ```
--(int)GetServerAudioRouteSendOperateType:(ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE *) Sendtype  SendList:(NSMutableArray*) OpenIDForSend  RecvOperateType:(ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE *) Recvtype RecvList:(NSMutableArray *)OpenIDForRecv;
+-(ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE)GetCurrentSendAudioRoute:(NSMutableArray*) OpenIDForSend;
+-(ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE)GetCurrentRecvAudioRoute:(NSMutableArray *)OpenIDForRecv;
 ```
 
+
+### 返回的规则
+
+**ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE**
+
+|接收类型   |效果   |
+|----------|-------|
+|AUDIO_ROUTE_NOT_SEND_TO_ANYONE |本端音频上行发送到后台，但后台不转发给任何人，相当于将自己静音|
+|AUDIO_ROUTE_SEND_TO_ALL        |本端音频上行将转发给所有人|
+|AUDIO_ROUTE_SEND_BLACK_LIST    |本端音频上行将不转发给黑名单的人|
+|AUDIO_ROUTE_SEND_WHITE_LIST    |本端音频上行将只转发给白名单的人|
+
+
+**ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE**
+
+|接收类型   |效果   |
+|----------|-------|
+|AUDIO_ROUTE_NOT_RECV_FROM_ANYONE |本端不接受任何音频，相当于关闭房间内扬声器效果|
+|AUDIO_ROUTE_RECV_FROM_ALL        |本端接收所有人的音频|
+|AUDIO_ROUTE_RECV_BLACK_LIST    |本端不接收黑名单的人的音频声音|
+|AUDIO_ROUTE_RECV_WHITE_LIST    |本端只接收白名单的人的音频声音|
