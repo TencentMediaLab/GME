@@ -7,8 +7,12 @@
 
 ### 接口原型
 ```
+//iOS接口
 -(int)SetServerAudioRouteSendOperateType:(ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE) Sendtype  SendList:(NSArray *)OpenIDForSend  RecvOperateType:(ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE) Recvtype RecvList:(NSArray *)OpenIDForRecv;
+//Unity接口
+public abstract int SetServerAudioRouteSendOperateType(ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE Sendtype, string[] OpenIDforSend, ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE Recvtype, string[] OpenIDforRecv);
 ```
+
 
 ### 类型说明
 
@@ -23,12 +27,11 @@
 |AUDIO_ROUTE_SEND_BLACK_LIST    |本端音频上行将不转发给黑名单的人，黑名单由参数 OpenIDForSend 提供|
 |AUDIO_ROUTE_SEND_WHITE_LIST    |本端音频上行将只转发给白名单的人，白名单由参数 OpenIDForSend 提供|
 
-即如果类型传入 AUDIO_ROUTE_NOT_SEND_TO_ANYONE 以及 AUDIO_ROUTE_SEND_TO_ALL ，
-此时的参数 OpenIDForSend 不生效，只需要填 null；
+即如果类型传入 AUDIO_ROUTE_NOT_SEND_TO_ANYONE 以及 AUDIO_ROUTE_SEND_TO_ALL ，此时的参数 OpenIDForSend 不生效，只需要填 null；
 
-如果类型传入 AUDIO_ROUTE_SEND_BLACK_LIST ，此时参数 OpenIDForSend 为黑名单列表；
+如果类型传入 AUDIO_ROUTE_SEND_BLACK_LIST ，此时参数 OpenIDForSend 为黑名单列表，最多支持 10 个；
 
-如果类型传入 AUDIO_ROUTE_SEND_WHITE_LIST ，此时参数 OpenIDForSend 为白名单列表。
+如果类型传入 AUDIO_ROUTE_SEND_WHITE_LIST ，此时参数 OpenIDForSend 为白名单列表，最多支持 10 个。
 
 
 #### ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE
@@ -42,7 +45,11 @@
 |AUDIO_ROUTE_RECV_BLACK_LIST    |本端不接收黑名单的人的音频声音，黑名单由参数 OpenIDForSend 提供|
 |AUDIO_ROUTE_RECV_WHITE_LIST    |本端只接收白名单的人的音频声音，白名单由参数 OpenIDForSend 提供|
 
-即如果类型传入 AUDIO_ROUTE_NOT_RECV_FROM_ANYONE 以及 AUDIO_ROUTE_RECV_FROM_ALL OpenIDForSend 不生效；如果类型传入 AUDIO_ROUTE_RECV_BLACK_LIST ，此时参数 OpenIDForSend 为黑名单列表；如果类型传入 AUDIO_ROUTE_RECV_WHITE_LIST ，此时参数 OpenIDForSend 为白名单列表。
+即如果类型传入 AUDIO_ROUTE_NOT_RECV_FROM_ANYONE 以及 AUDIO_ROUTE_RECV_FROM_ALL OpenIDForSend 不生效；
+
+如果类型传入 AUDIO_ROUTE_RECV_BLACK_LIST ，此时参数 OpenIDForSend 为黑名单列表，最多支持 10 个；
+
+如果类型传入 AUDIO_ROUTE_RECV_WHITE_LIST ，此时参数 OpenIDForSend 为白名单列表，最多支持 10 个。
 
 
 ### 返回值
@@ -90,8 +97,12 @@ if (ret != QAV_OK) {
 ### 接口原型
 
 ```
+//iOS接口
 -(ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE)GetCurrentSendAudioRoute:(NSMutableArray *) OpenIDForSend;
 -(ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE)GetCurrentRecvAudioRoute:(NSMutableArray *)OpenIDForRecv;
+//Unity接口
+public abstract ITMG_SERVER_AUDIO_ROUTE_SEND_TYPE GetCurrentSendAudioRoute(List<string> OpenIDforSend);
+public abstract ITMG_SERVER_AUDIO_ROUTE_RECV_TYPE GetCurrentRecvAudioRoute(List<string> OpenIDforRecve);
 ```
 
 
