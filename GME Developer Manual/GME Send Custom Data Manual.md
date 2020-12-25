@@ -24,7 +24,7 @@ public abstract int SendCustomData(byte[] customdata,int repeatCout);
 ### 返回值
 接口返回值为 QAV_OK 则表示成功。
 
-回调返回 1004 表示参数错误，建议重新检查参数是否正确。返回 1201 表示房间不存在，建议检查房间号是否正确。更多错误码请参考[错误码文档](https://cloud.tencent.com/document/product/607/15173)。
+回调返回 1004 表示参数错误，建议重新检查参数是否正确。返回 1201 表示房间不存在，建议检查房间号是否正确。更多错误码请参考 https://cloud.tencent.com/document/product/607/15173 。
 
 
 ### 示例代码
