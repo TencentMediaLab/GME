@@ -17,7 +17,7 @@ public abstract int SendCustomData(byte[] customdata,int repeatCout);
 ### 参数说明
 
 |参数   |类型   |含义   |
-|----------|-------|
+|----------|-------|-------|
 |data       |NSData *   |需要传递的信息|
 |reaptCout  |int        |重复次数，填入-1为无限次重复发送|
 
