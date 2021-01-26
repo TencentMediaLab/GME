@@ -1,11 +1,11 @@
-# IGVideo 使用文档
+# GVideo Android 端使用文档
 
-为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 IGVideo SDK 的开发的接入技术文档。
+为方便开发者调试和接入腾讯云游戏多媒体引擎产品 API，这里向您介绍适用于 GVideo SDK 的开发的接入技术文档。
 
 
 ## 功能介绍
 
-使用  IGVideo SDK 可以录制视频，播放视频及分享视频。本接口文档以 Android 端为例。
+使用  GVideo SDK 可以录制视频，播放视频及分享视频。本接口文档以 Android 端为例。
 
 ## 使用流程
 
@@ -35,12 +35,7 @@ import com.tencent.GVideoImpl.GVideoSDKImpl;
 调用接口需要获取GVideoSDK的初始化实例。
 
 ```
-static public IGVideoSDK getInstance() {
-	if (mInstance == null) {
-		mInstance = new GVideoSDKImpl();
-	}
-	return mInstance;
-}
+IGVideoSDK mIGVideoSDK = IGVideoSDK.getInstance();
 ```
 
 
@@ -71,7 +66,7 @@ String openID = "10001";//此参数必须大于10000
 
 int ret = IGVideoSDK.GetInstance(this).initialize(sdkAppId, openId, authBuffer);
 if(ret != 0){
-	Log.e(TAG,"初始化IGVideoSDK失败");
+	Log.e(TAG,"初始化GVideoSDK失败");
 }
 ```
 
@@ -181,24 +176,10 @@ public abstract int unBindView(Activity activity, ViewGroup viewContainer);
 
 **需要先设置路径，才可以播放视频。**
 
-### 设置本地的视频路径
 
-设置本地的视频路径。
+### 设置视频路径
 
-#### 函数原型
-
-```
-public abstract int setVideoPath(String videoPath);
-```
-
-|参数			|类型		|作用						|
-|---------------|-----------|---------------------------|
-|videoPath		|String		|待播放的视频本地路径			|
-
-
-### 设置网络的的视频URL
-
-设置网络的的视频 URL。
+设置需要播放的视频的路径。
 
 #### 函数原型
 
@@ -208,7 +189,7 @@ public abstract int setVideoURL(String videoURL);
 
 |参数			|类型		|作用						|
 |---------------|-----------|---------------------------|
-|videoURL		|String		|待播放的视频网络路径			|
+|videoURL		|String		|待播放的视频路径，填入本地路径播放本地视频，填入url 播放网络视频。			|
 
 
 ### 获取设置的路径
@@ -343,10 +324,7 @@ public abstract void setScreenRecordCallBack(IGVideoScreenRecordControlCallback 
 #### 函数原型
 
 ```
-public static void setActivityResult(Context context, int requestCode, int resultCode, Intent data) 
-{
-    ScreenRecorder.getInstance().onActivityResult(context, requestCode, resultCode, data);
-}
+public static void setActivityResult(Context context, int requestCode, int resultCode, Intent data) {}
 ```
 
 |参数			|类型		|作用						|
@@ -451,12 +429,12 @@ public abstract void setVideoShareDelegate(IGVideoShareControlDelegate delegate)
 #### 函数原型
 
 ```
-public abstract int generateShareLink(String UUID);
+public abstract int generateShareLink(String filePath);
 ```
 
 |参数			|类型		|作用						|
 |---------------|-----------|---------------------------|
-|UUID		|String		|待上传的本地文件路径			|
+|filePath		|String		|待上传的本地文件路径			|
 
 
 ### 取消正在分享的链接
@@ -466,9 +444,9 @@ public abstract int generateShareLink(String UUID);
 #### 函数原型
 
 ```
-public abstract int cancelGenerateShareLink(String filePath);
+public abstract int cancelGenerateShareLink(String UUID);
 ```
 
 |参数			|类型		|作用						|
 |---------------|-----------|---------------------------|
-|filePath		|String		|正在分享的链接			|
+|UUID		|String		|正在分享的链接			|
