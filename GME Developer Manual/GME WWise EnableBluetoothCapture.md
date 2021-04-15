@@ -33,9 +33,6 @@ GMESDK_API int GMESDK_CALL GMESDK_EnableBluetoothCapture(bool enable)
    <tr>
       <td>不插入蓝牙为媒体音量，手机采集</td>
    </tr>
-   <tr>
-      <td></td>
-   </tr>
 </table>
 
 
