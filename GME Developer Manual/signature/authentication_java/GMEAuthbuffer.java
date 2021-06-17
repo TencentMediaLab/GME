@@ -48,13 +48,11 @@ public class GMEAuthbuffer {
         return pEncryptOutBuf;
     }
 
-    static int radom = 16807;
+    // static int radomTest = 16807;
     static int rand()
     {
-        radom++;
-        return radom;
-        // Random r1 = new Random();
-        // return r1.nextInt();
+        Random r1 = new Random();
+        return r1.nextInt(1000000);
     }
 
     public static byte[] long2Byte(long value)
