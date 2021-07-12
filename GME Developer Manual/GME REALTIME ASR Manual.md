@@ -2,26 +2,16 @@
 
 ## 启动ASR
 
-在成功进房之后，开启麦克风采集及上行的情况下，调用次接口可以启动实时语音ASR功能。如果不传入参数，则默认是普通话实时语音ASR。传入的参数决定了ASR的目标语言。
+在成功进房之后，开启麦克风采集及上行的情况下，调用次接口可以启动实时语音ASR功能。
 
 ### 示例代码
 ```
 //启动实时语音ASR
 ret = (int)[[ITMGContext GetInstance] StartRealTimeASR];
-ret = (int)[[ITMGContext GetInstance] StartRealTimeASR:_ASRID.text];
+
 //停止实时语音ASR
 ret = (int)[[ITMGContext GetInstance] StopRealTimeASR];
 ```
-
-## 目标语言参数
-
-- 16k_en：英语
-- 16k_ca：粤语
-- 16k_ko：韩语
-- 16k_zh-TW：中文普通话繁体
-- 16k_ja：16k 日语
-- 16k_wuu-SH：16k 上海话方言
-- 16k_th：泰语
 
 ## 回调
 启动实时语音ASR功能之后，会在回调 ITMG_MAIN_EVENT_TYPE_REALTIME_ASR 中返回对应的信息。
